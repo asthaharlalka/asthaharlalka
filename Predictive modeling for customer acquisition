@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Name - Astha Harlalka</title>
+    <title>Predictive Modelling for Customer Acquisition - Astha Harlalka</title>
     
-    <!-- CSS - Consistent with your main portfolio -->
     <style>
-        /* Basic reset and fonts */
         * {
             margin: 0;
             padding: 0;
@@ -21,7 +19,6 @@
             background-color: #f9fafb;
         }
         
-        /* Container for content */
         .container {
             width: 90%;
             max-width: 1200px;
@@ -29,7 +26,7 @@
             padding: 0 15px;
         }
         
-        /* Header styling - consistent with main page */
+        /* Header styling */
         header {
             background-color: white;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
@@ -45,9 +42,14 @@
             align-items: center;
         }
         
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
         .logo h1 {
             font-size: 26px;
-            color: #2563eb;
+            color: #4169e1;
             letter-spacing: -0.5px;
         }
         
@@ -57,7 +59,7 @@
             margin-top: 2px;
         }
         
-        /* Navigation menu - consistent with main page */
+        /* Navigation menu */
         nav ul {
             display: flex;
             list-style: none;
@@ -81,21 +83,21 @@
             position: absolute;
             width: 0;
             height: 2px;
-            background: #2563eb;
+            background: #4169e1;
             left: 0;
             bottom: 0;
             transition: width 0.3s;
         }
         
         nav ul li a:hover {
-            color: #2563eb;
+            color: #4169e1;
         }
         
         nav ul li a:hover:after {
             width: 100%;
         }
         
-        /* Project Header Section */
+        /* Project Hero Section */
         .project-hero {
             background-color: #f0f5ff;
             padding: 80px 0 60px;
@@ -132,7 +134,7 @@
             height: 36px;
             border-radius: 50%;
             background-color: #dbeafe;
-            color: #2563eb;
+            color: #4169e1;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -183,7 +185,7 @@
             position: absolute;
             width: 60px;
             height: 3px;
-            background-color: #2563eb;
+            background-color: #4169e1;
             bottom: 0;
             left: 0;
         }
@@ -256,31 +258,18 @@
         }
         
         .btn-primary {
-            background-color: #2563eb;
+            background-color: #4169e1;
             color: white;
             box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
         }
         
         .btn-primary:hover {
-            background-color: #1d4ed8;
+            background-color: #3658c5;
             transform: translateY(-2px);
             box-shadow: 0 6px 8px rgba(37, 99, 235, 0.3);
         }
         
-        .btn-secondary {
-            background-color: white;
-            color: #333;
-            border: 1px solid #ddd;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-        
-        .btn-secondary:hover {
-            background-color: #f9fafb;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.08);
-        }
-        
-        /* Next/Previous project navigation */
+        /* Project navigation */
         .project-navigation {
             display: flex;
             justify-content: space-between;
@@ -291,6 +280,7 @@
         
         .nav-item {
             max-width: 45%;
+            text-decoration: none;
         }
         
         .nav-label {
@@ -303,15 +293,15 @@
         .nav-title {
             font-size: 18px;
             font-weight: 600;
-            color: #2563eb;
+            color: #4169e1;
             transition: color 0.3s;
         }
         
         .nav-title:hover {
-            color: #1d4ed8;
+            color: #3658c5;
         }
         
-        /* Footer styling - consistent with main page */
+        /* Footer styling */
         footer {
             background-color: #1e293b;
             color: white;
@@ -388,11 +378,25 @@
             .section-title {
                 font-size: 24px;
             }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header - Consistent with main page -->
+    <!-- Header -->
     <header>
         <div class="container">
             <div class="header-content">
@@ -417,15 +421,15 @@
     <!-- Project Hero Section -->
     <section class="project-hero">
         <div class="container">
-            <h1 class="project-title">Project Title Goes Here</h1>
-            <p class="project-subtitle">Brief overview of the project that summarizes the main achievements and outcomes in 1-2 sentences.</p>
+            <h1 class="project-title">Predictive Modelling for Customer Acquisition</h1>
+            <p class="project-subtitle">Optimized a bank's telemarketing campaign through advanced predictive analytics, resulting in 90% cost reduction and 2.5x increase in net profit.</p>
             
             <div class="project-meta">
                 <!-- Date/Duration -->
                 <div class="meta-item">
                     <div class="meta-icon">📅</div>
                     <div class="meta-content">
-                        <span>Date:</span> Month Year
+                        <span>Date:</span> 2024
                     </div>
                 </div>
                 
@@ -433,7 +437,7 @@
                 <div class="meta-item">
                     <div class="meta-icon">🏢</div>
                     <div class="meta-content">
-                        <span>Client:</span> Organization Name
+                        <span>Client:</span> Banking Institution
                     </div>
                 </div>
                 
@@ -441,21 +445,17 @@
                 <div class="meta-item">
                     <div class="meta-icon">👤</div>
                     <div class="meta-content">
-                        <span>Role:</span> Your Role in the Project
+                        <span>Role:</span> Data Scientist & Analytics Lead
                     </div>
                 </div>
             </div>
             
             <div class="project-tags">
-                <span class="tag">Primary Technology</span>
-                <span class="tag">Methodology</span>
-                <span class="tag">Tool/Framework</span>
-                <span class="tag">Industry</span>
-            </div>
-            
-            <div>
-                <a href="#" class="btn btn-primary">View Live Project</a>
-                <a href="#" class="btn btn-secondary">View Code Repository</a>
+                <span class="tag">R</span>
+                <span class="tag">Predictive Modeling</span>
+                <span class="tag">Logistic Regression</span>
+                <span class="tag">Decision Trees</span>
+                <span class="tag">Banking</span>
             </div>
         </div>
     </section>
@@ -467,9 +467,11 @@
             
             <div class="project-card">
                 <div class="project-description">
-                    <p>Provide a comprehensive overview of the project here, including the business problem, objectives, and general approach. This should be 2-3 paragraphs that give the reader a solid understanding of what you were trying to accomplish with this project.</p>
+                    <p>This project focused on optimizing a bank's telemarketing campaign to increase efficiency and return on investment. The bank was facing challenges with high customer acquisition costs and low conversion rates in their direct marketing efforts. The primary objective was to develop a data-driven approach to identify high-potential customers and prioritize outreach efforts.</p>
                     
-                    <p>Highlight key aspects of the problem domain, why this project was important, and any unique challenges or constraints you faced. You can also mention the overall impact or results achieved to set the stage for the detailed sections that follow.</p>
+                    <p>Working with historical campaign data that included customer demographics, transaction history, and previous campaign responses, I developed predictive models to determine the likelihood of conversion for each potential customer. The project required rigorous data preprocessing, feature engineering, and model selection to achieve optimal results.</p>
+                    
+                    <p>The implemented solution enabled the bank to significantly reduce marketing costs while simultaneously increasing their conversion rate and net profit, demonstrating the tangible business value of advanced analytics in marketing optimization.</p>
                 </div>
             </div>
         </div>
@@ -482,16 +484,27 @@
             
             <div class="project-card">
                 <div class="project-description">
-                    <p>Detail the technical approach and methodology you used to address the problem. Include:</p>
+                    <p>The project followed a comprehensive analytical approach:</p>
                     
                     <ul>
-                        <li><strong>Data Collection & Processing:</strong> Describe how data was collected, cleaned, and prepared for analysis.</li>
-                        <li><strong>Analytical Techniques:</strong> Explain the models, algorithms, or analytical methods applied.</li>
-                        <li><strong>Tools & Technologies:</strong> List the specific software, programming languages, and frameworks used.</li>
-                        <li><strong>Implementation Process:</strong> Outline the step-by-step approach taken to implement the solution.</li>
+                        <li><strong>Data Collection & Preparation:</strong> Gathered historical campaign data from multiple sources, including customer profiles, transaction records, and previous campaign responses. Performed extensive data cleaning, handling missing values, and normalizing features.</li>
+                        
+                        <li><strong>Exploratory Data Analysis:</strong> Conducted in-depth statistical analysis to identify key patterns and correlations. Used visualization techniques to understand customer segments and behavior traits associated with successful conversions.</li>
+                        
+                        <li><strong>Feature Engineering:</strong> Created relevant derived features from raw data, including recency-frequency-monetary (RFM) metrics, customer lifetime value estimates, and interaction terms between demographic variables.</li>
+                        
+                        <li><strong>Model Development:</strong> Built multiple predictive models using R, including:
+                            <ul>
+                                <li>Logistic regression models to predict conversion probability</li>
+                                <li>Decision tree models to identify key decision points for customer segmentation</li>
+                                <li>Ensemble methods to improve overall prediction accuracy</li>
+                            </ul>
+                        </li>
+                        
+                        <li><strong>Model Evaluation:</strong> Implemented cross-validation techniques to assess model performance and prevent overfitting. Used ROC curves, precision-recall analysis, and confusion matrices to optimize the models.</li>
+                        
+                        <li><strong>Campaign Optimization Strategy:</strong> Developed a scoring system to rank customers by conversion probability, enabling targeted outreach to high-potential prospects. Created a decision framework for campaign execution that balanced reach and efficiency.</li>
                     </ul>
-                    
-                    <p>You can include code snippets or pseudocode if relevant, and explain your reasoning for choosing particular approaches over alternatives.</p>
                 </div>
             </div>
         </div>
@@ -504,27 +517,37 @@
             
             <div class="project-card">
                 <div class="project-description">
-                    <p>Present the main results and insights discovered through your analysis. Include:</p>
+                    <p>The implementation of the predictive models delivered exceptional results for the bank's customer acquisition efforts:</p>
                     
                     <ul>
-                        <li><strong>Quantitative Results:</strong> Highlight specific metrics, KPIs, or performance improvements.</li>
-                        <li><strong>Qualitative Insights:</strong> Describe any patterns, trends, or relationships identified.</li>
-                        <li><strong>Business Impact:</strong> Explain how these findings translated to business value or addressed the original problem.</li>
+                        <li><strong>Cost Reduction:</strong> Achieved a 90% reduction in customer acquisition costs by focusing outreach efforts on high-probability prospects, eliminating wasted contacts to low-potential customers.</li>
+                        
+                        <li><strong>Profit Increase:</strong> Generated a 2.5x increase in net profit from the telemarketing campaign by improving both efficiency and conversion rates.</li>
+                        
+                        <li><strong>Conversion Rate:</strong> Improved overall campaign conversion rate from 11% to 37% by targeting the right customer segments with appropriate offers.</li>
+                        
+                        <li><strong>Customer Insights:</strong> Identified key determinants of customer responsiveness:
+                            <ul>
+                                <li>Previous positive interactions with the bank strongly predicted future conversions</li>
+                                <li>Specific demographic combinations showed significantly higher response rates</li>
+                                <li>Certain product holdings correlated with openness to new offers</li>
+                            </ul>
+                        </li>
+                        
+                        <li><strong>Operational Efficiency:</strong> Reduced campaign duration by 40% while achieving better results, allowing for more agile marketing cycles.</li>
                     </ul>
-                    
-                    <p>Consider using visual elements like charts, graphs, or tables to effectively communicate complex findings. You can also include before/after comparisons to clearly demonstrate the impact of your work.</p>
                 </div>
                 
-                <!-- Example image gallery - replace with your actual project images -->
+                <!-- Example image gallery - placeholder for actual project images -->
                 <div class="image-gallery">
                     <div class="gallery-item">
-                        <img src="project-image-1.jpg" alt="Project visualization showing key metrics">
+                        <img src="https://via.placeholder.com/600x400.png?text=ROC+Curve+Analysis" alt="ROC Curve Analysis">
                     </div>
                     <div class="gallery-item">
-                        <img src="project-image-2.jpg" alt="Data visualization of results">
+                        <img src="https://via.placeholder.com/600x400.png?text=Decision+Tree+Visualization" alt="Decision Tree Visualization">
                     </div>
                     <div class="gallery-item">
-                        <img src="project-image-3.jpg" alt="Implementation workflow diagram">
+                        <img src="https://via.placeholder.com/600x400.png?text=Campaign+Results+Dashboard" alt="Campaign Results Dashboard">
                     </div>
                 </div>
             </div>
@@ -538,15 +561,17 @@
             
             <div class="project-card">
                 <div class="project-description">
-                    <p>Discuss the obstacles you encountered during the project and how you overcame them. This section demonstrates your problem-solving abilities and resilience.</p>
-                    
                     <ul>
-                        <li><strong>Challenge 1:</strong> Describe a significant obstacle you faced. Then explain your approach to solving it, what strategies you tried, and the ultimate solution.</li>
-                        <li><strong>Challenge 2:</strong> Detail another challenge and its resolution, highlighting different skills or techniques.</li>
-                        <li><strong>Challenge 3:</strong> Include a third challenge if relevant to showcase the breadth of your problem-solving capabilities.</li>
+                        <li><strong>Data Quality Issues:</strong> The historical data contained significant inconsistencies and missing values. I implemented robust data cleaning pipelines and applied multiple imputation techniques to handle missing data without introducing bias into the models.</li>
+                        
+                        <li><strong>Class Imbalance:</strong> The dataset had a natural imbalance with few positive responses compared to non-responses. I addressed this by implementing SMOTE (Synthetic Minority Over-sampling Technique) to create a balanced training dataset, which significantly improved model performance.</li>
+                        
+                        <li><strong>Feature Selection:</strong> With over 200 potential variables, determining the most predictive features was challenging. I developed an iterative feature selection approach using both statistical methods and domain expertise to identify the optimal feature set.</li>
+                        
+                        <li><strong>Model Interpretability:</strong> While complex models offered slightly better accuracy, stakeholders needed transparent rationales for targeting decisions. I balanced performance with interpretability by using a combination of logistic regression for clear variable importance and decision trees for intuitive decision paths.</li>
+                        
+                        <li><strong>Implementation Resistance:</strong> Some marketing team members were hesitant to adopt the new data-driven approach. I overcame this by creating an interactive dashboard that demonstrated the financial impact of the model and running a pilot campaign that showcased the improved results.</li>
                     </ul>
-                    
-                    <p>Be honest about challenges while emphasizing your resourcefulness and adaptability in finding solutions.</p>
                 </div>
             </div>
         </div>
@@ -559,15 +584,19 @@
             
             <div class="project-card">
                 <div class="project-description">
-                    <p>Summarize the overall project outcomes and what you learned through the process. Include:</p>
+                    <p>This project demonstrated the significant impact that predictive analytics can have on marketing efficiency and ROI. Key takeaways include:</p>
                     
                     <ul>
-                        <li><strong>Key Takeaways:</strong> The most important insights gained from the project.</li>
-                        <li><strong>Skills Developed:</strong> New technical or soft skills acquired or enhanced.</li>
-                        <li><strong>Future Improvements:</strong> How the solution could be extended or improved in the future.</li>
+                        <li><strong>Data-Driven Targeting:</strong> Predictive modeling proved far more effective than demographic-based targeting alone, highlighting the importance of behavioral and transactional data in customer acquisition.</li>
+                        
+                        <li><strong>Model Simplicity vs. Complexity:</strong> While more complex models sometimes showed marginal improvements in accuracy, simpler models often provided sufficient performance with greater interpretability and easier implementation.</li>
+                        
+                        <li><strong>Business Context Integration:</strong> The most successful analytics projects integrate domain expertise with technical modeling. Understanding the business context allowed for better feature engineering and more relevant model outputs.</li>
+                        
+                        <li><strong>Continuous Improvement:</strong> The implementation included a feedback loop to capture new campaign results and continuously refine the models, ensuring ongoing optimization rather than a one-time improvement.</li>
                     </ul>
                     
-                    <p>This section helps demonstrate your growth mindset and ability to extract valuable learnings from your experiences.</p>
+                    <p>Moving forward, the bank has established a framework for applying similar predictive approaches to other marketing initiatives, creating a more data-driven culture across their customer acquisition teams.</p>
                 </div>
             </div>
         </div>
@@ -576,19 +605,19 @@
     <!-- Project Navigation -->
     <div class="container">
         <div class="project-navigation">
-            <a href="previous-project.html" class="nav-item">
+            <a href="ford-ka-segmentation.html" class="nav-item">
                 <span class="nav-label">← Previous Project</span>
-                <h3 class="nav-title">Previous Project Title</h3>
+                <h3 class="nav-title">Ford Ka Market Segmentation</h3>
             </a>
             
-            <a href="next-project.html" class="nav-item" style="text-align: right;">
+            <a href="cell2cell-retention.html" class="nav-item" style="text-align: right;">
                 <span class="nav-label">Next Project →</span>
-                <h3 class="nav-title">Next Project Title</h3>
+                <h3 class="nav-title">Cell2Cell Proactive Retention Campaign</h3>
             </a>
         </div>
     </div>
 
-    <!-- Footer - Consistent with main page -->
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -609,9 +638,9 @@
         </div>
     </footer>
 
-    <!-- Simple JavaScript to update year automatically -->
+    <!-- JavaScript -->
     <script>
-        // Update the current year in the footer
+        // Update current year
         document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
 </body>
