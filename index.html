@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astha Harlalka - Portfolio</title>
     
-    <!-- Simple CSS - Easy to modify -->
+    <!-- Enhanced CSS with improved aesthetics -->
     <style>
         /* Basic reset and fonts */
         * {
@@ -15,10 +15,10 @@
         }
         
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
             color: #333;
-            background-color: #f5f5f5;
+            background-color: #f9fafb;
         }
         
         /* Container for content */
@@ -29,10 +29,10 @@
             padding: 0 15px;
         }
         
-        /* Header styling */
+        /* Header styling - improved aesthetics */
         header {
             background-color: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             padding: 20px 0;
             position: sticky;
             top: 0;
@@ -46,16 +46,18 @@
         }
         
         .logo h1 {
-            font-size: 24px;
-            color: #2563eb; /* Blue color - change as needed */
+            font-size: 26px;
+            color: #2563eb;
+            letter-spacing: -0.5px;
         }
         
         .logo p {
-            font-size: 14px;
+            font-size: 15px;
             color: #666;
+            margin-top: 2px;
         }
         
-        /* Navigation menu */
+        /* Navigation menu - improved aesthetics */
         nav ul {
             display: flex;
             list-style: none;
@@ -68,35 +70,66 @@
         nav ul li a {
             text-decoration: none;
             color: #333;
-            font-weight: bold;
-            transition: color 0.3s;
+            font-weight: 600;
+            transition: all 0.3s;
+            padding: 5px 2px;
+            position: relative;
+        }
+        
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: #2563eb;
+            left: 0;
+            bottom: 0;
+            transition: width 0.3s;
         }
         
         nav ul li a:hover {
-            color: #2563eb; /* Blue color - change as needed */
+            color: #2563eb;
         }
         
-        /* Section styling */
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+        
+        /* Section styling - consistent across all sections */
         section {
-            padding: 60px 0;
+            padding: 70px 0;
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 40px;
-            font-size: 28px;
-            color: #333;
+            margin-bottom: 50px;
+            font-size: 32px;
+            color: #111;
+            position: relative;
+            font-weight: 700;
         }
         
-        /* Hero section */
+        .section-title:after {
+            content: "";
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background-color: #2563eb;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Hero section - improved layout */
         .hero {
-            background-color: #f8fafc;
+            background-color: #f0f5ff;
+            padding: 80px 0;
         }
         
         .hero-content {
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 40px;
         }
         
         @media (min-width: 768px) {
@@ -110,44 +143,70 @@
         }
         
         .hero-text h2 {
-            font-size: 32px;
-            margin-bottom: 15px;
+            font-size: 36px;
+            margin-bottom: 18px;
+            line-height: 1.3;
+            color: #111;
         }
         
         .hero-text p {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             font-size: 18px;
-            color: #666;
+            color: #555;
+            line-height: 1.7;
         }
         
         .btn {
             display: inline-block;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 24px;
+            border-radius: 6px;
             text-decoration: none;
-            font-weight: bold;
-            margin-right: 10px;
-            margin-bottom: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-right: 12px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
         }
         
         .btn-primary {
-            background-color: #2563eb; /* Blue color - change as needed */
+            background-color: #2563eb;
             color: white;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+        }
+        
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(37, 99, 235, 0.3);
         }
         
         .btn-secondary {
             background-color: white;
             color: #333;
             border: 1px solid #ddd;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
         
-        /* Card styling */
+        .btn-secondary:hover {
+            background-color: #f9fafb;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        /* Card styling - consistent across all sections */
         .card {
             background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            padding: 20px;
-            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+            padding: 30px;
+            margin-bottom: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.08);
         }
         
         /* Highlights in hero section */
@@ -158,36 +217,39 @@
         .highlight-item {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         .highlight-icon {
-            width: 40px;
-            height: 40px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            background-color: #dbeafe; /* Light blue - change as needed */
+            background-color: #dbeafe;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 15px;
-            color: #2563eb; /* Blue color - change as needed */
+            margin-right: 18px;
+            color: #2563eb;
+            font-size: 20px;
         }
         
         .highlight-content h3 {
             font-size: 18px;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
+            color: #111;
         }
         
         .highlight-content p {
-            font-size: 14px;
-            color: #666;
+            font-size: 15px;
+            color: #555;
+            line-height: 1.6;
         }
         
-        /* Project card styling */
+        /* Project card styling - improved aesthetics */
         .project-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
+            gap: 30px;
         }
         
         @media (min-width: 768px) {
@@ -198,67 +260,92 @@
         
         @media (min-width: 1024px) {
             .project-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
             }
         }
         
         .project-card {
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.08);
             background-color: white;
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         
         .project-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 20px rgba(0,0,0,0.1);
         }
         
         .project-header {
-            background-color: #2563eb; /* Blue color - change as needed */
+            background-color: #2563eb;
             color: white;
-            padding: 15px;
+            padding: 20px 25px;
+        }
+        
+        .project-header h3 {
+            font-size: 20px;
+            line-height: 1.4;
         }
         
         .project-body {
-            padding: 20px;
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
         
         .project-description {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             color: #555;
+            line-height: 1.7;
+            flex-grow: 1;
         }
         
         .project-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
-            margin-bottom: 15px;
+            gap: 8px;
+            margin-bottom: 20px;
         }
         
         .tag {
-            background-color: #dbeafe; /* Light blue - change as needed */
-            color: #1e40af; /* Dark blue - change as needed */
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: bold;
+            background-color: #dbeafe;
+            color: #1e40af;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .tag:hover {
+            background-color: #bfdbfe;
         }
         
         .project-link {
-            color: #2563eb; /* Blue color - change as needed */
+            color: #2563eb;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
+            font-weight: 600;
+            font-size: 15px;
             display: inline-flex;
             align-items: center;
+            transition: transform 0.2s;
+            margin-top: auto;
         }
         
-        /* Skills section */
+        .project-link:hover {
+            transform: translateX(3px);
+        }
+        
+        /* Skills section - improved aesthetics */
         .skills-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
+            gap: 25px;
         }
         
         @media (min-width: 768px) {
@@ -274,24 +361,30 @@
         }
         
         .skill-tag {
-            background-color: #dbeafe; /* Light blue - change as needed */
-            color: #1e40af; /* Dark blue - change as needed */
-            padding: 5px 15px;
+            background-color: #dbeafe;
+            color: #1e40af;
+            padding: 8px 16px;
             border-radius: 20px;
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 600;
+            transition: all 0.2s;
         }
         
-        /* Contact section */
+        .skill-tag:hover {
+            background-color: #bfdbfe;
+            transform: translateY(-2px);
+        }
+        
+        /* Contact section - improved aesthetics */
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
+            gap: 30px;
         }
         
         @media (min-width: 768px) {
             .contact-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
             }
         }
         
@@ -300,48 +393,74 @@
         }
         
         .contact-icon {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            background-color: #dbeafe; /* Light blue - change as needed */
-            color: #2563eb; /* Blue color - change as needed */
+            background-color: #dbeafe;
+            color: #2563eb;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 15px;
-            font-size: 24px;
+            margin: 0 auto 20px;
+            font-size: 28px;
+            transition: all 0.3s;
         }
         
-        /* Form styling */
-        .form-group {
-            margin-bottom: 20px;
+        .contact-item:hover .contact-icon {
+            transform: scale(1.1);
+            background-color: #bfdbfe;
         }
         
-        .form-label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+        /* Experience styling - consistent format */
+        .experience-item {
+            margin-bottom: 30px;
         }
         
-        .form-input,
-        .form-textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-family: inherit;
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            align-items: flex-start;
+        }
+        
+        .experience-header h4 {
+            font-size: 20px;
+            color: #111;
+        }
+        
+        .experience-header span {
+            color: #666;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .experience-title {
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 12px;
             font-size: 16px;
         }
         
-        .form-textarea {
-            min-height: 120px;
+        .experience-list {
+            list-style-position: outside;
+            padding-left: 20px;
         }
         
-        /* Footer styling */
+        .experience-list li {
+            margin-bottom: 10px;
+            color: #444;
+        }
+        
+        /* Section backgrounds - alternating for visual separation */
+        .alt-bg {
+            background-color: #f0f5ff;
+        }
+        
+        /* Footer styling - improved aesthetics */
         footer {
-            background-color: #1e293b; /* Dark blue/gray - change as needed */
+            background-color: #1e293b;
             color: white;
-            padding: 30px 0;
+            padding: 40px 0 30px;
         }
         
         .footer-content {
@@ -358,9 +477,19 @@
             }
         }
         
+        .footer-branding h3 {
+            font-size: 22px;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+        
+        .footer-branding p {
+            color: #cbd5e1;
+        }
+        
         .social-links {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             margin-top: 20px;
         }
         
@@ -371,27 +500,28 @@
         }
         
         .social-link {
-            color: #94a3b8; /* Light gray - change as needed */
-            font-size: 20px;
-            transition: color 0.3s;
+            color: #94a3b8;
+            font-size: 24px;
+            transition: all 0.3s;
         }
         
         .social-link:hover {
             color: white;
+            transform: translateY(-3px);
         }
         
         .copyright {
             text-align: center;
-            border-top: 1px solid #334155; /* Darker gray - change as needed */
+            border-top: 1px solid #334155;
             margin-top: 30px;
-            padding-top: 20px;
-            color: #94a3b8; /* Light gray - change as needed */
+            padding-top: 25px;
+            color: #94a3b8;
             font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <!-- Header - Easy to modify text -->
+    <!-- Header -->
     <header>
         <div class="container">
             <div class="header-content">
@@ -428,9 +558,8 @@
                 
                 <div class="hero-card">
                     <div class="card">
-                        <h3 style="margin-bottom: 20px;">Professional Highlights</h3>
+                        <h3 style="margin-bottom: 20px; font-size: 22px;">Professional Highlights</h3>
                         <ul class="highlight-list">
-                            <!-- HIGHLIGHT 1 - Easy to modify -->
                             <li class="highlight-item">
                                 <div class="highlight-icon">
                                     <i>🔍</i>
@@ -441,7 +570,6 @@
                                 </div>
                             </li>
                             
-                            <!-- HIGHLIGHT 2 - Easy to modify -->
                             <li class="highlight-item">
                                 <div class="highlight-icon">
                                     <i>💼</i>
@@ -452,7 +580,6 @@
                                 </div>
                             </li>
                             
-                            <!-- HIGHLIGHT 3 - Easy to modify -->
                             <li class="highlight-item">
                                 <div class="highlight-icon">
                                     <i>🎓</i>
@@ -464,7 +591,6 @@
                                 </div>
                             </li>
                             
-                            <!-- HIGHLIGHT 4 - Easy to modify -->
                             <li class="highlight-item">
                                 <div class="highlight-icon">
                                     <i>🏆</i>
@@ -486,24 +612,22 @@
         <div class="container">
             <h2 class="section-title">About Me</h2>
             
-            <!-- ABOUT CONTENT - Easy to modify -->
             <div class="card" style="margin-bottom: 40px;">
                 <p style="margin-bottom: 15px;">
-                    I’m a business and marketing analytics professional with a Master of Science in Business Analytics from Carnegie Mellon University's Tepper School of Business. I bring a unique blend of technical expertise in data science and machine learning, paired with hands-on experience in marketing analytics and process optimization.
+                    I'm a business and marketing analytics professional with a Master of Science in Business Analytics from Carnegie Mellon University's Tepper School of Business. I bring a unique blend of technical expertise in data science and machine learning, paired with hands-on experience in marketing analytics and process optimization.
                 </p>
                 <p style="margin-bottom: 15px;">
-                    At organizations like Publicis, I’ve led high-impact initiatives that enhanced ad spend efficiency, improved customer acquisition strategies, and automated workflows—unlocking measurable business value. I specialize in turning complex data into actionable insights that inform strategy and drive performance.
+                    At organizations like Publicis, I've led high-impact initiatives that enhanced ad spend efficiency, improved customer acquisition strategies, and automated workflows—unlocking measurable business value. I specialize in turning complex data into actionable insights that inform strategy and drive performance.
                 </p>
                 <p>
-                   I’m passionate about using AI and advanced analytics to solve real-world business challenges. My approach combines analytical rigor, strategic thinking, and strong communication to deliver data-driven solutions that align with business goals and drive sustainable growth.
+                   I'm passionate about using AI and advanced analytics to solve real-world business challenges. My approach combines analytical rigor, strategic thinking, and strong communication to deliver data-driven solutions that align with business goals and drive sustainable growth.
                 </p>
             </div>
             
-            <!-- EDUCATION - Easy to modify -->
-            <h3 style="font-size: 22px; margin-bottom: 20px;">Education</h3>
+            <h3 style="font-size: 24px; margin-bottom: 25px; color: #333; text-align: center;">Education</h3>
             <div class="card" style="margin-bottom: 40px;">
-                <div style="margin-bottom: 25px;">
-                    <h4 style="font-size: 18px; margin-bottom: 5px;">Carnegie Mellon University – Tepper School of Business</h4>
+                <div style="margin-bottom: 30px;">
+                    <h4 style="font-size: 20px; margin-bottom: 8px; color: #2563eb;">Carnegie Mellon University – Tepper School of Business</h4>
                     <p style="font-weight: bold;">Master of Science in Business Analytics (Merit Scholarship)</p>
                     <p>GPA: 4.00/4.00 | May 2025</p>
                     <p style="margin-top: 10px;">
@@ -512,7 +636,7 @@
                 </div>
                 
                 <div>
-                    <h4 style="font-size: 18px; margin-bottom: 5px;">Narsee Monjee College of Commerce and Economics</h4>
+                    <h4 style="font-size: 20px; margin-bottom: 8px; color: #2563eb;">Narsee Monjee College of Commerce and Economics</h4>
                     <p style="font-weight: bold;">Bachelor of Commerce (Financial Accounting and Auditing)</p>
                     <p>GPA: 3.82/4.00 | May 2021</p>
                     <p style="margin-top: 10px;">
@@ -521,77 +645,75 @@
                 </div>
             </div>
             
-           <!-- EXPERIENCE - Easy to modify -->
-<section>
-    <h3 style="font-size: 22px; margin-bottom: 20px;">Work Experience</h3>
-    <div class="card">
-        
-        <!-- Experience 1 -->
-        <div style="margin-bottom: 30px;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                <h4 style="font-size: 18px;">Deloitte Consulting US (Capstone Project)</h4>
-                <span>Jan 2025 - Apr 2025</span>
-            </div>
-            <p style="font-weight: bold; margin-bottom: 10px;">Simulated Consumer Testing with AI</p>
-            <ul style="list-style-position: inside; margin-left: 5px; padding-left: 10px;">
-                <li>LLM Integration & AI Technology Creation: Built an AI tool using Flask, LLMs, and Selenium to simulate 25+ customer personas and evaluate website content, UX, and key marketing elements such as message clarity, CTA effectiveness, and brand perception, saving over 12,000 hours of manual review across 1,000+ websites.</li>
-                <li>UX Optimization & Business Impact: Engineered automated testing and persona flows with Selenium, enabling a 25% increase in website usability scores and driving adoption of strategic recommendations by client teams.</li>
-                <li>Insight Validation: Benchmarked persona feedback across multiple LLMs, applying a 70% agreeableness threshold to reduce hallucinations and ensure high-confidence insights for optimizing conversion funnels, UX, and content performance.</li>
-            </ul>
-        </div>
+            <!-- Work Experience Section -->
+            <h3 style="font-size: 24px; margin-bottom: 25px; color: #333; text-align: center;">Work Experience</h3>
+            <div class="card">
+                <!-- Experience 1 -->
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h4>Deloitte Consulting US (Capstone Project)</h4>
+                        <span>Jan 2025 - Apr 2025</span>
+                    </div>
+                    <p class="experience-title">Simulated Consumer Testing with AI</p>
+                    <ul class="experience-list">
+                        <li>LLM Integration & AI Technology Creation: Built an AI tool using Flask, LLMs, and Selenium to simulate 25+ customer personas and evaluate website content, UX, and key marketing elements such as message clarity, CTA effectiveness, and brand perception, saving over 12,000 hours of manual review across 1,000+ websites.</li>
+                        <li>UX Optimization & Business Impact: Engineered automated testing and persona flows with Selenium, enabling a 25% increase in website usability scores and driving adoption of strategic recommendations by client teams.</li>
+                        <li>Insight Validation: Benchmarked persona feedback across multiple LLMs, applying a 70% agreeableness threshold to reduce hallucinations and ensure high-confidence insights for optimizing conversion funnels, UX, and content performance.</li>
+                    </ul>
+                </div>
 
-        <!-- Experience 2 -->
-        <div style="margin-bottom: 30px;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                <h4 style="font-size: 18px;">Publicis Global Delivery</h4>
-                <span>Jul 2023 - Jan 2024</span>
-            </div>
-            <p style="font-weight: bold; margin-bottom: 10px;">Associate Manager</p>
-            <ul style="list-style-position: inside; margin-left: 5px; padding-left: 10px;">
-                <li>Revenue Growth: Created A/B testing frameworks, analyzed marketing data using SQL and Python, and optimized ad delivery improving return on ad spend (ROAS) by ~30%, generating $7.2M in incremental revenue for clients.</li>
-                <li>Data Analytics and Ad Optimization: Decreased trafficking errors by 13% month-on-month, saving an estimated 40+ hours/month of manual rework, through deep analysis of delivery KPIs using SQL and Tableau.</li>
-                <li>Process Automation: Proposed and delivered automation initiatives that cut manual workload by 25%, strategically positioning the team to scale services and manage $2M in added revenue from a key Media & Entertainment account.</li>
-            </ul>
-        </div>
+                <!-- Experience 2 -->
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h4>Publicis Global Delivery</h4>
+                        <span>Jul 2023 - Jan 2024</span>
+                    </div>
+                    <p class="experience-title">Associate Manager</p>
+                    <ul class="experience-list">
+                        <li>Revenue Growth: Created A/B testing frameworks, analyzed marketing data using SQL and Python, and optimized ad delivery improving return on ad spend (ROAS) by ~30%, generating $7.2M in incremental revenue for clients.</li>
+                        <li>Data Analytics and Ad Optimization: Decreased trafficking errors by 13% month-on-month, saving an estimated 40+ hours/month of manual rework, through deep analysis of delivery KPIs using SQL and Tableau.</li>
+                        <li>Process Automation: Proposed and delivered automation initiatives that cut manual workload by 25%, strategically positioning the team to scale services and manage $2M in added revenue from a key Media & Entertainment account.</li>
+                    </ul>
+                </div>
 
-        <!-- Experience 3 -->
-        <div style="margin-bottom: 30px;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                <h4 style="font-size: 18px;">Publicis Global Delivery</h4>
-                <span>Feb 2022 - Jun 2023</span>
-            </div>
-            <p style="font-weight: bold; margin-bottom: 10px;">Ad Operations Analyst</p>
-            <ul style="list-style-position: inside; margin-left: 5px; padding-left: 10px;">
-                <li>Process Improvement: Led global ad operations process evaluation to identify pain points and drive compliance improvements across 15+ countries, enabling 3,500+ error-free campaign deliveries (an unprecedented milestone).</li>
-                <li>Performance Analysis: Analyzed CM360 trafficking logs, QA failure rates, and time-to-live metrics to identify workflow inefficiencies, improving efficiency by 48% and reducing turnaround time by 42%.</li>
-                <li>Ad Fraud & Viewability Analysis: Reduced invalid traffic exposure by ~35% using IAS (Integral Ad Science) insights, improving ad spend efficiency and media delivery quality across campaigns.</li>
-            </ul>
-        </div>
+                <!-- Experience 3 -->
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h4>Publicis Global Delivery</h4>
+                        <span>Feb 2022 - Jun 2023</span>
+                    </div>
+                    <p class="experience-title">Ad Operations Analyst</p>
+                    <ul class="experience-list">
+                        <li>Process Improvement: Led global ad operations process evaluation to identify pain points and drive compliance improvements across 15+ countries, enabling 3,500+ error-free campaign deliveries (an unprecedented milestone).</li>
+                        <li>Performance Analysis: Analyzed CM360 trafficking logs, QA failure rates, and time-to-live metrics to identify workflow inefficiencies, improving efficiency by 48% and reducing turnaround time by 42%.</li>
+                        <li>Ad Fraud & Viewability Analysis: Reduced invalid traffic exposure by ~35% using IAS (Integral Ad Science) insights, improving ad spend efficiency and media delivery quality across campaigns.</li>
+                    </ul>
+                </div>
 
-        <!-- Experience 4 -->
-        <div style="margin-bottom: 30px;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                <h4 style="font-size: 18px;">Publicis Global Delivery</h4>
-                <span>Jun 2021 - Jan 2022</span>
+                <!-- Experience 4 -->
+                <div class="experience-item" style="margin-bottom: 0;">
+                    <div class="experience-header">
+                        <h4>Publicis Global Delivery</h4>
+                        <span>Jun 2021 - Jan 2022</span>
+                    </div>
+                    <p class="experience-title">Analyst</p>
+                    <ul class="experience-list">
+                        <li>Customer Acquisition and Media Optimization: Designed and executed A/B tests to evaluate creative and media performance, increasing click-through rates (CTR) by 25% and reducing customer acquisition costs (CAC) by 18%.</li>
+                        <li>Project Management: Effectively managed coordination and optimized task assignment to maintain ~95% team utilization.</li>
+                        <li>Ad Trafficking: Streamlined ad trafficking processes, reducing errors for special request projects and saving ~120 hours/week.</li>
+                    </ul>
+                </div>
             </div>
-            <p style="font-weight: bold; margin-bottom: 10px;">Analyst</p>
-            <ul style="list-style-position: inside; margin-left: 5px; padding-left: 10px;">
-                <li>Customer Acquisition and Media Optimization: Designed and executed A/B tests to evaluate creative and media performance, increasing click-through rates (CTR) by 25% and reducing customer acquisition costs (CAC) by 18%.</li>
-                <li>Project Management: Effectively managed coordination and optimized task assignment to maintain ~95% team utilization.</li>
-                <li>Ad Trafficking: Streamlined ad trafficking processes, reducing errors for special request projects and saving ~120 hours/week.</li>
-            </ul>
         </div>
-    </div>
-</section>
-
+    </section>
 
     <!-- Projects Section -->
-    <section id="projects" style="background-color: #f8fafc;">
+    <section id="projects" class="alt-bg">
         <div class="container">
             <h2 class="section-title">Analytics Projects</h2>
             
             <div class="project-grid">
-                <!-- PROJECT 1 - Easy to modify -->
+                <!-- PROJECT 1 -->
                 <div class="project-card">
                     <div class="project-header">
                         <h3>Predictive Modelling for Customer Acquisition</h3>
@@ -608,7 +730,7 @@
                     </div>
                 </div>
                 
-                <!-- PROJECT 2 - Easy to modify -->
+                <!-- PROJECT 2 -->
                 <div class="project-card">
                     <div class="project-header">
                         <h3>Cell2Cell Proactive Retention Campaign</h3>
@@ -625,7 +747,7 @@
                     </div>
                 </div>
                 
-                <!-- PROJECT 3 - Easy to modify -->
+                <!-- PROJECT 3 -->
                 <div class="project-card">
                     <div class="project-header">
                         <h3>Competitive Analysis using Topic Models</h3>
@@ -643,7 +765,7 @@
                     </div>
                 </div>
                 
-                <!-- PROJECT 4 - Easy to modify -->
+                <!-- PROJECT 4 -->
                 <div class="project-card">
                     <div class="project-header">
                         <h3>Ford Ka Market Segmentation</h3>
@@ -670,9 +792,9 @@
             <h2 class="section-title">Skills & Expertise</h2>
             
             <div class="skills-grid">
-                <!-- SKILL CATEGORY 1 - Easy to modify -->
+                <!-- SKILL CATEGORY 1 -->
                 <div class="card">
-                    <h3 style="margin-bottom: 15px;">Programming & ML Frameworks</h3>
+                    <h3 style="margin-bottom: 18px; color: #2563eb; font-size: 20px;">Programming & ML Frameworks</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">Python</span>
                         <span class="skill-tag">R</span>
@@ -685,9 +807,9 @@
                     </div>
                 </div>
                 
-                <!-- SKILL CATEGORY 2 - Easy to modify -->
+                <!-- SKILL CATEGORY 2 -->
                 <div class="card">
-                    <h3 style="margin-bottom: 15px;">Databases & Data Handling</h3>
+                    <h3 style="margin-bottom: 18px; color: #2563eb; font-size: 20px;">Databases & Data Handling</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">SQL</span>
                         <span class="skill-tag">NoSQL (MongoDB)</span>
@@ -699,9 +821,9 @@
                     </div>
                 </div>
                 
-                <!-- SKILL CATEGORY 3 - Easy to modify -->
+                <!-- SKILL CATEGORY 3 -->
                 <div class="card">
-                    <h3 style="margin-bottom: 15px;">Tools & Automation</h3>
+                    <h3 style="margin-bottom: 18px; color: #2563eb; font-size: 20px;">Tools & Automation</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">Tableau</span>
                         <span class="skill-tag">Power BI</span>
@@ -720,9 +842,9 @@
                     </div>
                 </div>
                 
-                <!-- SKILL CATEGORY 4 - Easy to modify -->
+                <!-- SKILL CATEGORY 4 -->
                 <div class="card">
-                    <h3 style="margin-bottom: 15px;">Marketing Analytics & Strategy</h3>
+                    <h3 style="margin-bottom: 18px; color: #2563eb; font-size: 20px;">Marketing Analytics & Strategy</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">A/B Testing</span>
                         <span class="skill-tag">Marketing Mix Modeling</span>
@@ -739,78 +861,40 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" style="background-color: #f8fafc;">
+    <!-- Contact Section - Simplified without the Get in Touch form -->
+    <section id="contact" class="alt-bg">
         <div class="container">
             <h2 class="section-title">Contact Me</h2>
             
-            <div class="contact-grid" style="margin-bottom: 40px;">
-                <!-- CONTACT METHOD 1 - Easy to modify -->
+            <div class="contact-grid">
+                <!-- Email contact -->
                 <div class="card contact-item">
                     <div class="contact-icon">
                         <i>✉️</i>
                     </div>
-                    <h3 style="margin-bottom: 10px;">Email</h3>
-                    <p>aharlalk@tepper.cmu.edu</p>
+                    <h3 style="margin-bottom: 12px; font-size: 22px;">Email</h3>
+                    <p style="font-size: 16px;">aharlalk@tepper.cmu.edu</p>
                 </div>
                 
-                <!-- CONTACT METHOD 2 - Easy to modify -->
+                <!-- LinkedIn contact -->
                 <div class="card contact-item">
                     <div class="contact-icon">
                         <i>👔</i>
                     </div>
-                    <h3 style="margin-bottom: 10px;">LinkedIn</h3>
-                    <p style="margin-bottom: 10px;">Connect with me professionally</p>
+                    <h3 style="margin-bottom: 12px; font-size: 22px;">LinkedIn</h3>
+                    <p style="margin-bottom: 15px; font-size: 16px;">Connect with me professionally</p>
                     <a href="https://www.linkedin.com/in/asthaharlalka" class="project-link">LinkedIn Profile</a>
                 </div>
-                
-            </div>
-<!-- Contact Form - Fully Integrated with Formspree and Thank You Page -->
-<div class="card" style="padding: 30px;">
-    <h3 style="margin-bottom: 20px; font-size: 22px;">Get In Touch</h3>
-    <form action="https://formspree.io/f/xblgwvle" method="POST">
-        
-        <!-- Redirect after submission -->
-        <input type="hidden" name="_redirect" value="thank-you.html">
-        
-        <!-- Name and Email -->
-        <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 20px;">
-            <div class="form-group" style="flex: 1; min-width: 200px;">
-                <label for="name" class="form-label" style="display: block; margin-bottom: 5px;">Name</label>
-                <input type="text" id="name" name="name" required class="form-input" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
-            </div>
-            <div class="form-group" style="flex: 1; min-width: 200px;">
-                <label for="email" class="form-label" style="display: block; margin-bottom: 5px;">Email</label>
-                <input type="email" id="email" name="email" required class="form-input" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
             </div>
         </div>
-
-        <!-- Subject -->
-        <div class="form-group" style="margin-bottom: 20px;">
-            <label for="subject" class="form-label" style="display: block; margin-bottom: 5px;">Subject</label>
-            <input type="text" id="subject" name="subject" class="form-input" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
-        </div>
-
-        <!-- Message -->
-        <div class="form-group" style="margin-bottom: 20px;">
-            <label for="message" class="form-label" style="display: block; margin-bottom: 5px;">Message</label>
-            <textarea id="message" name="message" rows="5" required class="form-textarea" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;"></textarea>
-        </div>
-
-        <!-- Submit Button -->
-        <button type="submit" class="btn btn-primary" style="padding: 10px 20px; border: none; border-radius: 6px; background-color: #007bff; color: #fff; cursor: pointer;">
-            Send Message
-        </button>
-    </form>
-</div>
-
+    </section>
 
     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div>
-                    <h3 style="font-size: 20px; margin-bottom: 5px;">Astha Harlalka</h3>
+                <div class="footer-branding">
+                    <h3>Astha Harlalka</h3>
                     <p>Business Analytics Professional</p>
                 </div>
                 
