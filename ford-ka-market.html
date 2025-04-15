@@ -42,21 +42,26 @@
             align-items: center;
         }
         
+        /* Fixed logo styling for different lines */
         .logo {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            align-items: flex-start;
         }
         
         .logo h1 {
-            font-size: 26px;
+            font-size: 28px;
             color: #4169e1;
             letter-spacing: -0.5px;
+            display: block;
+            font-weight: 700;
         }
         
         .logo p {
-            font-size: 15px;
+            font-size: 16px;
             color: #666;
-            margin-top: 2px;
+            margin-top: 5px;
+            display: block;
         }
         
         /* Navigation menu */
@@ -76,6 +81,7 @@
             transition: all 0.3s;
             padding: 5px 2px;
             position: relative;
+            font-size: 16px;
         }
         
         nav ul li a:after {
@@ -100,90 +106,68 @@
         /* Project Hero Section */
         .project-hero {
             background-color: #f0f5ff;
+            background-image: linear-gradient(135deg, #f0f5ff 0%, #e6f0ff 100%);
             padding: 80px 0 60px;
+            border-bottom: 1px solid rgba(65, 105, 225, 0.1);
         }
         
         .project-title {
-            font-size: 36px;
-            margin-bottom: 15px;
+            font-size: 38px;
+            margin-bottom: 20px;
             color: #111;
+            line-height: 1.3;
         }
         
         .project-subtitle {
             font-size: 18px;
             color: #555;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             max-width: 800px;
-        }
-        
-        .project-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .meta-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background-color: #dbeafe;
-            color: #4169e1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-        
-        .meta-content span {
-            font-weight: 600;
-            color: #444;
+            line-height: 1.6;
         }
         
         .project-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
             margin-bottom: 40px;
         }
         
         .tag {
             background-color: #dbeafe;
             color: #1e40af;
-            padding: 6px 12px;
+            padding: 8px 16px;
             border-radius: 20px;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
         
         .tag:hover {
             background-color: #bfdbfe;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         
         /* Project content section styling */
         .section {
-            padding: 60px 0;
+            padding: 70px 0;
         }
         
         .section-title {
-            font-size: 28px;
+            font-size: 30px;
             color: #111;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             position: relative;
             padding-bottom: 15px;
+            font-weight: 700;
         }
         
         .section-title:after {
             content: "";
             position: absolute;
-            width: 60px;
+            width: 70px;
             height: 3px;
             background-color: #4169e1;
             bottom: 0;
@@ -192,88 +176,94 @@
         
         .project-card {
             background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
-            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            padding: 35px;
             margin-bottom: 30px;
             border: 1px solid rgba(0,0,0,0.03);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.08);
         }
         
         .project-description {
-            margin-bottom: 25px;
             color: #444;
             line-height: 1.8;
         }
         
         .project-description p {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .project-description h4 {
+            color: #2a4d9e;
+            font-size: 20px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
         }
         
         .project-description ul, 
         .project-description ol {
-            margin-left: 20px;
-            margin-bottom: 20px;
+            margin-left: 25px;
+            margin-bottom: 25px;
         }
         
         .project-description li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            font-size: 16px; /* Ensuring consistent font size for list items */
+        }
+        
+        .project-description strong {
+            color: #333;
+            font-weight: 600;
         }
         
         /* Image gallery styling */
         .image-gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 25px;
+            margin: 40px 0;
         }
         
         .gallery-item {
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.12);
         }
         
         .gallery-item img {
             width: 100%;
             height: auto;
             display: block;
-            transition: transform 0.3s;
+            transition: transform 0.5s;
         }
         
         .gallery-item:hover img {
             transform: scale(1.05);
         }
         
-        /* Button styling */
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            margin-right: 12px;
-            margin-bottom: 12px;
-            transition: all 0.3s;
-        }
-        
-        .btn-primary {
-            background-color: #4169e1;
-            color: white;
-            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
-        }
-        
-        .btn-primary:hover {
-            background-color: #3658c5;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(37, 99, 235, 0.3);
+        /* Alternating section backgrounds */
+        .section:nth-child(even) {
+            background-color: #f8fafc;
         }
         
         /* Project navigation */
         .project-navigation {
             display: flex;
             justify-content: space-between;
-            margin-top: 50px;
+            margin-top: 60px;
             padding-top: 30px;
             border-top: 1px solid #e5e7eb;
         }
@@ -281,6 +271,13 @@
         .nav-item {
             max-width: 45%;
             text-decoration: none;
+            padding: 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-item:hover {
+            background-color: #f0f5ff;
         }
         
         .nav-label {
@@ -297,7 +294,7 @@
             transition: color 0.3s;
         }
         
-        .nav-title:hover {
+        .nav-item:hover .nav-title {
             color: #3658c5;
         }
         
@@ -305,8 +302,8 @@
         footer {
             background-color: #1e293b;
             color: white;
-            padding: 40px 0 30px;
-            margin-top: 60px;
+            padding: 50px 0 30px;
+            margin-top: 80px;
         }
         
         .footer-content {
@@ -324,13 +321,14 @@
         }
         
         .footer-branding h3 {
-            font-size: 22px;
-            margin-bottom: 5px;
+            font-size: 24px;
+            margin-bottom: 8px;
             color: #fff;
         }
         
         .footer-branding p {
             color: #cbd5e1;
+            font-size: 16px;
         }
         
         .social-links {
@@ -349,17 +347,21 @@
             color: #94a3b8;
             font-size: 24px;
             transition: all 0.3s;
+            padding: 10px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.05);
         }
         
         .social-link:hover {
             color: white;
             transform: translateY(-3px);
+            background-color: rgba(255,255,255,0.1);
         }
         
         .copyright {
             text-align: center;
             border-top: 1px solid #334155;
-            margin-top: 30px;
+            margin-top: 40px;
             padding-top: 25px;
             color: #94a3b8;
             font-size: 14px;
@@ -372,11 +374,11 @@
             }
             
             .project-title {
-                font-size: 28px;
+                font-size: 30px;
             }
             
             .section-title {
-                font-size: 24px;
+                font-size: 26px;
             }
             
             .header-content {
@@ -384,14 +386,143 @@
                 text-align: center;
             }
             
+            .logo {
+                align-items: center;
+                margin-bottom: 15px;
+            }
+            
             nav ul {
-                margin-top: 20px;
+                margin-top: 15px;
                 justify-content: center;
             }
             
             nav ul li {
                 margin: 0 10px;
             }
+            
+            .project-card {
+                padding: 25px;
+            }
+            
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Cluster card styling */
+        .cluster-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        @media (min-width: 768px) {
+            .cluster-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .cluster-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 25px;
+            border: 1px solid rgba(0,0,0,0.03);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .cluster-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        
+        .cluster-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2a4d9e;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dbeafe;
+        }
+        
+        .cluster-description {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        
+        .highlight-tag {
+            display: inline-block;
+            background-color: #f0f5ff;
+            color: #4169e1;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .ka-match {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        
+        .high-match {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        
+        .medium-match {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .low-match {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        
+        /* Recommendation box */
+        .recommendation-box {
+            background-color: #f0f7ff;
+            border-left: 4px solid #4169e1;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .recommendation-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2a4d9e;
+            margin-bottom: 15px;
+        }
+        
+        .message-box {
+            background-color: #f8fafc;
+            border: 1px solid #dbeafe;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .message-quote {
+            font-size: 22px;
+            font-weight: 700;
+            color: #2a4d9e;
+            margin-bottom: 15px;
+        }
+        
+        .message-tagline {
+            font-size: 16px;
+            color: #555;
+            font-style: italic;
         }
     </style>
 </head>
@@ -422,27 +553,15 @@
     <section class="project-hero">
         <div class="container">
             <h1 class="project-title">Ford Ka Market Segmentation</h1>
-            <p class="project-subtitle">Applied k-means clustering in R on demographic and psychographic data to segment small-car buyers
-and identify high-MQL (Marketing Qualified Lead) clusters for Ford Ka, boosting alignment with trend- and value-driven consumers.</p>
-            
-            <div class="project-meta">
-                <!-- Date/Duration -->
-                <div class="meta-item">
-                    <div class="meta-icon">📅</div>
-                    <div class="meta-content">
-                        <span>Date:</span> 2025
-                    </div>
-                </div>
-                
-  
-              
+            <p class="project-subtitle">Applied k-means clustering in R on demographic and psychographic data to segment small-car buyers and identify high-MQL clusters for Ford Ka, boosting alignment with trend- and value-driven consumers.</p>
             
             <div class="project-tags">
                 <span class="tag">R</span>
-                <span class="tag">Predictive Modeling</span>
-                <span class="tag">Logistic Regression</span>
-                <span class="tag">Decision Trees</span>
-                <span class="tag">Banking</span>
+                <span class="tag">K-means</span>
+                <span class="tag">Segmentation</span>
+                <span class="tag">Marketing Strategy</span>
+                <span class="tag">Automotive</span>
+                <span class="tag">Consumer Behavior</span>
             </div>
         </div>
     </section>
@@ -454,44 +573,62 @@ and identify high-MQL (Marketing Qualified Lead) clusters for Ford Ka, boosting 
             
             <div class="project-card">
                 <div class="project-description">
-                    <p>This project focused on optimizing a bank's telemarketing campaign to increase efficiency and return on investment. The bank was facing challenges with high customer acquisition costs and low conversion rates in their direct marketing efforts. The primary objective was to develop a data-driven approach to identify high-potential customers and prioritize outreach efforts.</p>
+                    <p>The launch of the Ford Ka marked a bold move by Ford into a rapidly evolving small-car market in France—one where consumer preferences were splintering across lifestyle, design, and emotional appeal. My goal was to help Ford identify the right target segments for the Ka using data-driven segmentation, and recommend how to best position the Ka to win market share from dominant competitors like Renault Twingo.</p>
                     
-                    <p>Working with historical campaign data that included customer demographics, transaction history, and previous campaign responses, I developed predictive models to determine the likelihood of conversion for each potential customer. The project required rigorous data preprocessing, feature engineering, and model selection to achieve optimal results.</p>
+                    <p>Using k-means clustering on both demographic and psychographic data, I developed a robust segmentation framework that uncovered distinct buyer personas, aligned with Ford's brand strengths, and informed targeted marketing recommendations.</p>
                     
-                    <p>The implemented solution enabled the bank to significantly reduce marketing costs while simultaneously increasing their conversion rate and net profit, demonstrating the tangible business value of advanced analytics in marketing optimization.</p>
+                    <p>The business challenge required:</p>
+                    
+                    <ul>
+                        <li>Moving beyond traditional automotive segmentation based primarily on product class and demographics</li>
+                        <li>Understanding the emotional and psychological drivers behind small car purchases</li>
+                        <li>Identifying segments where Ford Ka's unique design and personality would resonate most</li>
+                        <li>Developing actionable marketing strategies to reach and convert these segments</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Methodology/Approach Section -->
-    <section class="section" style="background-color: #f8fafc;">
+    <section class="section">
         <div class="container">
             <h2 class="section-title">Methodology & Approach</h2>
             
             <div class="project-card">
                 <div class="project-description">
-                    <p>The project followed a comprehensive analytical approach:</p>
+                    <h4>1. Traditional vs. Modern Segmentation</h4>
+                    <p>Historically, Ford and other automakers segmented the market by car size and product class—e.g., Type-A (&lt;360 cm), Basic-B, Trend-B, etc.—and aligned these with basic demographics like age and income. But with the Twingo's runaway success, it became clear that small car buyers wanted more than value and compactness. Consumers were now making purchase decisions based on design, personality, and brand image.</p>
                     
+                    <p>I reframed the problem: instead of matching cars to fixed buyer categories, I used data mining to uncover what actually drives purchase decisions today.</p>
+                    
+                    <h4>2. Data Structure & Clustering Setup</h4>
+                    <p>I used the provided FordKaData.xlsx dataset, which included:</p>
                     <ul>
-                        <li><strong>Data Collection & Preparation:</strong> Gathered historical campaign data from multiple sources, including customer profiles, transaction records, and previous campaign responses. Performed extensive data cleaning, handling missing values, and normalizing features.</li>
-                        
-                        <li><strong>Exploratory Data Analysis:</strong> Conducted in-depth statistical analysis to identify key patterns and correlations. Used visualization techniques to understand customer segments and behavior traits associated with successful conversions.</li>
-                        
-                        <li><strong>Feature Engineering:</strong> Created relevant derived features from raw data, including recency-frequency-monetary (RFM) metrics, customer lifetime value estimates, and interaction terms between demographic variables.</li>
-                        
-                        <li><strong>Model Development:</strong> Built multiple predictive models using R, including:
-                            <ul>
-                                <li>Logistic regression models to predict conversion probability</li>
-                                <li>Decision tree models to identify key decision points for customer segmentation</li>
-                                <li>Ensemble methods to improve overall prediction accuracy</li>
-                            </ul>
-                        </li>
-                        
-                        <li><strong>Model Evaluation:</strong> Implemented cross-validation techniques to assess model performance and prevent overfitting. Used ROC curves, precision-recall analysis, and confusion matrices to optimize the models.</li>
-                        
-                        <li><strong>Campaign Optimization Strategy:</strong> Developed a scoring system to rank customers by conversion probability, enabling targeted outreach to high-potential prospects. Created a decision framework for campaign execution that balanced reach and efficiency.</li>
+                        <li>Demographic data: Age, gender, marital status, income, first-time buyer flag, number of children</li>
+                        <li>Psychographic data: Responses to 62 attitudinal statements (e.g., "I want a trendy car")</li>
                     </ul>
+                    
+                    <p>I ran:</p>
+                    <ul>
+                        <li>K-means clustering on demographic data (k=7 optimal)</li>
+                        <li>K-means clustering on psychographic data (k=6 optimal)</li>
+                    </ul>
+                    
+                    <p>I evaluated solutions using scree plots, R-squared measures, and centroid interpretation. I also used cross-tabulations with PreferenceGroups (Ka Choosers, Non-Choosers, and Neutrals) to evaluate each segment's alignment with Ka's perception.</p>
+                </div>
+                
+                <!-- Image gallery - placeholder for actual project images -->
+                <div class="image-gallery">
+                    <div class="gallery-item">
+                        <img src="https://via.placeholder.com/600x400.png?text=K-means+Clustering+Analysis" alt="K-means Clustering Analysis">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://via.placeholder.com/600x400.png?text=Ford+Ka+Buyer+Segments" alt="Ford Ka Buyer Segments">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://via.placeholder.com/600x400.png?text=Preference+Group+Analysis" alt="Preference Group Analysis">
+                    </div>
                 </div>
             </div>
         </div>
@@ -500,90 +637,166 @@ and identify high-MQL (Marketing Qualified Lead) clusters for Ford Ka, boosting 
     <!-- Key Findings/Results Section -->
     <section class="section">
         <div class="container">
-            <h2 class="section-title">Key Findings & Results</h2>
+            <h2 class="section-title">Key Findings & Customer Segments</h2>
             
             <div class="project-card">
                 <div class="project-description">
-                    <p>The implementation of the predictive models delivered exceptional results for the bank's customer acquisition efforts:</p>
+                    <h4>Exploratory Insight: "Trendiness" Drives Preference</h4>
+                    <p>Q1 ("I want a car that is trendy") emerged as a key differentiator. Ka Choosers scored significantly higher than others. This insight helped validate the Ka's personality as a bold, youthful, trend-forward vehicle.</p>
                     
-                    <ul>
-                        <li><strong>Cost Reduction:</strong> Achieved a 90% reduction in customer acquisition costs by focusing outreach efforts on high-probability prospects, eliminating wasted contacts to low-potential customers.</li>
+                    <p>I used ANOVA tests and descriptive statistics to confirm the relationship. Visuals like boxplots and balloon plots made these insights easier to communicate to stakeholders.</p>
+                    
+                    <h4>Cluster Analysis Results</h4>
+                    
+                    <h4>Demographic Clustering (k = 7)</h4>
+                    <div class="cluster-grid">
+                        <div class="cluster-card">
+                            <h3 class="cluster-title">Cluster 1: Established Married Professionals</h3>
+                            <p class="cluster-description">Ages 40–55, high income, prefer value and reliability in their vehicles. They prioritize comfort and practicality over style.</p>
+                            <div>
+                                <span class="highlight-tag">High Income</span>
+                                <span class="highlight-tag">Married</span>
+                                <span class="highlight-tag">Middle-aged</span>
+                                <span class="highlight-tag">Value-focused</span>
+                            </div>
+                            <div>
+                                <span class="ka-match medium-match">Medium Ka Match</span>
+                            </div>
+                        </div>
                         
-                        <li><strong>Profit Increase:</strong> Generated a 2.5x increase in net profit from the telemarketing campaign by improving both efficiency and conversion rates.</li>
-                        
-                        <li><strong>Conversion Rate:</strong> Improved overall campaign conversion rate from 11% to 37% by targeting the right customer segments with appropriate offers.</li>
-                        
-                        <li><strong>Customer Insights:</strong> Identified key determinants of customer responsiveness:
-                            <ul>
-                                <li>Previous positive interactions with the bank strongly predicted future conversions</li>
-                                <li>Specific demographic combinations showed significantly higher response rates</li>
-                                <li>Certain product holdings correlated with openness to new offers</li>
-                            </ul>
-                        </li>
-                        
-                        <li><strong>Operational Efficiency:</strong> Reduced campaign duration by 40% while achieving better results, allowing for more agile marketing cycles.</li>
-                    </ul>
-                </div>
-                
-                <!-- Example image gallery - placeholder for actual project images -->
-                <div class="image-gallery">
-                    <div class="gallery-item">
-                        <img src="https://via.placeholder.com/600x400.png?text=ROC+Curve+Analysis" alt="ROC Curve Analysis">
+                        <div class="cluster-card">
+                            <h3 class="cluster-title">Cluster 5: Young Urban Couples</h3>
+                            <p class="cluster-description">Ages 25–40, moderate income, city dwellers with small families or none. Looking for stylish yet practical transportation.</p>
+                            <div>
+                                <span class="highlight-tag">Urban</span>
+                                <span class="highlight-tag">Younger</span>
+                                <span class="highlight-tag">Style-conscious</span>
+                                <span class="highlight-tag">Small family</span>
+                            </div>
+                            <div>
+                                <span class="ka-match high-match">High Ka Match</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="gallery-item">
-                        <img src="https://via.placeholder.com/600x400.png?text=Decision+Tree+Visualization" alt="Decision Tree Visualization">
+                    
+                    <p>These two clusters had the strongest Ka preference overlap, but lacked nuance on emotional drivers.</p>
+                    
+                    <h4>Psychographic Clustering (k = 6)</h4>
+                    <div class="cluster-grid">
+                        <div class="cluster-card">
+                            <h3 class="cluster-title">Cluster 2: Prestige & Image Seekers</h3>
+                            <p class="cluster-description">High interest in style, brand, and attention. They want a car that makes a statement and reflects their personality.</p>
+                            <div>
+                                <span class="highlight-tag">Style-focused</span>
+                                <span class="highlight-tag">Brand-conscious</span>
+                                <span class="highlight-tag">Image-driven</span>
+                                <span class="highlight-tag">Trendy</span>
+                            </div>
+                            <div>
+                                <span class="ka-match high-match">High Ka Match</span>
+                            </div>
+                        </div>
+                        
+                        <div class="cluster-card">
+                            <h3 class="cluster-title">Cluster 3: Balanced Modern Buyers</h3>
+                            <p class="cluster-description">Moderate interest in aesthetics + high practicality. They seek both style and substance in their vehicle choice.</p>
+                            <div>
+                                <span class="highlight-tag">Balanced</span>
+                                <span class="highlight-tag">Practical</span>
+                                <span class="highlight-tag">Modern</span>
+                                <span class="highlight-tag">Value-conscious</span>
+                            </div>
+                            <div>
+                                <span class="ka-match high-match">High Ka Match</span>
+                            </div>
+                        </div>
+                        
+                        <div class="cluster-card">
+                            <h3 class="cluster-title">Cluster 5: Value-Driven Traditionalists</h3>
+                            <p class="cluster-description">Low interest in design, high preference for reliability. These buyers prioritize function over form.</p>
+                            <div>
+                                <span class="highlight-tag">Reliability-focused</span>
+                                <span class="highlight-tag">Traditional</span>
+                                <span class="highlight-tag">Practical</span>
+                                <span class="highlight-tag">Budget-conscious</span>
+                            </div>
+                            <div>
+                                <span class="ka-match low-match">Low Ka Match</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="gallery-item">
-                        <img src="https://via.placeholder.com/600x400.png?text=Campaign+Results+Dashboard" alt="Campaign Results Dashboard">
-                    </div>
+                    
+                    <p>Clusters 2 & 3 stood out as the most promising segments for Ford Ka. Of the two, Cluster 3 was my top recommendation based on size, profitability, and alignment with Ford's values.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Challenges & Solutions Section -->
-    <section class="section" style="background-color: #f8fafc;">
-        <div class="container">
-            <h2 class="section-title">Challenges & Solutions</h2>
-            
-            <div class="project-card">
-                <div class="project-description">
-                    <ul>
-                        <li><strong>Data Quality Issues:</strong> The historical data contained significant inconsistencies and missing values. I implemented robust data cleaning pipelines and applied multiple imputation techniques to handle missing data without introducing bias into the models.</li>
-                        
-                        <li><strong>Class Imbalance:</strong> The dataset had a natural imbalance with few positive responses compared to non-responses. I addressed this by implementing SMOTE (Synthetic Minority Over-sampling Technique) to create a balanced training dataset, which significantly improved model performance.</li>
-                        
-                        <li><strong>Feature Selection:</strong> With over 200 potential variables, determining the most predictive features was challenging. I developed an iterative feature selection approach using both statistical methods and domain expertise to identify the optimal feature set.</li>
-                        
-                        <li><strong>Model Interpretability:</strong> While complex models offered slightly better accuracy, stakeholders needed transparent rationales for targeting decisions. I balanced performance with interpretability by using a combination of logistic regression for clear variable importance and decision trees for intuitive decision paths.</li>
-                        
-                        <li><strong>Implementation Resistance:</strong> Some marketing team members were hesitant to adopt the new data-driven approach. I overcame this by creating an interactive dashboard that demonstrated the financial impact of the model and running a pilot campaign that showcased the improved results.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Conclusions & Learnings Section -->
+    <!-- Target Recommendations Section -->
     <section class="section">
         <div class="container">
-            <h2 class="section-title">Conclusions & Learnings</h2>
+            <h2 class="section-title">Target Segment & Strategy Recommendations</h2>
             
             <div class="project-card">
                 <div class="project-description">
-                    <p>This project demonstrated the significant impact that predictive analytics can have on marketing efficiency and ROI. Key takeaways include:</p>
+                    <div class="recommendation-box">
+                        <h4 class="recommendation-title">Primary Focus: Cluster 3 (Balanced Modern Buyers)</h4>
+                        <p>This segment wants a city-friendly, fun, fuel-efficient car that looks modern but isn't flashy. The Ka's compact size, stylish edge, and affordability align perfectly with these balanced consumers who want both style and practical value.</p>
+                    </div>
                     
+                    <div class="recommendation-box">
+                        <h4 class="recommendation-title">Secondary Focus: Cluster 2 (Prestige Seekers)</h4>
+                        <p>Though the Ka isn't a luxury car, it has design charisma that appeals to those seeking personal expression. With the right messaging, Ford can still attract aspirational buyers from this cluster who want to stand out from the crowd.</p>
+                    </div>
+                    
+                    <h4>Messaging Strategy</h4>
+                    <div class="message-box">
+                        <p class="message-quote">"The Ford Ka — Where Karacter Meets Konvenience."</p>
+                        <p class="message-tagline">Bold outside. Smart inside.</p>
+                    </div>
+                    
+                    <p>This message appeals to urban buyers who care about:</p>
                     <ul>
-                        <li><strong>Data-Driven Targeting:</strong> Predictive modeling proved far more effective than demographic-based targeting alone, highlighting the importance of behavioral and transactional data in customer acquisition.</li>
-                        
-                        <li><strong>Model Simplicity vs. Complexity:</strong> While more complex models sometimes showed marginal improvements in accuracy, simpler models often provided sufficient performance with greater interpretability and easier implementation.</li>
-                        
-                        <li><strong>Business Context Integration:</strong> The most successful analytics projects integrate domain expertise with technical modeling. Understanding the business context allowed for better feature engineering and more relevant model outputs.</li>
-                        
-                        <li><strong>Continuous Improvement:</strong> The implementation included a feedback loop to capture new campaign results and continuously refine the models, ensuring ongoing optimization rather than a one-time improvement.</li>
+                        <li>Practical design for city driving</li>
+                        <li>Aesthetic appeal that stands out</li>
+                        <li>Fuel efficiency and maneuverability</li>
                     </ul>
                     
-                    <p>Moving forward, the bank has established a framework for applying similar predictive approaches to other marketing initiatives, creating a more data-driven culture across their customer acquisition teams.</p>
+                    <p>Other message pillars:</p>
+                    <ul>
+                        <li>"Compact size. Big statement."</li>
+                        <li>"For drivers who want more than a car—they want a vibe."</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusions Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Strategic Insights & Learnings</h2>
+            
+            <div class="project-card">
+                <div class="project-description">
+                    <ul>
+                        <li>Psychographics beat demographics for segmentation—two buyers may look the same on paper but seek entirely different things. This project confirmed that attitudinal data provides much richer insights for market segmentation.</li>
+                        
+                        <li>Data-driven marketing strategy doesn't just segment—it tells you how to win. Ka's uniqueness lies in its emotional appeal, not specs. The analysis clearly showed that the car's character was its main selling point for target segments.</li>
+                        
+                        <li>The car's polarizing design is a feature, not a bug—it helps capture attention in a crowded market. The segmentation analysis revealed that Ka's distinctive styling was precisely what attracted key buyer groups.</li>
+                    </ul>
+                    
+                    <h4>Tools & Techniques Used</h4>
+                    <ul>
+                        <li>R (ggplot2, kmeans, openxlsx, CrossTable, balloonplot)</li>
+                        <li>Cluster centroid analysis</li>
+                        <li>Scree plot (elbow method) for k-value tuning</li>
+                        <li>Cross-tabulations with preference labels</li>
+                        <li>Psychographic cluster profiling</li>
+                    </ul>
+                    
+                    <p>This approach can be extended to other product categories and markets where consumer preferences are increasingly driven by emotional and lifestyle factors rather than traditional demographic categories.</p>
                 </div>
             </div>
         </div>
@@ -592,14 +805,14 @@ and identify high-MQL (Marketing Qualified Lead) clusters for Ford Ka, boosting 
     <!-- Project Navigation -->
     <div class="container">
         <div class="project-navigation">
-            <a href="ford-ka-segmentation.html" class="nav-item">
+            <a href="cell2cell-retention.html" class="nav-item">
                 <span class="nav-label">← Previous Project</span>
-                <h3 class="nav-title">Ford Ka Market Segmentation</h3>
+                <h3 class="nav-title">Cell2Cell Proactive Retention Campaign</h3>
             </a>
             
-            <a href="cell2cell-retention.html" class="nav-item" style="text-align: right;">
+            <a href="competitive-analysis.html" class="nav-item" style="text-align: right;">
                 <span class="nav-label">Next Project →</span>
-                <h3 class="nav-title">Cell2Cell Proactive Retention Campaign</h3>
+                <h3 class="nav-title">Competitive Analysis using Topic Models</h3>
             </a>
         </div>
     </div>
@@ -609,26 +822,4 @@ and identify high-MQL (Marketing Qualified Lead) clusters for Ford Ka, boosting 
         <div class="container">
             <div class="footer-content">
                 <div class="footer-branding">
-                    <h3>Astha Harlalka</h3>
-                    <p>Business Analytics Professional</p>
-                </div>
-                
-                <div class="social-links">
-                    <a href="mailto:aharlalk@tepper.cmu.edu" class="social-link">✉️</a>
-                    <a href="https://www.linkedin.com/in/asthaharlalka" class="social-link">👔</a>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; <span id="current-year">2025</span> Astha Harlalka. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- JavaScript -->
-    <script>
-        // Update current year
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
-</body>
-</html>
+                    <h
