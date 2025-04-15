@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astha Harlalka - Portfolio</title>
     
-    <!-- Enhanced CSS with improved aesthetics -->
+    <!-- Enhanced CSS with improved aesthetics and mobile navigation -->
     <style>
         /* Basic reset and fonts */
         * {
@@ -49,6 +49,7 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+            z-index: 101; /* Ensure logo stays above mobile nav */
         }
         
         .logo h1 {
@@ -65,7 +66,22 @@
             display: block;
         }
         
-        /* Navigation menu - improved aesthetics */
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #333;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 101; /* Ensure button stays above mobile nav */
+        }
+        
+        /* Navigation menu - improved aesthetics with mobile support */
+        nav {
+            transition: all 0.3s ease;
+        }
+        
         nav ul {
             display: flex;
             list-style: none;
@@ -101,6 +117,63 @@
         
         nav ul li a:hover:after {
             width: 100%;
+        }
+        
+        /* Mobile navigation styles */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 75%;
+                max-width: 300px;
+                height: 100vh;
+                background-color: white;
+                box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+                padding-top: 80px;
+                transition: right 0.3s ease;
+                z-index: 100;
+            }
+            
+            nav.active {
+                right: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 0 0 20px 0;
+                width: 100%;
+                text-align: center;
+            }
+            
+            nav ul li a {
+                display: block;
+                padding: 10px 15px;
+                font-size: 18px;
+            }
+            
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 99;
+            }
+            
+            .overlay.active {
+                display: block;
+            }
         }
         
         /* Resume button styling */
@@ -151,7 +224,7 @@
             transform: translateX(-50%);
         }
         
-        /* Hero section - improved layout */
+        /* Hero section - improved layout with mobile responsiveness */
         .hero {
             background-color: #f0f5ff;
             padding: 80px 0;
@@ -178,6 +251,12 @@
             margin-bottom: 18px;
             line-height: 1.3;
             color: #111;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-text h2 {
+                font-size: 28px;
+            }
         }
         
         .hero-text p {
@@ -452,17 +531,29 @@
             justify-content: space-between;
             margin-bottom: 10px;
             align-items: flex-start;
+            flex-wrap: wrap;
         }
         
         .experience-header h4 {
             font-size: 20px;
             color: #111;
+            margin-right: 10px;
         }
         
         .experience-header span {
             color: #666;
             font-weight: 600;
             white-space: nowrap;
+        }
+        
+        @media (max-width: 576px) {
+            .experience-header {
+                flex-direction: column;
+            }
+            
+            .experience-header span {
+                margin-top: 5px;
+            }
         }
         
         .experience-title {
@@ -549,6 +640,34 @@
             color: #94a3b8;
             font-size: 14px;
         }
+        
+        /* Responsive fixes for smaller screens */
+        @media (max-width: 576px) {
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .highlight-item {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .highlight-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+                margin-right: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -560,6 +679,12 @@
                     <h1>Astha Harlalka</h1>
                     <p>Marketing & Business Analytics Professional</p>
                 </div>
+                
+                <!-- Mobile Menu Button (Hamburger) -->
+                <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
+                
+                <!-- Overlay for mobile menu background -->
+                <div class="overlay"></div>
                 
                 <nav>
                     <ul>
@@ -948,10 +1073,57 @@
         </div>
     </footer>
 
-    <!-- Simple JavaScript to update year automatically -->
+    <!-- JavaScript for mobile menu toggle and smooth scrolling -->
     <script>
         // Update the current year in the footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        const overlay = document.querySelector('.overlay');
+        const navLinks = document.querySelectorAll('nav ul li a');
+        
+        // Toggle mobile menu when hamburger is clicked
+        mobileMenuBtn.addEventListener('click', function() {
+            nav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        // Close mobile menu when overlay is clicked
+        overlay.addEventListener('click', function() {
+            nav.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        // Close mobile menu when a link is clicked
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                nav.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70, // Adjust for header height
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>
