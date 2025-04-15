@@ -103,6 +103,29 @@
             width: 100%;
         }
         
+        /* Resume button styling */
+        .resume-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #2563eb;
+            background-color: rgba(37, 99, 235, 0.1);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .resume-btn:hover {
+            background-color: #2563eb;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .resume-icon {
+            font-size: 18px;
+        }
+        
         /* Section styling - consistent across all sections */
         section {
             padding: 70px 0;
@@ -526,34 +549,6 @@
             color: #94a3b8;
             font-size: 14px;
         }
-        
-        /* Resume button styling */
-        .resume-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: #2563eb;
-            background-color: rgba(37, 99, 235, 0.1);
-            padding: 8px 15px;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        
-        .resume-btn:hover {
-            background-color: #2563eb;
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        .resume-icon {
-            font-size: 18px;
-        }
-        
-        .resume-button-container {
-            text-align: center;
-            margin-top: 30px;
-        }
     </style>
 </head>
 <body>
@@ -590,7 +585,6 @@
                     <div>
                         <a href="#projects" class="btn btn-primary">View Projects</a>
                         <a href="#contact" class="btn btn-secondary">Contact Me</a>
-                        <a href="resume.pdf" download class="btn btn-secondary">Download Resume</a>
                     </div>
                 </div>
                 
@@ -660,10 +654,6 @@
                 <p>
                    I'm passionate about using AI and advanced analytics to solve real-world business challenges. My approach combines analytical rigor, strategic thinking, and strong communication to deliver data-driven solutions that align with business goals and drive sustainable growth.
                 </p>
-                
-                <div class="resume-button-container">
-                    <a href="resume.pdf" download class="btn btn-primary">Download Complete Resume</a>
-                </div>
             </div>
             
             <h3 style="font-size: 24px; margin-bottom: 25px; color: #333; text-align: center;">Education</h3>
@@ -838,8 +828,14 @@
                 <div class="card">
                     <h3 style="margin-bottom: 18px; color: #2563eb; font-size: 20px;">Programming & ML Frameworks</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">Python</span
-                                                          <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">R</span>
+                        <span class="skill-tag">Scikit-learn</span>
+                        <span class="skill-tag">PyTorch</span>
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">XGBoost</span>
+                        <span class="skill-tag">LLMs</span>
+                        <span class="skill-tag">Python</span>
                         <span class="skill-tag">R</span>
                         <span class="skill-tag">Scikit-learn</span>
                         <span class="skill-tag">PyTorch</span>
