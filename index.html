@@ -49,7 +49,7 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            z-index: 101; /* Ensure logo stays above mobile nav */
+            z-index: 101;
         }
         
         .logo h1 {
@@ -74,7 +74,7 @@
             color: #333;
             font-size: 24px;
             cursor: pointer;
-            z-index: 101; /* Ensure button stays above mobile nav */
+            z-index: 101;
         }
         
         /* Navigation menu - improved aesthetics with mobile support */
@@ -242,7 +242,7 @@
             }
             
             .hero-text, .hero-card {
-                width: 50%;
+                flex: 1;
             }
         }
         
@@ -355,7 +355,7 @@
             line-height: 1.6;
         }
         
-        /* Project card styling - improved aesthetics */
+        /* Project card styling - FIXED AND IMPROVED */
         .project-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -363,12 +363,6 @@
         }
         
         @media (min-width: 768px) {
-            .project-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (min-width: 1024px) {
             .project-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -390,10 +384,45 @@
             box-shadow: 0 15px 20px rgba(0,0,0,0.1);
         }
         
+        /* Featured project special styling */
+        .featured-project {
+            border: 2px solid #2563eb;
+            background: linear-gradient(135deg, #f0f5ff 0%, #ffffff 100%);
+        }
+        
+        @media (min-width: 768px) {
+            .featured-project {
+                grid-column: 1 / -1;
+                max-width: none;
+            }
+            
+            .featured-project .project-body {
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                gap: 30px;
+                align-items: start;
+            }
+            
+            .featured-project .project-main-content {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .featured-project .project-actions {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
         .project-header {
             background-color: #2563eb;
             color: white;
             padding: 20px 25px;
+        }
+        
+        .featured-project .project-header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
         }
         
         .project-header h3 {
@@ -436,6 +465,7 @@
             background-color: #bfdbfe;
         }
         
+        /* Project link styling - improved */
         .project-link {
             color: #2563eb;
             text-decoration: none;
@@ -443,12 +473,78 @@
             font-size: 15px;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             transition: transform 0.2s;
             margin-top: auto;
+            padding: 10px 15px;
+            border-radius: 6px;
+            text-align: center;
         }
         
         .project-link:hover {
             transform: translateX(3px);
+        }
+        
+        /* Featured project buttons */
+        .project-btn-primary {
+            background: #2563eb;
+            color: white;
+            border: none;
+        }
+        
+        .project-btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+        
+        .project-btn-secondary {
+            border: 2px solid #2563eb;
+            color: #2563eb;
+            background: transparent;
+        }
+        
+        .project-btn-secondary:hover {
+            background: #2563eb;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Featured project info box */
+        .project-info-box {
+            background: rgba(37, 99, 235, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid #2563eb;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .project-info-box p {
+            font-size: 14px;
+            margin: 0;
+            color: #1e40af;
+            font-weight: 600;
+        }
+        
+        /* Mobile project layout fixes */
+        @media (max-width: 767px) {
+            .featured-project .project-body {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .featured-project .project-actions {
+                margin-top: 20px;
+            }
+            
+            .project-actions {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .project-link {
+                width: 100%;
+            }
         }
         
         /* Skills section - improved aesthetics */
@@ -870,33 +966,38 @@
             <h2 class="section-title">Analytics Projects</h2>
             
             <div class="project-grid">
+                <!-- FEATURED PROJECT - Boston Beats -->
+                <div class="project-card featured-project">
+                    <div class="project-header">
+                        <h3>🎵 Boston Beats 2025 - Campaign Analytics Dashboard</h3>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-main-content">
+                            <p class="project-description">
+                                <strong>Advanced SQL-powered marketing analytics dashboard</strong> built using real Kaggle dataset with 1,200+ campaign records. Features sophisticated multi-touch attribution modeling, statistical budget optimization engine, and interactive campaign performance analysis across 4 digital platforms (Google, Meta, Reddit, TikTok).
+                            </p>
+                            
+                            <div class="project-tags">
+                                <span class="tag" style="background: #dbeafe; color: #1e40af;">Advanced SQL</span>
+                                <span class="tag" style="background: #dcfce7; color: #166534;">Real Kaggle Dataset</span>
+                                <span class="tag" style="background: #fef3c7; color: #92400e;">Multi-Touch Attribution</span>
+                                <span class="tag" style="background: #fce7f3; color: #be185d;">Interactive Dashboard</span>
+                                <span class="tag" style="background: #e0e7ff; color: #3730a3;">Budget Optimization</span>
+                                <span class="tag" style="background: #f3e8ff; color: #7c3aed;">Statistical Analysis</span>
+                            </div>
+                            
+                            <div class="project-info-box">
+                                <p>🎯 <strong>Interview Showcase Project:</strong> Demonstrates advanced SQL capabilities, marketing analytics expertise, and ability to build production-ready client solutions with measurable business impact.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="project-actions">
+                            <a href="projects/boston-beats-analytics/" class="project-link project-btn-primary">🚀 View Live Demo</a>
+                            <a href="projects/boston-beats-analytics/README.md" class="project-link project-btn-secondary">📖 Technical Details</a>
+                        </div>
+                    </div>
+                </div>
 
-                <div class="project-card" style="border: 2px solid #2563eb; background: linear-gradient(135deg, #f0f5ff 0%, #ffffff 100%);">
-    <div class="project-header" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);">
-        <h3>🎵 Boston Beats 2025 - Campaign Analytics Dashboard</h3>
-    </div>
-    <div class="project-body">
-        <p class="project-description">
-            <strong> Advanced SQL-powered marketing analytics dashboard using real Kaggle dataset. Features multi-touch attribution modeling, budget optimization engine, and interactive campaign performance analysis across 4 platforms (Google, Meta, Reddit, TikTok).
-        </p>
-        <div class="project-tags">
-            <span class="tag" style="background: #dbeafe; color: #1e40af;">Advanced SQL</span>
-            <span class="tag" style="background: #dcfce7; color: #166534;">Real Dataset</span>
-            <span class="tag" style="background: #fef3c7; color: #92400e;">Multi-Touch Attribution</span>
-            <span class="tag" style="background: #fce7f3; color: #be185d;">Interactive Dashboard</span>
-            <span class="tag" style="background: #e0e7ff; color: #3730a3;">Budget Optimization</span>
-        </div>
-        <div style="margin-top: 15px; padding: 15px; background: rgba(37, 99, 235, 0.05); border-radius: 8px; border-left: 4px solid #2563eb;">
-            <p style="font-size: 14px; margin: 0; color: #1e40af; font-weight: 600;">
-                🎯 <strong>Interview Project:</strong> Demonstrates advanced SQL skills, marketing analytics expertise, and ability to build client-ready solutions.
-            </p>
-        </div>
-        <div style="display: flex; gap: 10px; margin-top: 15px;">
-            <a href="projects/boston-beats-analytics/" class="project-link" style="flex: 1; text-align: center; padding: 10px; background: #2563eb; color: white; border-radius: 6px; text-decoration: none;">🚀 View Live Demo</a>
-            <a href="projects/boston-beats-analytics/README.md" class="project-link" style="flex: 1; text-align: center; padding: 10px; border: 2px solid #2563eb; color: #2563eb; border-radius: 6px; text-decoration: none;">📖 Technical Details</a>
-        </div>
-    </div>
-</div>
                 <!-- PROJECT 1 -->
                 <div class="project-card">
                     <div class="project-header">
@@ -909,6 +1010,8 @@
                         <div class="project-tags">
                             <span class="tag">R</span>
                             <span class="tag">Predictive Modeling</span>
+                            <span class="tag">Logistic Regression</span>
+                            <span class="tag">Decision Trees</span>
                         </div>
                         <a href="predictive-modelling.html" class="project-link">View Details →</a>
                     </div>
@@ -926,6 +1029,8 @@
                         <div class="project-tags">
                             <span class="tag">Python</span>
                             <span class="tag">Churn Prediction</span>
+                            <span class="tag">Customer Retention</span>
+                            <span class="tag">ROI Optimization</span>
                         </div>
                         <a href="cell2cell-proactive.html" class="project-link">View Details →</a>
                     </div>
@@ -944,6 +1049,7 @@
                             <span class="tag">Python</span>
                             <span class="tag">LDA</span>
                             <span class="tag">Topic Modeling</span>
+                            <span class="tag">Competitive Analysis</span>
                         </div>
                         <a href="competitive-analysis.html" class="project-link">View Details →</a>
                     </div>
@@ -960,8 +1066,9 @@
                         </p>
                         <div class="project-tags">
                             <span class="tag">R</span>
-                            <span class="tag">K-means</span>
-                            <span class="tag">Segmentation</span>
+                            <span class="tag">K-means Clustering</span>
+                            <span class="tag">Market Segmentation</span>
+                            <span class="tag">Consumer Analysis</span>
                         </div>
                         <a href="ford-ka-segmentation.html" class="project-link">View Details →</a>
                     </div>
@@ -982,13 +1089,7 @@
                     <div class="skill-tags">
                         <span class="skill-tag">Python</span>
                         <span class="skill-tag">R</span>
-                        <span class="skill-tag">Scikit-learn</span>
-                        <span class="skill-tag">PyTorch</span>
-                        <span class="skill-tag">TensorFlow</span>
-                        <span class="skill-tag">XGBoost</span>
-                        <span class="skill-tag">LLMs</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">R</span>
+                        <span class="skill-tag">Advanced SQL</span>
                         <span class="skill-tag">Scikit-learn</span>
                         <span class="skill-tag">PyTorch</span>
                         <span class="skill-tag">TensorFlow</span>
@@ -1025,7 +1126,7 @@
                         <span class="skill-tag">Git</span>
                         <span class="skill-tag">Jira</span>
                         <span class="skill-tag">Airtable</span>
-                        <span class="skill-tag">Wordpress</span>
+                        <span class="skill-tag">WordPress</span>
                         <span class="skill-tag">Adobe Analytics</span>
                         <span class="skill-tag">Google Analytics</span>
                         <span class="skill-tag">CM360</span>
@@ -1046,13 +1147,14 @@
                         <span class="skill-tag">Forecasting</span>
                         <span class="skill-tag">Customer Journey Mapping</span>
                         <span class="skill-tag">Optimization</span>
+                        <span class="skill-tag">Budget Optimization</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section - Simplified without the Get in Touch form -->
+    <!-- Contact Section -->
     <section id="contact" class="alt-bg">
         <div class="container">
             <h2 class="section-title">Contact Me</h2>
@@ -1074,7 +1176,7 @@
                     </div>
                     <h3 style="margin-bottom: 12px; font-size: 22px;">LinkedIn</h3>
                     <p style="margin-bottom: 15px; font-size: 16px;">Connect with me</p>
-                    <a href="https://www.linkedin.com/in/asthaharlalka" class="project-link">LinkedIn Profile</a>
+                    <a href="https://www.linkedin.com/in/asthaharlalka" class="project-link">LinkedIn Profile →</a>
                 </div>
             </div>
         </div>
@@ -1086,11 +1188,12 @@
             <div class="footer-content">
                 <div class="footer-branding">
                     <h3>Astha Harlalka</h3>
+                    <p>Marketing & Business Analytics Professional</p>
                 </div>
                 
                 <div class="social-links">
-                    <a href="mailto:aharlalk@tepper.cmu.edu" class="social-link">✉️</a>
-                    <a href="https://www.linkedin.com/in/asthaharlalka" class="social-link">👔</a>
+                    <a href="mailto:aharlalk@tepper.cmu.edu" class="social-link" title="Email">✉️</a>
+                    <a href="https://www.linkedin.com/in/asthaharlalka" class="social-link" title="LinkedIn">👔</a>
                 </div>
             </div>
             
@@ -1149,6 +1252,32 @@
                         behavior: 'smooth'
                     });
                 }
+            });
+        });
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate cards on scroll (optional enhancement)
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all cards for animation
+            document.querySelectorAll('.card, .project-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
             });
         });
     </script>
