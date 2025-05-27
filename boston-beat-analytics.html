@@ -1,28 +1,240 @@
-import React, { useState, useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LineChart, Line, ResponsiveContainer, ScatterChart, Scatter } from 'recharts';
-import { Database, Play, Code, TrendingUp, Target, DollarSign, Users, Award, Lightbulb } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boston Beats 2025 - SQL Analytics Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.js"></script>
+    <style>
+        .code-block {
+            background: #1a202c;
+            color: #68d391;
+            font-family: 'Courier New', monospace;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-button.active {
+            background-color: #dbeafe;
+            color: #1d4ed8;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <i data-lucide="database" class="w-8 h-8 text-blue-600"></i>
+                    <h1 class="text-xl font-bold text-gray-900">Boston Beats 2025 - SQL Analytics Dashboard</h1>
+                </div>
+                <div class="flex space-x-1">
+                    <button onclick="showTab('overview')" class="tab-button flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" id="tab-overview">
+                        <i data-lucide="database" class="w-4 h-4 mr-2"></i>
+                        Dataset Overview
+                    </button>
+                    <button onclick="showTab('queries')" class="tab-button flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" id="tab-queries">
+                        <i data-lucide="code" class="w-4 h-4 mr-2"></i>
+                        SQL Queries
+                    </button>
+                    <button onclick="showTab('insights')" class="tab-button flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" id="tab-insights">
+                        <i data-lucide="trending-up" class="w-4 h-4 mr-2"></i>
+                        Insights
+                    </button>
+                    <button onclick="showTab('recommendations')" class="tab-button flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" id="tab-recommendations">
+                        <i data-lucide="lightbulb" class="w-4 h-4 mr-2"></i>
+                        Recommendations
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-const SQLAnalyticsDashboard = () => {
-  const [activeTab, setActiveTab] = useState('overview');
-  const [selectedQuery, setSelectedQuery] = useState('platform_efficiency');
-  const [showQueryResult, setShowQueryResult] = useState(false);
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <!-- Project Introduction -->
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg p-8 mb-6">
+                <h2 class="text-3xl font-bold mb-4">Boston Beats 2025: SQL-Driven Campaign Analytics</h2>
+                <p class="text-lg text-blue-100 mb-4">
+                    Advanced SQL analysis of multi-platform marketing campaign performance using 200K+ rows of campaign data
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
+                    <div>
+                        <p class="text-2xl font-bold">200K+</p>
+                        <p class="text-blue-200">Data Points</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-bold">15+</p>
+                        <p class="text-blue-200">Complex Queries</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-bold">4</p>
+                        <p class="text-blue-200">Platforms</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-bold">563</p>
+                        <p class="text-blue-200">Conversions</p>
+                    </div>
+                </div>
+            </div>
 
-  // Sample data that would come from your Kaggle dataset
-  const campaignRawData = [
-    { campaign_id: 'META_001', platform: 'Meta', campaign_date: '2025-01-01', spend: 125.50, impressions: 12500, clicks: 262, conversions: 8, audience_segment: '18-24', creative_type: 'video' },
-    { campaign_id: 'META_002', platform: 'Meta', campaign_date: '2025-01-02', spend: 138.25, impressions: 13800, clicks: 290, conversions: 9, audience_segment: '25-35', creative_type: 'image' },
-    { campaign_id: 'GOOG_001', platform: 'Google', campaign_date: '2025-01-01', spend: 95.75, impressions: 3830, clicks: 134, conversions: 7, audience_segment: '18-24', creative_type: 'text' },
-    { campaign_id: 'GOOG_002', platform: 'Google', campaign_date: '2025-01-02', spend: 110.30, impressions: 4410, clicks: 154, conversions: 8, audience_segment: '25-35', creative_type: 'text' },
-    { campaign_id: 'REDD_001', platform: 'Reddit', campaign_date: '2025-01-01', spend: 42.80, impressions: 5350, clicks: 96, conversions: 2, audience_segment: '18-24', creative_type: 'image' },
-    { campaign_id: 'TIKT_001', platform: 'TikTok', campaign_date: '2025-01-01', spend: 35.60, impressions: 2373, clicks: 66, conversions: 1, audience_segment: '18-24', creative_type: 'video' }
-  ];
+            <!-- Dataset Structure -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h3 class="text-xl font-bold mb-4 flex items-center">
+                    <i data-lucide="database" class="w-6 h-6 mr-2 text-blue-600"></i>
+                    Dataset Structure & Schema
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-lg font-semibold mb-3">Primary Tables</h4>
+                        <div class="bg-gray-50 rounded-lg p-4 font-mono text-sm">
+                            <div class="mb-4">
+                                <p class="font-bold text-blue-600">campaign_data</p>
+                                <ul class="ml-4 space-y-1">
+                                    <li>• campaign_id (VARCHAR)</li>
+                                    <li>• platform (VARCHAR)</li>
+                                    <li>• campaign_date (DATE)</li>
+                                    <li>• spend (DECIMAL)</li>
+                                    <li>• impressions (INT)</li>
+                                    <li>• clicks (INT)</li>
+                                    <li>• conversions (INT)</li>
+                                    <li>• audience_segment (VARCHAR)</li>
+                                    <li>• creative_type (VARCHAR)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p class="font-bold text-green-600">user_touchpoints</p>
+                                <ul class="ml-4 space-y-1">
+                                    <li>• customer_id (VARCHAR)</li>
+                                    <li>• platform (VARCHAR)</li>
+                                    <li>• touchpoint_date (TIMESTAMP)</li>
+                                    <li>• conversion_value (DECIMAL)</li>
+                                    <li>• touchpoint_order (INT)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-3">Key Metrics Calculated</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-center">
+                                <i data-lucide="target" class="w-4 h-4 text-green-600 mr-2"></i>
+                                <span>Cost Per Acquisition (CPA)</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="trending-up" class="w-4 h-4 text-blue-600 mr-2"></i>
+                                <span>Return on Ad Spend (ROAS)</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="users" class="w-4 h-4 text-purple-600 mr-2"></i>
+                                <span>Customer Lifetime Value (CLV)</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="dollar-sign" class="w-4 h-4 text-yellow-600 mr-2"></i>
+                                <span>Multi-Touch Attribution</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-  // Complex SQL queries that demonstrate advanced skills
-  const sqlQueries = {
-    platform_efficiency: {
-      title: "Platform Efficiency Analysis with Window Functions",
-      description: "Uses CTEs, window functions, and statistical analysis to rank platform performance",
-      sql: `-- Advanced Platform Performance Analysis
+            <!-- Sample Data Preview -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h4 class="text-lg font-bold mb-4">Sample Campaign Data</h4>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="p-2 text-left">Campaign ID</th>
+                                <th class="p-2 text-left">Platform</th>
+                                <th class="p-2 text-left">Date</th>
+                                <th class="p-2 text-right">Spend</th>
+                                <th class="p-2 text-right">Impressions</th>
+                                <th class="p-2 text-right">Clicks</th>
+                                <th class="p-2 text-right">Conversions</th>
+                                <th class="p-2 text-left">Audience</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-2 font-mono text-xs">META_001</td>
+                                <td class="p-2">Meta</td>
+                                <td class="p-2">2025-01-01</td>
+                                <td class="p-2 text-right">$125.50</td>
+                                <td class="p-2 text-right">12,500</td>
+                                <td class="p-2 text-right">262</td>
+                                <td class="p-2 text-right">8</td>
+                                <td class="p-2">18-24</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-2 font-mono text-xs">GOOG_001</td>
+                                <td class="p-2">Google</td>
+                                <td class="p-2">2025-01-01</td>
+                                <td class="p-2 text-right">$95.75</td>
+                                <td class="p-2 text-right">3,830</td>
+                                <td class="p-2 text-right">134</td>
+                                <td class="p-2 text-right">7</td>
+                                <td class="p-2">18-24</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-2 font-mono text-xs">REDD_001</td>
+                                <td class="p-2">Reddit</td>
+                                <td class="p-2">2025-01-01</td>
+                                <td class="p-2 text-right">$42.80</td>
+                                <td class="p-2 text-right">5,350</td>
+                                <td class="p-2 text-right">96</td>
+                                <td class="p-2 text-right">2</td>
+                                <td class="p-2">18-24</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Performance Overview Chart -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h4 class="text-lg font-bold mb-4">Platform Performance Overview</h4>
+                <canvas id="performanceChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+
+        <!-- SQL Queries Tab -->
+        <div id="queries" class="tab-content">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold flex items-center">
+                        <i data-lucide="code" class="w-6 h-6 mr-2 text-green-600"></i>
+                        Advanced SQL Analysis
+                    </h3>
+                    <select id="querySelect" onchange="showQuery()" class="px-4 py-2 border rounded-lg bg-white">
+                        <option value="platform_efficiency">Platform Efficiency Analysis</option>
+                        <option value="cohort_analysis">Cohort Analysis</option>
+                        <option value="attribution_modeling">Attribution Modeling</option>
+                    </select>
+                </div>
+
+                <div id="queryDescription" class="mb-4">
+                    <h4 class="text-lg font-semibold text-gray-800">Platform Efficiency Analysis with Window Functions</h4>
+                    <p class="text-gray-600">Uses CTEs, window functions, and statistical analysis to rank platform performance</p>
+                </div>
+
+                <!-- SQL Code Display -->
+                <div id="sqlCode" class="code-block mb-4">-- Advanced Platform Performance Analysis
 WITH daily_performance AS (
   SELECT 
     platform,
@@ -103,20 +315,411 @@ FROM daily_performance dp
 JOIN platform_efficiency pe ON dp.platform = pe.platform
 GROUP BY dp.platform, pe.efficiency_tier, pe.total_conversions, 
          pe.avg_cpa, pe.cpa_volatility, pe.conversion_growth_rate
-ORDER BY composite_score DESC;`,
-      
-      results: [
-        { platform: 'Google', efficiency_tier: 'High Efficiency', total_conversions: 242, avg_cpa: 13.97, cpa_stability: 2.1, growth_rate_pct: 15.2, conversion_rank: 1, efficiency_rank: 1, composite_score: 106.4 },
-        { platform: 'Meta', efficiency_tier: 'High Efficiency', total_conversions: 215, avg_cpa: 17.91, cpa_stability: 3.4, growth_rate_pct: 8.7, conversion_rank: 2, efficiency_rank: 2, composite_score: 93.3 },
-        { platform: 'Reddit', efficiency_tier: 'Moderate Efficiency', total_conversions: 68, avg_cpa: 20.88, cpa_stability: 5.2, growth_rate_pct: -2.1, conversion_rank: 3, efficiency_rank: 3, composite_score: 32.7 },
-        { platform: 'TikTok', efficiency_tier: 'Low Efficiency', total_conversions: 38, avg_cpa: 25.00, cpa_stability: 6.8, growth_rate_pct: -8.3, conversion_rank: 4, efficiency_rank: 4, composite_score: 18.2 }
-      ]
-    },
+ORDER BY composite_score DESC;</div>
 
-    cohort_analysis: {
-      title: "Cohort Analysis with Advanced Date Functions",
-      description: "Customer acquisition cohorts using advanced date manipulation and retention analysis",
-      sql: `-- Customer Acquisition Cohort Analysis
+                <!-- Execute Button -->
+                <div class="flex justify-between items-center mb-4">
+                    <button onclick="toggleResults()" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        <i data-lucide="play" class="w-4 h-4 mr-2"></i>
+                        <span id="executeButtonText">Execute Query</span>
+                    </button>
+                    <div class="text-sm text-gray-600">
+                        Query complexity: <span class="font-semibold">Advanced</span> | 
+                        Techniques: <span class="font-semibold">CTEs, Window Functions, Statistical Analysis</span>
+                    </div>
+                </div>
+
+                <!-- Query Results -->
+                <div id="queryResults" style="display: none;" class="bg-white border rounded-lg p-4">
+                    <h4 class="text-lg font-bold mb-4">Query Results</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="p-3 text-left">Platform</th>
+                                    <th class="p-3 text-left">Efficiency Tier</th>
+                                    <th class="p-3 text-right">Total Conversions</th>
+                                    <th class="p-3 text-right">Avg CPA</th>
+                                    <th class="p-3 text-right">CPA Stability</th>
+                                    <th class="p-3 text-right">Growth Rate %</th>
+                                    <th class="p-3 text-right">Composite Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="p-3">Google</td>
+                                    <td class="p-3">High Efficiency</td>
+                                    <td class="p-3 text-right">242</td>
+                                    <td class="p-3 text-right">$13.97</td>
+                                    <td class="p-3 text-right">2.1</td>
+                                    <td class="p-3 text-right">15.2</td>
+                                    <td class="p-3 text-right">106.4</td>
+                                </tr>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="p-3">Meta</td>
+                                    <td class="p-3">High Efficiency</td>
+                                    <td class="p-3 text-right">215</td>
+                                    <td class="p-3 text-right">$17.91</td>
+                                    <td class="p-3 text-right">3.4</td>
+                                    <td class="p-3 text-right">8.7</td>
+                                    <td class="p-3 text-right">93.3</td>
+                                </tr>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="p-3">Reddit</td>
+                                    <td class="p-3">Moderate Efficiency</td>
+                                    <td class="p-3 text-right">68</td>
+                                    <td class="p-3 text-right">$20.88</td>
+                                    <td class="p-3 text-right">5.2</td>
+                                    <td class="p-3 text-right">-2.1</td>
+                                    <td class="p-3 text-right">32.7</td>
+                                </tr>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="p-3">TikTok</td>
+                                    <td class="p-3">Low Efficiency</td>
+                                    <td class="p-3 text-right">38</td>
+                                    <td class="p-3 text-right">$25.00</td>
+                                    <td class="p-3 text-right">6.8</td>
+                                    <td class="p-3 text-right">-8.3</td>
+                                    <td class="p-3 text-right">18.2</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQL Techniques Highlighted -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-blue-50 border-l-4 border-blue-400 p-6 rounded-lg">
+                    <h4 class="text-lg font-bold text-blue-800 mb-2">Window Functions</h4>
+                    <ul class="text-blue-700 text-sm space-y-1">
+                        <li>• LAG/LEAD for period comparisons</li>
+                        <li>• ROW_NUMBER for ranking</li>
+                        <li>• Running totals with SUM() OVER</li>
+                        <li>• Rolling averages</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-green-50 border-l-4 border-green-400 p-6 rounded-lg">
+                    <h4 class="text-lg font-bold text-green-800 mb-2">Advanced Analytics</h4>
+                    <ul class="text-green-700 text-sm space-y-1">
+                        <li>• Statistical functions (STDDEV)</li>
+                        <li>• Percentile calculations</li>
+                        <li>• Complex CASE logic</li>
+                        <li>• Multi-level aggregations</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-purple-50 border-l-4 border-purple-400 p-6 rounded-lg">
+                    <h4 class="text-lg font-bold text-purple-800 mb-2">Query Optimization</h4>
+                    <ul class="text-purple-700 text-sm space-y-1">
+                        <li>• CTEs for readability</li>
+                        <li>• Efficient joins</li>
+                        <li>• Index-friendly WHERE clauses</li>
+                        <li>• Subquery optimization</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insights Tab -->
+        <div id="insights" class="tab-content">
+            <div class="bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-lg p-8 mb-6">
+                <h3 class="text-2xl font-bold mb-4">Data-Driven Business Insights</h3>
+                <p class="text-green-100">Critical findings that directly impact campaign strategy and budget allocation</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <!-- Platform Performance Insights -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="award" class="w-6 h-6 text-yellow-500 mr-2"></i>
+                        <h4 class="text-lg font-bold">Platform Performance Insights</h4>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4">
+                            <h5 class="font-bold text-green-800">Budget Reallocation</h5>
+                            <p class="text-green-700 text-sm mb-2">
+                                <strong>SQL Finding:</strong> Platform efficiency analysis shows Google achieving 4.5x ROAS 
+                                vs 3.0x for Reddit
+                            </p>
+                            <p class="text-green-800 font-semibold">
+                                Action: Shift $300 from Reddit → Google
+                            </p>
+                            <p class="text-green-600 text-sm">
+                                Expected: +47 conversions, +$1,175 revenue (18% improvement)
+                            </p>
+                        </div>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
+                            <h5 class="font-bold text-blue-800">Audience Optimization</h5>
+                            <p class="text-blue-700 text-sm mb-2">
+                                <strong>SQL Finding:</strong> Cohort analysis reveals 18-24 segment has 
+                                2.3x higher conversion rate and 74.8% retention
+                            </p>
+                            <p class="text-blue-800 font-semibold">
+                                Action: Increase 18-24 targeting by 40%
+                            </p>
+                            <p class="text-blue-600 text-sm">
+                                Expected: +32 conversions, improved CLV by $4.50
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="bg-purple-50 border-l-4 border-purple-400 p-4">
+                            <h5 class="font-bold text-purple-800">Attribution Strategy</h5>
+                            <p class="text-purple-700 text-sm mb-2">
+                                <strong>SQL Finding:</strong> Multi-touch attribution shows Meta initiates 72% 
+                                of journeys, Google closes 68%
+                            </p>
+                            <p class="text-purple-800 font-semibold">
+                                Action: Separate upper/lower funnel strategies
+                            </p>
+                            <p class="text-purple-600 text-sm">
+                                Expected: 25% improvement in customer journey efficiency
+                            </p>
+                        </div>
+
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                            <h5 class="font-bold text-yellow-800">Creative Refresh</h5>
+                            <p class="text-yellow-700 text-sm mb-2">
+                                <strong>SQL Finding:</strong> Window function analysis shows TikTok CTR 
+                                improved 180% after Day 12 creative refresh
+                            </p>
+                            <p class="text-yellow-800 font-semibold">
+                                Action: Weekly creative testing across all platforms
+                            </p>
+                            <p class="text-yellow-600 text-sm">
+                                Expected: 15-25% CTR improvement based on historical data
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strategic Recommendations -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h4 class="text-xl font-bold mb-4">Long-term Strategic Insights</h4>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <h5 class="font-semibold mb-3 text-blue-800">Customer Journey Optimization</h5>
+                        <ul class="space-y-2 text-sm">
+                            <li>• Implement sequential messaging based on attribution analysis</li>
+                            <li>• Meta for awareness, Google for conversion</li>
+                            <li>• Cross-platform frequency capping using user-level data</li>
+                            <li>• Optimize for 3-touchpoint journey (highest efficiency)</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h5 class="font-semibold mb-3 text-green-800">Data Infrastructure</h5>
+                        <ul class="space-y-2 text-sm">
+                            <li>• Implement real-time data pipeline for daily optimization</li>
+                            <li>• Set up automated alerts for CPA volatility (>2 standard deviations)</li>
+                            <li>• Build cohort tracking for all acquisition channels</li>
+                            <li>• Create attribution modeling dashboard</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h5 class="font-semibold mb-3 text-purple-800">Scale Preparation</h5>
+                        <ul class="space-y-2 text-sm">
+                            <li>• Google can efficiently handle 50% budget increase</li>
+                            <li>• Meta needs creative diversification before scaling</li>
+                            <li>• Test YouTube based on audience overlap analysis</li>
+                            <li>• Implement incrementality testing framework</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Business Impact Quantification -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h4 class="text-xl font-bold mb-4">Quantified Business Impact</h4>
+                
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h5 class="font-bold mb-4">Current Performance (SQL Calculated)</h5>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>Total Conversions:</span>
+                                    <span class="font-mono">563</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Total Revenue:</span>
+                                    <span class="font-mono">$14,075</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Blended ROAS:</span>
+                                    <span class="font-mono">3.56x</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Average CPA:</span>
+                                    <span class="font-mono">$17.68</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h5 class="font-bold mb-4">Optimized Projection</h5>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>Projected Conversions:</span>
+                                    <span class="font-mono text-green-600">679 (+20.6%)</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Projected Revenue:</span>
+                                    <span class="font-mono text-green-600">$16,975 (+20.6%)</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Optimized ROAS:</span>
+                                    <span class="font-mono text-green-600">4.29x (+20.5%)</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Optimized CPA:</span>
+                                    <span class="font-mono text-green-600">$14.63 (-17.2%)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 pt-4 border-t">
+                        <p class="text-center text-lg font-bold text-green-600">
+                            Net Impact: +$2,900 revenue improvement with same $10K budget
+                        </p>
+                        <p class="text-center text-sm text-gray-600 mt-1">
+                            All projections based on SQL statistical analysis of historical performance patterns
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from all buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected tab and mark button as active
+            document.getElementById(tabName).classList.add('active');
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+            
+            // Initialize charts when showing specific tabs
+            if (tabName === 'overview') {
+                setTimeout(initPerformanceChart, 100);
+            } else if (tabName === 'insights') {
+                setTimeout(() => {
+                    initRetentionChart();
+                    initEfficiencyChart();
+                }, 100);
+            }
+        }
+
+        // SQL Query functionality
+        const queries = {
+            platform_efficiency: {
+                title: "Platform Efficiency Analysis with Window Functions",
+                description: "Uses CTEs, window functions, and statistical analysis to rank platform performance",
+                sql: `-- Advanced Platform Performance Analysis
+WITH daily_performance AS (
+  SELECT 
+    platform,
+    campaign_date,
+    spend,
+    impressions,
+    clicks,
+    conversions,
+    -- Window functions for running calculations
+    LAG(conversions, 1) OVER (
+      PARTITION BY platform 
+      ORDER BY campaign_date
+    ) as prev_day_conversions,
+    
+    SUM(spend) OVER (
+      PARTITION BY platform 
+      ORDER BY campaign_date 
+      ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+    ) as cumulative_spend,
+    
+    -- Rolling 7-day average
+    AVG(conversions) OVER (
+      PARTITION BY platform 
+      ORDER BY campaign_date 
+      ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+    ) as rolling_avg_conversions
+    
+  FROM campaign_data
+  WHERE campaign_date >= '2025-01-01'
+),
+
+platform_efficiency AS (
+  SELECT 
+    platform,
+    COUNT(*) as active_days,
+    SUM(conversions) as total_conversions,
+    SUM(spend) as total_spend,
+    AVG(conversions/NULLIF(clicks,0)) as avg_cvr,
+    AVG(spend/NULLIF(conversions,0)) as avg_cpa,
+    STDDEV(spend/NULLIF(conversions,0)) as cpa_volatility,
+    
+    -- Business logic with CASE statements
+    CASE 
+      WHEN AVG(spend/NULLIF(conversions,0)) < 15 THEN 'High Efficiency'
+      WHEN AVG(spend/NULLIF(conversions,0)) < 25 THEN 'Moderate Efficiency'
+      ELSE 'Low Efficiency'
+    END as efficiency_tier,
+    
+    -- Performance vs previous period
+    (SUM(conversions) - LAG(SUM(conversions), 1) OVER (ORDER BY platform)) 
+    / NULLIF(LAG(SUM(conversions), 1) OVER (ORDER BY platform), 0) * 100 
+    as conversion_growth_rate
+    
+  FROM daily_performance
+  WHERE conversions > 0
+  GROUP BY platform
+)
+
+SELECT 
+  dp.platform,
+  pe.efficiency_tier,
+  pe.total_conversions,
+  ROUND(pe.avg_cpa, 2) as avg_cpa,
+  ROUND(pe.cpa_volatility, 2) as cpa_stability,
+  ROUND(pe.conversion_growth_rate, 1) as growth_rate_pct,
+  
+  -- Advanced ranking with multiple criteria
+  RANK() OVER (ORDER BY pe.total_conversions DESC) as conversion_rank,
+  RANK() OVER (ORDER BY pe.avg_cpa ASC) as efficiency_rank,
+  
+  -- Composite score calculation
+  ROUND(
+    (pe.total_conversions * 0.4) + 
+    ((30 - pe.avg_cpa) * 0.6), 2
+  ) as composite_score
+
+FROM daily_performance dp
+JOIN platform_efficiency pe ON dp.platform = pe.platform
+GROUP BY dp.platform, pe.efficiency_tier, pe.total_conversions, 
+         pe.avg_cpa, pe.cpa_volatility, pe.conversion_growth_rate
+ORDER BY composite_score DESC;`
+            },
+            cohort_analysis: {
+                title: "Cohort Analysis with Advanced Date Functions",
+                description: "Customer acquisition cohorts using advanced date manipulation and retention analysis",
+                sql: `-- Customer Acquisition Cohort Analysis
 WITH first_purchase_dates AS (
   SELECT 
     customer_id,
@@ -200,20 +803,12 @@ SELECT
 
 FROM cohort_metrics
 WHERE cohort_month >= '2025-01-01'
-ORDER BY cohort_month, period_number;`,
-      
-      results: [
-        { cohort_month: '2025-01-01', period_number: 0, customers: 563, retention_pct: 100.0, avg_clv_period: 25.0, cumulative_clv: 14075, prev_period_retention: null, churn_rate: 0 },
-        { cohort_month: '2025-01-01', period_number: 1, customers: 421, retention_pct: 74.8, avg_clv_period: 28.5, cumulative_clv: 26074, prev_period_retention: 100.0, churn_rate: 25.2 },
-        { cohort_month: '2025-01-01', period_number: 2, customers: 312, retention_pct: 55.4, avg_clv_period: 31.2, cumulative_clv: 35814, prev_period_retention: 74.8, churn_rate: 19.4 },
-        { cohort_month: '2025-01-01', period_number: 3, customers: 267, retention_pct: 47.4, avg_clv_period: 33.8, cumulative_clv: 44840, prev_period_retention: 55.4, churn_rate: 8.0 }
-      ]
-    },
-
-    attribution_modeling: {
-      title: "Multi-Touch Attribution with Advanced Analytics",
-      description: "Complex attribution modeling using multiple SQL techniques and statistical functions",
-      sql: `-- Multi-Touch Attribution Analysis
+ORDER BY cohort_month, period_number;`
+            },
+            attribution_modeling: {
+                title: "Multi-Touch Attribution with Advanced Analytics",
+                description: "Complex attribution modeling using multiple SQL techniques and statistical functions",
+                sql: `-- Multi-Touch Attribution Analysis
 WITH customer_journeys AS (
   SELECT 
     customer_id,
@@ -332,626 +927,507 @@ SELECT
   ROUND(journey_closer_count * 100.0 / NULLIF(unique_customers, 0), 1) as journey_closer_pct
 
 FROM platform_attribution_summary
-ORDER BY linear_attribution DESC;`,
-      
-      results: [
-        { platform: 'Google', unique_customers: 189, first_touch_attribution: 4250, last_touch_attribution: 6050, linear_attribution: 5420, time_decay_attribution: 5890, position_based_attribution: 5680, attribution_variance_pct: 33.2, journey_starter_pct: 45.2, journey_closer_pct: 67.8 },
-        { platform: 'Meta', unique_customers: 165, first_touch_attribution: 5375, last_touch_attribution: 3200, linear_attribution: 4875, time_decay_attribution: 4120, position_based_attribution: 4650, attribution_variance_pct: 68.1, journey_starter_pct: 72.1, journey_closer_pct: 28.5 },
-        { platform: 'Reddit', unique_customers: 52, first_touch_attribution: 850, last_touch_attribution: 1700, linear_attribution: 1420, time_decay_attribution: 1280, position_based_attribution: 1390, attribution_variance_pct: 59.9, journey_starter_pct: 38.5, journey_closer_pct: 23.1 },
-        { platform: 'TikTok', unique_customers: 28, first_touch_attribution: 650, last_touch_attribution: 950, linear_attribution: 820, time_decay_attribution: 790, position_based_attribution: 845, attribution_variance_pct: 36.6, journey_starter_pct: 42.9, journey_closer_pct: 35.7 }
-      ]
-    }
-  };
+ORDER BY linear_attribution DESC;`
+            }
+        };
 
-  const OverviewTab = () => (
-    <div className="space-y-6">
-      {/* Project Introduction */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg p-8">
-        <h1 className="text-3xl font-bold mb-4">Boston Beats 2025: SQL-Driven Campaign Analytics</h1>
-        <p className="text-lg text-blue-100 mb-4">
-          Advanced SQL analysis of multi-platform marketing campaign performance using 200K+ rows of campaign data
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
-          <div>
-            <p className="text-2xl font-bold">200K+</p>
-            <p className="text-blue-200">Data Points</p>
-          </div>
-          <div>
-            <p className="text-2xl font-bold">15+</p>
-            <p className="text-blue-200">Complex Queries</p>
-          </div>
-          <div>
-            <p className="text-2xl font-bold">4</p>
-            <p className="text-blue-200">Platforms</p>
-          </div>
-          <div>
-            <p className="text-2xl font-bold">563</p>
-            <p className="text-blue-200">Conversions</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Dataset Structure */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-bold mb-4 flex items-center">
-          <Database className="h-6 w-6 mr-2 text-blue-600" />
-          Dataset Structure & Schema
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h3 className="text-lg font-semibold mb-3">Primary Tables</h3>
-            <div className="bg-gray-50 rounded-lg p-4 font-mono text-sm">
-              <div className="mb-4">
-                <p className="font-bold text-blue-600">campaign_data</p>
-                <ul className="ml-4 space-y-1">
-                  <li>• campaign_id (VARCHAR)</li>
-                  <li>• platform (VARCHAR)</li>
-                  <li>• campaign_date (DATE)</li>
-                  <li>• spend (DECIMAL)</li>
-                  <li>• impressions (INT)</li>
-                  <li>• clicks (INT)</li>
-                  <li>• conversions (INT)</li>
-                  <li>• audience_segment (VARCHAR)</li>
-                  <li>• creative_type (VARCHAR)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-bold text-green-600">user_touchpoints</p>
-                <ul className="ml-4 space-y-1">
-                  <li>• customer_id (VARCHAR)</li>
-                  <li>• platform (VARCHAR)</li>
-                  <li>• touchpoint_date (TIMESTAMP)</li>
-                  <li>• conversion_value (DECIMAL)</li>
-                  <li>• touchpoint_order (INT)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold mb-3">Key Metrics Calculated</h3>
-            <ul className="space-y-2">
-              <li className="flex items-center">
-                <Target className="h-4 w-4 text-green-600 mr-2" />
-                <span>Cost Per Acquisition (CPA)</span>
-              </li>
-              <li className="flex items-center">
-                <TrendingUp className="h-4 w-4 text-blue-600 mr-2" />
-                <span>Return on Ad Spend (ROAS)</span>
-              </li>
-              <li className="flex items-center">
-                <Users className="h-4 w-4 text-purple-600 mr-2" />
-                <span>Customer Lifetime Value (CLV)</span>
-              </li>
-              <li className="flex items-center">
-                <DollarSign className="h-4 w-4 text-yellow-600 mr-2" />
-                <span>Multi-Touch Attribution</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      {/* Sample Data Preview */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-lg font-bold mb-4">Sample Campaign Data</h3>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="bg-gray-50">
-                <th className="p-2 text-left">Campaign ID</th>
-                <th className="p-2 text-left">Platform</th>
-                <th className="p-2 text-left">Date</th>
-                <th className="p-2 text-right">Spend</th>
-                <th className="p-2 text-right">Impressions</th>
-                <th className="p-2 text-right">Clicks</th>
-                <th className="p-2 text-right">Conversions</th>
-                <th className="p-2 text-left">Audience</th>
-              </tr>
-            </thead>
-            <tbody>
-              {campaignRawData.slice(0, 5).map((row, idx) => (
-                <tr key={idx} className="border-b hover:bg-gray-50">
-                  <td className="p-2 font-mono text-xs">{row.campaign_id}</td>
-                  <td className="p-2">{row.platform}</td>
-                  <td className="p-2">{row.campaign_date}</td>
-                  <td className="p-2 text-right">${row.spend}</td>
-                  <td className="p-2 text-right">{row.impressions.toLocaleString()}</td>
-                  <td className="p-2 text-right">{row.clicks}</td>
-                  <td className="p-2 text-right">{row.conversions}</td>
-                  <td className="p-2">{row.audience_segment}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  );
-
-  const SQLQueriesTab = () => (
-    <div className="space-y-6">
-      {/* Query Selector */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold flex items-center">
-            <Code className="h-6 w-6 mr-2 text-green-600" />
-            Advanced SQL Analysis
-          </h2>
-          <select 
-            value={selectedQuery}
-            onChange={(e) => setSelectedQuery(e.target.value)}
-            className="px-4 py-2 border rounded-lg bg-white"
-          >
-            <option value="platform_efficiency">Platform Efficiency Analysis</option>
-            <option value="cohort_analysis">Cohort Analysis</option>
-            <option value="attribution_modeling">Attribution Modeling</option>
-          </select>
-        </div>
-
-        <div className="mb-4">
-          <h3 className="text-lg font-semibold text-gray-800">{sqlQueries[selectedQuery].title}</h3>
-          <p className="text-gray-600">{sqlQueries[selectedQuery].description}</p>
-        </div>
-
-        {/* SQL Code Display */}
-        <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-          <pre className="text-green-400 text-sm font-mono whitespace-pre-wrap">
-            {sqlQueries[selectedQuery].sql}
-          </pre>
-        </div>
-
-        {/* Execute Button */}
-        <div className="mt-4 flex justify-between items-center">
-          <button
-            onClick={() => setShowQueryResult(!showQueryResult)}
-            className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            <Play className="h-4 w-4 mr-2" />
-            {showQueryResult ? 'Hide Results' : 'Execute Query'}
-          </button>
-          <div className="text-sm text-gray-600">
-            Query complexity: <span className="font-semibold">Advanced</span> | 
-            Techniques: <span className="font-semibold">CTEs, Window Functions, Statistical Analysis</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Query Results */}
-      {showQueryResult && (
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-bold mb-4">Query Results</h3>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="bg-gray-50">
-                  {Object.keys(sqlQueries[selectedQuery].results[0]).map(key => (
-                    <th key={key} className="p-3 text-left capitalize">
-                      {key.replace(/_/g, ' ')}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {sqlQueries[selectedQuery].results.map((row, idx) => (
-                  <tr key={idx} className="border-b hover:bg-gray-50">
-                    {Object.values(row).map((value, colIdx) => (
-                      <td key={colIdx} className="p-3">
-                        {typeof value === 'number' ? value.toLocaleString() : value}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      {/* SQL Techniques Highlighted */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-blue-50 border-l-4 border-blue-400 p-6 rounded-lg">
-          <h3 className="text-lg font-bold text-blue-800 mb-2">Window Functions</h3>
-          <ul className="text-blue-700 text-sm space-y-1">
-            <li>• LAG/LEAD for period comparisons</li>
-            <li>• ROW_NUMBER for ranking</li>
-            <li>• Running totals with SUM() OVER</li>
-            <li>• Rolling averages</li>
-          </ul>
-        </div>
-        
-        <div className="bg-green-50 border-l-4 border-green-400 p-6 rounded-lg">
-          <h3 className="text-lg font-bold text-green-800 mb-2">Advanced Analytics</h3>
-          <ul className="text-green-700 text-sm space-y-1">
-            <li>• Statistical functions (STDDEV)</li>
-            <li>• Percentile calculations</li>
-            <li>• Complex CASE logic</li>
-            <li>• Multi-level aggregations</li>
-          </ul>
-        </div>
-        
-        <div className="bg-purple-50 border-l-4 border-purple-400 p-6 rounded-lg">
-          <h3 className="text-lg font-bold text-purple-800 mb-2">Query Optimization</h3>
-          <ul className="text-purple-700 text-sm space-y-1">
-            <li>• CTEs for readability</li>
-            <li>• Efficient joins</li>
-            <li>• Index-friendly WHERE clauses</li>
-            <li>• Subquery optimization</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-
-  const InsightsTab = () => (
-    <div className="space-y-6">
-      {/* Key Business Insights */}
-      <div className="bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-lg p-8">
-        <h2 className="text-2xl font-bold mb-4">Data-Driven Business Insights</h2>
-        <p className="text-green-100">Critical findings that directly impact campaign strategy and budget allocation</p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Platform Performance Insights */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex items-center mb-4">
-            <Award className="h-6 w-6 text-yellow-500 mr-2" />
-            <h3 className="text-lg font-bold">Platform Performance Insights</h3>
-          </div>
-          <div className="space-y-4">
-            <div className="bg-green-50 border-l-4 border-green-400 p-4">
-              <p className="font-semibold text-green-800">Google: The Efficiency Leader</p>
-              <p className="text-green-700 text-sm">
-                42% of total conversions at $13.97 CPA - 15% below forecasted $16.50. 
-                SQL analysis shows 4.5x ROAS with lowest volatility (σ = 2.1)
-              </p>
-            </div>
-            <div className="bg-blue-50 border-l-4 border-blue-400 p-4">
-              <p className="font-semibold text-blue-800">Meta: High Volume, Scaling Opportunity</p>
-              <p className="text-blue-700 text-sm">
-                Highest absolute conversions (215) but higher CPA variability. 
-                Window function analysis shows 8.7% month-over-month growth
-              </p>
-            </div>
-            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
-              <p className="font-semibold text-yellow-800">Reddit: Demographic Winner</p>
-              <p className="text-blue-700 text-sm">
-                18-24 segment converts 2.3x better than 25-35. 
-                Cohort analysis reveals 74.8% retention in month 1
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Attribution Insights */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex items-center mb-4">
-            <TrendingUp className="h-6 w-6 text-blue-500 mr-2" />
-            <h3 className="text-lg font-bold">Attribution Model Findings</h3>
-          </div>
-          <div className="space-y-4">
-            <div className="bg-gray-50 p-4 rounded">
-              <p className="font-semibold">Multi-Touch Attribution Reveals Hidden Value</p>
-              <div className="mt-2 space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span>Last-Touch Attribution:</span>
-                  <span className="font-mono">Google $6,050</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Linear Attribution:</span>
-                  <span className="font-mono">Google $5,420</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>First-Touch Attribution:</span>
-                  <span className="font-mono">Meta $5,375</span>
-                </div>
-              </div>
-              <p className="text-gray-600 text-sm mt-2">
-                SQL analysis shows Meta initiates 72% of customer journeys, 
-                while Google closes 68% - different roles require different strategies
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Cohort Analysis Chart */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-xl font-bold mb-4">Customer Retention Analysis (SQL-Derived)</h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={[
-            { month: 0, retention: 100, revenue: 25.0 },
-            { month: 1, retention: 74.8, revenue: 28.5 },
-            { month: 2, retention: 55.4, revenue: 31.2 },
-            { month: 3, retention: 47.4, revenue: 33.8 },
-            { month: 4, retention: 42.1, revenue: 35.1 },
-            { month: 5, retention: 38.7, revenue: 36.8 }
-          ]}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" label={{ value: 'Months Since Acquisition', position: 'insideBottom', offset: -5 }} />
-            <YAxis yAxisId="left" label={{ value: 'Retention %', angle: -90, position: 'insideLeft' }} />
-            <YAxis yAxisId="right" orientation="right" label={{ value: 'Avg Revenue', angle: 90, position: 'insideRight' }} />
-            <Tooltip />
-            <Legend />
-            <Line yAxisId="left" type="monotone" dataKey="retention" stroke="#8884d8" strokeWidth={3} name="Retention Rate %" />
-            <Line yAxisId="right" type="monotone" dataKey="revenue" stroke="#82ca9d" strokeWidth={3} name="Avg Revenue $" />
-          </LineChart>
-        </ResponsiveContainer>
-        <p className="text-gray-600 text-sm mt-2">
-          <strong>SQL Insight:</strong> DATEDIFF and LAG functions reveal customer value increases 
-          over time despite retention decline - focus on long-term value optimization
-        </p>
-      </div>
-
-      {/* Statistical Analysis */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-xl font-bold mb-4">Statistical Performance Analysis</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h4 className="font-semibold mb-3">Platform Efficiency Distribution</h4>
-            <ResponsiveContainer width="100%" height={200}>
-              <ScatterChart data={[
-                { platform: 'Google', efficiency: 4.5, volatility: 2.1, conversions: 242 },
-                { platform: 'Meta', efficiency: 3.8, volatility: 3.4, conversions: 215 },
-                { platform: 'Reddit', efficiency: 3.0, volatility: 5.2, conversions: 68 },
-                { platform: 'TikTok', efficiency: 2.4, volatility: 6.8, conversions: 38 }
-              ]}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="efficiency" name="ROAS" />
-                <YAxis dataKey="volatility" name="CPA Volatility" />
-                <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-                <Scatter dataKey="conversions" fill="#8884d8" />
-              </ScatterChart>
-            </ResponsiveContainer>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-3">SQL-Calculated Metrics</h4>
-            <div className="space-y-3 text-sm">
-              <div className="flex justify-between">
-                <span>Conversion Rate Variance (STDDEV):</span>
-                <span className="font-mono">±1.8%</span>
-              </div>
-              <div className="flex justify-between">
-                <span>CPA Correlation (Google vs Meta):</span>
-                <span className="font-mono">-0.67</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Weekly Seasonality Index:</span>
-                <span className="font-mono">1.12x Wed-Fri</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Attribution Variance Range:</span>
-                <span className="font-mono">33-68%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  const RecommendationsTab = () => (
-    <div className="space-y-6">
-      {/* Executive Summary */}
-      <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg p-8">
-        <h2 className="text-2xl font-bold mb-2">SQL-Driven Strategic Recommendations</h2>
-        <p className="text-orange-100">Data-backed decisions for immediate campaign optimization</p>
-      </div>
-
-      {/* Immediate Actions */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <div className="flex items-center mb-6">
-          <Lightbulb className="h-6 w-6 text-yellow-500 mr-2" />
-          <h3 className="text-xl font-bold">Immediate SQL-Backed Actions</h3>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <div className="bg-green-50 border-l-4 border-green-400 p-4">
-              <h4 className="font-bold text-green-800">Budget Reallocation</h4>
-              <p className="text-green-700 text-sm mb-2">
-                <strong>SQL Finding:</strong> Platform efficiency analysis shows Google achieving 4.5x ROAS 
-                vs 3.0x for Reddit
-              </p>
-              <p className="text-green-800 font-semibold">
-                Action: Shift $300 from Reddit → Google
-              </p>
-              <p className="text-green-600 text-sm">
-                Expected: +47 conversions, +$1,175 revenue (18% improvement)
-              </p>
-            </div>
-
-            <div className="bg-blue-50 border-l-4 border-blue-400 p-4">
-              <h4 className="font-bold text-blue-800">Audience Optimization</h4>
-              <p className="text-blue-700 text-sm mb-2">
-                <strong>SQL Finding:</strong> Cohort analysis reveals 18-24 segment has 
-                2.3x higher conversion rate and 74.8% retention
-              </p>
-              <p className="text-blue-800 font-semibold">
-                Action: Increase 18-24 targeting by 40%
-              </p>
-              <p className="text-blue-600 text-sm">
-                Expected: +32 conversions, improved CLV by $4.50
-              </p>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <div className="bg-purple-50 border-l-4 border-purple-400 p-4">
-              <h4 className="font-bold text-purple-800">Attribution Strategy</h4>
-              <p className="text-purple-700 text-sm mb-2">
-                <strong>SQL Finding:</strong> Multi-touch attribution shows Meta initiates 72% 
-                of journeys, Google closes 68%
-              </p>
-              <p className="text-purple-800 font-semibold">
-                Action: Separate upper/lower funnel strategies
-              </p>
-              <p className="text-purple-600 text-sm">
-                Expected: 25% improvement in customer journey efficiency
-              </p>
-            </div>
-
-            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
-              <h4 className="font-bold text-yellow-800">Creative Refresh</h4>
-              <p className="text-yellow-700 text-sm mb-2">
-                <strong>SQL Finding:</strong> Window function analysis shows TikTok CTR 
-                improved 180% after Day 12 creative refresh
-              </p>
-              <p className="text-yellow-800 font-semibold">
-                Action: Weekly creative testing across all platforms
-              </p>
-              <p className="text-yellow-600 text-sm">
-                Expected: 15-25% CTR improvement based on historical data
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Strategic Recommendations */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-xl font-bold mb-4">Long-term Strategic Insights</h3>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div>
-            <h4 className="font-semibold mb-3 text-blue-800">Customer Journey Optimization</h4>
-            <ul className="space-y-2 text-sm">
-              <li>• Implement sequential messaging based on attribution analysis</li>
-              <li>• Meta for awareness, Google for conversion</li>
-              <li>• Cross-platform frequency capping using user-level data</li>
-              <li>• Optimize for 3-touchpoint journey (highest efficiency)</li>
-            </ul>
-          </div>
-          
-          <div>
-            <h4 className="font-semibold mb-3 text-green-800">Data Infrastructure</h4>
-            <ul className="space-y-2 text-sm">
-              <li>• Implement real-time data pipeline for daily optimization</li>
-              <li>• Set up automated alerts for CPA volatility (>2 standard deviations)</li>
-              <li>• Build cohort tracking for all acquisition channels</li>
-              <li>• Create attribution modeling dashboard</li>
-            </ul>
-          </div>
-          
-          <div>
-            <h4 className="font-semibold mb-3 text-purple-800">Scale Preparation</h4>
-            <ul className="space-y-2 text-sm">
-              <li>• Google can efficiently handle 50% budget increase</li>
-              <li>• Meta needs creative diversification before scaling</li>
-              <li>• Test YouTube based on audience overlap analysis</li>
-              <li>• Implement incrementality testing framework</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      {/* Business Impact Quantification */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-xl font-bold mb-4">Quantified Business Impact</h3>
-        
-        <div className="bg-gray-50 rounded-lg p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <h4 className="font-bold mb-4">Current Performance (SQL Calculated)</h4>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span>Total Conversions:</span>
-                  <span className="font-mono">563</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Total Revenue:</span>
-                  <span className="font-mono">$14,075</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Blended ROAS:</span>
-                  <span className="font-mono">3.56x</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Average CPA:</span>
-                  <span className="font-mono">$17.68</span>
-                </div>
-              </div>
-            </div>
+        function showQuery() {
+            const selectedQuery = document.getElementById('querySelect').value;
+            const query = queries[selectedQuery];
             
-            <div>
-              <h4 className="font-bold mb-4">Optimized Projection</h4>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span>Projected Conversions:</span>
-                  <span className="font-mono text-green-600">679 (+20.6%)</span>
+            document.getElementById('queryDescription').innerHTML = `
+                <h4 class="text-lg font-semibold text-gray-800">${query.title}</h4>
+                <p class="text-gray-600">${query.description}</p>
+            `;
+            
+            document.getElementById('sqlCode').textContent = query.sql;
+        }
+
+        function toggleResults() {
+            const results = document.getElementById('queryResults');
+            const button = document.getElementById('executeButtonText');
+            
+            if (results.style.display === 'none') {
+                results.style.display = 'block';
+                button.textContent = 'Hide Results';
+            } else {
+                results.style.display = 'none';
+                button.textContent = 'Execute Query';
+            }
+        }
+
+        // Chart initialization functions
+        function initPerformanceChart() {
+            const ctx = document.getElementById('performanceChart');
+            if (!ctx) return;
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Google', 'Meta', 'Reddit', 'TikTok'],
+                    datasets: [{
+                        label: 'Conversions',
+                        data: [242, 215, 68, 38],
+                        backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                        borderColor: 'rgb(59, 130, 246)',
+                        borderWidth: 1
+                    }, {
+                        label: 'CPA ($)',
+                        data: [13.97, 17.91, 20.88, 25.00],
+                        backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                        borderColor: 'rgb(16, 185, 129)',
+                        borderWidth: 1,
+                        yAxisID: 'y1'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: { display: true, text: 'Conversions' }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: { display: true, text: 'CPA ($)' },
+                            grid: { drawOnChartArea: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        function initRetentionChart() {
+            const ctx = document.getElementById('retentionChart');
+            if (!ctx) return;
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Month 0', 'Month 1', 'Month 2', 'Month 3', 'Month 4', 'Month 5'],
+                    datasets: [{
+                        label: 'Retention Rate %',
+                        data: [100, 74.8, 55.4, 47.4, 42.1, 38.7],
+                        borderColor: 'rgb(59, 130, 246)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        yAxisID: 'y'
+                    }, {
+                        label: 'Avg Revenue  p-4">
+                            <p class="font-semibold text-green-800">Google: The Efficiency Leader</p>
+                            <p class="text-green-700 text-sm">
+                                42% of total conversions at $13.97 CPA - 15% below forecasted $16.50. 
+                                SQL analysis shows 4.5x ROAS with lowest volatility (σ = 2.1)
+                            </p>
+                        </div>
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
+                            <p class="font-semibold text-blue-800">Meta: High Volume, Scaling Opportunity</p>
+                            <p class="text-blue-700 text-sm">
+                                Highest absolute conversions (215) but higher CPA variability. 
+                                Window function analysis shows 8.7% month-over-month growth
+                            </p>
+                        </div>
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                            <p class="font-semibold text-yellow-800">Reddit: Demographic Winner</p>
+                            <p class="text-yellow-700 text-sm">
+                                18-24 segment converts 2.3x better than 25-35. 
+                                Cohort analysis reveals 74.8% retention in month 1
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                <div className="flex justify-between">
-                  <span>Projected Revenue:</span>
-                  <span className="font-mono text-green-600">$16,975 (+20.6%)</span>
+
+                <!-- Attribution Insights -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="trending-up" class="w-6 h-6 text-blue-500 mr-2"></i>
+                        <h4 class="text-lg font-bold">Attribution Model Findings</h4>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 p-4 rounded">
+                            <p class="font-semibold">Multi-Touch Attribution Reveals Hidden Value</p>
+                            <div class="mt-2 space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>Last-Touch Attribution:</span>
+                                    <span class="font-mono">Google $6,050</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Linear Attribution:</span>
+                                    <span class="font-mono">Google $5,420</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>First-Touch Attribution:</span>
+                                    <span class="font-mono">Meta $5,375</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mt-2">
+                                SQL analysis shows Meta initiates 72% of customer journeys, 
+                                while Google closes 68% - different roles require different strategies
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                <div className="flex justify-between">
-                  <span>Optimized ROAS:</span>
-                  <span className="font-mono text-green-600">4.29x (+20.5%)</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Optimized CPA:</span>
-                  <span className="font-mono text-green-600">$14.63 (-17.2%)</span>
-                </div>
-              </div>
             </div>
-          </div>
-          
-          <div className="mt-6 pt-4 border-t">
-            <p className="text-center text-lg font-bold text-green-600">
-              Net Impact: +$2,900 revenue improvement with same $10K budget
-            </p>
-            <p className="text-center text-sm text-gray-600 mt-1">
-              All projections based on SQL statistical analysis of historical performance patterns
-            </p>
-          </div>
+
+            <!-- Retention Analysis Chart -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h4 class="text-xl font-bold mb-4">Customer Retention Analysis (SQL-Derived)</h4>
+                <canvas id="retentionChart" width="400" height="200"></canvas>
+                <p class="text-gray-600 text-sm mt-2">
+                    <strong>SQL Insight:</strong> DATEDIFF and LAG functions reveal customer value increases 
+                    over time despite retention decline - focus on long-term value optimization
+                </p>
+            </div>
+
+            <!-- Statistical Analysis -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h4 class="text-xl font-bold mb-4">Statistical Performance Analysis</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h5 class="font-semibold mb-3">Platform Efficiency Distribution</h5>
+                        <canvas id="efficiencyChart" width="400" height="200"></canvas>
+                    </div>
+                    <div>
+                        <h5 class="font-semibold mb-3">SQL-Calculated Metrics</h5>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span>Conversion Rate Variance (STDDEV):</span>
+                                <span class="font-mono">±1.8%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>CPA Correlation (Google vs Meta):</span>
+                                <span class="font-mono">-0.67</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Weekly Seasonality Index:</span>
+                                <span class="font-mono">1.12x Wed-Fri</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Attribution Variance Range:</span>
+                                <span class="font-mono">33-68%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-4">
-              <Database className="h-8 w-8 text-blue-600" />
-              <h1 className="text-xl font-bold text-gray-900">Boston Beats 2025 - SQL Analytics</h1>
+        <!-- Recommendations Tab -->
+        <div id="recommendations" class="tab-content">
+            <div class="bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg p-8 mb-6">
+                <h3 class="text-2xl font-bold mb-2">SQL-Driven Strategic Recommendations</h3>
+                <p class="text-orange-100">Data-backed decisions for immediate campaign optimization</p>
             </div>
-            <div className="flex space-x-1">
-              {[
-                { id: 'overview', label: 'Dataset Overview', icon: Database },
-                { id: 'queries', label: 'SQL Queries', icon: Code },
-                { id: 'insights', label: 'Insights', icon: TrendingUp },
-                { id: 'recommendations', label: 'Recommendations', icon: Lightbulb }
-              ].map(({ id, label, icon: Icon }) => (
-                <button
-                  key={id}
-                  onClick={() => setActiveTab(id)}
-                  className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    activeTab === id
-                      ? 'bg-blue-100 text-blue-700'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                  }`}
-                >
-                  <Icon className="h-4 w-4 mr-2" />
-                  {label}
-                </button>
-              ))}
+
+            <!-- Immediate Actions -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <div class="flex items-center mb-6">
+                    <i data-lucide="lightbulb" class="w-6 h-6 text-yellow-500 mr-2"></i>
+                    <h4 class="text-xl font-bold">Immediate SQL-Backed Actions</h4>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div class="bg-green-50 border-l-4 border-green-400,
+                        data: [25.0, 28.5, 31.2, 33.8, 35.1, 36.8],
+                        borderColor: 'rgb(16, 185, 129)',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4,
+                        yAxisID: 'y1'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: { display: true, text: 'Retention %' }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: { display: true, text: 'Avg Revenue  p-4">
+                            <p class="font-semibold text-green-800">Google: The Efficiency Leader</p>
+                            <p class="text-green-700 text-sm">
+                                42% of total conversions at $13.97 CPA - 15% below forecasted $16.50. 
+                                SQL analysis shows 4.5x ROAS with lowest volatility (σ = 2.1)
+                            </p>
+                        </div>
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
+                            <p class="font-semibold text-blue-800">Meta: High Volume, Scaling Opportunity</p>
+                            <p class="text-blue-700 text-sm">
+                                Highest absolute conversions (215) but higher CPA variability. 
+                                Window function analysis shows 8.7% month-over-month growth
+                            </p>
+                        </div>
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                            <p class="font-semibold text-yellow-800">Reddit: Demographic Winner</p>
+                            <p class="text-yellow-700 text-sm">
+                                18-24 segment converts 2.3x better than 25-35. 
+                                Cohort analysis reveals 74.8% retention in month 1
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attribution Insights -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="trending-up" class="w-6 h-6 text-blue-500 mr-2"></i>
+                        <h4 class="text-lg font-bold">Attribution Model Findings</h4>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 p-4 rounded">
+                            <p class="font-semibold">Multi-Touch Attribution Reveals Hidden Value</p>
+                            <div class="mt-2 space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>Last-Touch Attribution:</span>
+                                    <span class="font-mono">Google $6,050</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Linear Attribution:</span>
+                                    <span class="font-mono">Google $5,420</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>First-Touch Attribution:</span>
+                                    <span class="font-mono">Meta $5,375</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mt-2">
+                                SQL analysis shows Meta initiates 72% of customer journeys, 
+                                while Google closes 68% - different roles require different strategies
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+
+            <!-- Retention Analysis Chart -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h4 class="text-xl font-bold mb-4">Customer Retention Analysis (SQL-Derived)</h4>
+                <canvas id="retentionChart" width="400" height="200"></canvas>
+                <p class="text-gray-600 text-sm mt-2">
+                    <strong>SQL Insight:</strong> DATEDIFF and LAG functions reveal customer value increases 
+                    over time despite retention decline - focus on long-term value optimization
+                </p>
+            </div>
+
+            <!-- Statistical Analysis -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h4 class="text-xl font-bold mb-4">Statistical Performance Analysis</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h5 class="font-semibold mb-3">Platform Efficiency Distribution</h5>
+                        <canvas id="efficiencyChart" width="400" height="200"></canvas>
+                    </div>
+                    <div>
+                        <h5 class="font-semibold mb-3">SQL-Calculated Metrics</h5>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span>Conversion Rate Variance (STDDEV):</span>
+                                <span class="font-mono">±1.8%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>CPA Correlation (Google vs Meta):</span>
+                                <span class="font-mono">-0.67</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Weekly Seasonality Index:</span>
+                                <span class="font-mono">1.12x Wed-Fri</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Attribution Variance Range:</span>
+                                <span class="font-mono">33-68%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </nav>
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        {activeTab === 'overview' && <OverviewTab />}
-        {activeTab === 'queries' && <SQLQueriesTab />}
-        {activeTab === 'insights' && <InsightsTab />}
-        {activeTab === 'recommendations' && <RecommendationsTab />}
-      </main>
-    </div>
-  );
-};
+        <!-- Recommendations Tab -->
+        <div id="recommendations" class="tab-content">
+            <div class="bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg p-8 mb-6">
+                <h3 class="text-2xl font-bold mb-2">SQL-Driven Strategic Recommendations</h3>
+                <p class="text-orange-100">Data-backed decisions for immediate campaign optimization</p>
+            </div>
 
-export default SQLAnalyticsDashboard;
+            <!-- Immediate Actions -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <div class="flex items-center mb-6">
+                    <i data-lucide="lightbulb" class="w-6 h-6 text-yellow-500 mr-2"></i>
+                    <h4 class="text-xl font-bold">Immediate SQL-Backed Actions</h4>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div class="bg-green-50 border-l-4 border-green-400 },
+                            grid: { drawOnChartArea: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        function initEfficiencyChart() {
+            const ctx = document.getElementById('efficiencyChart');
+            if (!ctx) return;
+            
+            new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Platform Efficiency',
+                        data: [
+                            {x: 4.5, y: 2.1, label: 'Google'},
+                            {x: 3.8, y: 3.4, label: 'Meta'},
+                            {x: 3.0, y: 5.2, label: 'Reddit'},
+                            {x: 2.4, y: 6.8, label: 'TikTok'}
+                        ],
+                        backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                        borderColor: 'rgb(59, 130, 246)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'ROAS' }
+                        },
+                        y: {
+                            title: { display: true, text: 'CPA Volatility' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            showTab('overview');
+        });
+    </script>
+</body>
+</html> p-4">
+                            <p class="font-semibold text-green-800">Google: The Efficiency Leader</p>
+                            <p class="text-green-700 text-sm">
+                                42% of total conversions at $13.97 CPA - 15% below forecasted $16.50. 
+                                SQL analysis shows 4.5x ROAS with lowest volatility (σ = 2.1)
+                            </p>
+                        </div>
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
+                            <p class="font-semibold text-blue-800">Meta: High Volume, Scaling Opportunity</p>
+                            <p class="text-blue-700 text-sm">
+                                Highest absolute conversions (215) but higher CPA variability. 
+                                Window function analysis shows 8.7% month-over-month growth
+                            </p>
+                        </div>
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                            <p class="font-semibold text-yellow-800">Reddit: Demographic Winner</p>
+                            <p class="text-yellow-700 text-sm">
+                                18-24 segment converts 2.3x better than 25-35. 
+                                Cohort analysis reveals 74.8% retention in month 1
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attribution Insights -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="trending-up" class="w-6 h-6 text-blue-500 mr-2"></i>
+                        <h4 class="text-lg font-bold">Attribution Model Findings</h4>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 p-4 rounded">
+                            <p class="font-semibold">Multi-Touch Attribution Reveals Hidden Value</p>
+                            <div class="mt-2 space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>Last-Touch Attribution:</span>
+                                    <span class="font-mono">Google $6,050</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Linear Attribution:</span>
+                                    <span class="font-mono">Google $5,420</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>First-Touch Attribution:</span>
+                                    <span class="font-mono">Meta $5,375</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mt-2">
+                                SQL analysis shows Meta initiates 72% of customer journeys, 
+                                while Google closes 68% - different roles require different strategies
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Retention Analysis Chart -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h4 class="text-xl font-bold mb-4">Customer Retention Analysis (SQL-Derived)</h4>
+                <canvas id="retentionChart" width="400" height="200"></canvas>
+                <p class="text-gray-600 text-sm mt-2">
+                    <strong>SQL Insight:</strong> DATEDIFF and LAG functions reveal customer value increases 
+                    over time despite retention decline - focus on long-term value optimization
+                </p>
+            </div>
+
+            <!-- Statistical Analysis -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h4 class="text-xl font-bold mb-4">Statistical Performance Analysis</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h5 class="font-semibold mb-3">Platform Efficiency Distribution</h5>
+                        <canvas id="efficiencyChart" width="400" height="200"></canvas>
+                    </div>
+                    <div>
+                        <h5 class="font-semibold mb-3">SQL-Calculated Metrics</h5>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span>Conversion Rate Variance (STDDEV):</span>
+                                <span class="font-mono">±1.8%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>CPA Correlation (Google vs Meta):</span>
+                                <span class="font-mono">-0.67</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Weekly Seasonality Index:</span>
+                                <span class="font-mono">1.12x Wed-Fri</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Attribution Variance Range:</span>
+                                <span class="font-mono">33-68%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendations Tab -->
+        <div id="recommendations" class="tab-content">
+            <div class="bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg p-8 mb-6">
+                <h3 class="text-2xl font-bold mb-2">SQL-Driven Strategic Recommendations</h3>
+                <p class="text-orange-100">Data-backed decisions for immediate campaign optimization</p>
+            </div>
+
+            <!-- Immediate Actions -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <div class="flex items-center mb-6">
+                    <i data-lucide="lightbulb" class="w-6 h-6 text-yellow-500 mr-2"></i>
+                    <h4 class="text-xl font-bold">Immediate SQL-Backed Actions</h4>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div class="bg-green-50 border-l-4 border-green-400
