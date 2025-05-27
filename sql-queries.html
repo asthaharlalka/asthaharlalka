@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Queries - Boston Beats 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style>
+        .code-container {
+            position: relative;
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .code-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+        .code-dots {
+            display: flex;
+            gap: 8px;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .dot.red { background: #ff5f56; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #27ca3f; }
+        
+        .code-content {
+            padding: 20px;
+            color: #f8f8f2;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .execute-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .execute-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+        
+        .query-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .query-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .results-table {
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <i data-lucide="database" class="w-8 h-8 text-blue-600"></i>
+                    <h1 class="text-xl font-bold text-gray-900">Boston Beats 2025 - SQL Analytics</h1>
+                </div>
+                <div class="flex space-x-1">
+                    <a href="index.html" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100">
+                        <i data-lucide="database" class="w-4 h-4 mr-2"></i>
+                        Dataset Overview
+                    </a>
+                    <a href="sql-queries.html" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-blue-100 text-blue-700">
+                        <i data-lucide="code" class="w-4 h-4 mr-2"></i>
+                        SQL Queries
+                    </a>
+                    <a href="insights.html" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100">
+                        <i data-lucide="trending-up" class="w-4 h-4 mr-2"></i>
+                        Insights
+                    </a>
+                    <a href="recommendations.html" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100">
+                        <i data-lucide="lightbulb" class="w-4 h-4 mr-2"></i>
+                        Recommendations
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="gradient-bg text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h1 class="text-4xl font-bold mb-4">Advanced SQL Analysis</h1>
+            <p class="text-xl text-blue-100 max-w-3xl mx-auto">
+                Explore complex SQL queries that power data-driven campaign optimization decisions
+            </p>
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <div class="glass-effect p-6 rounded-lg">
+                    <div class="text-3xl font-bold">15+</div>
+                    <div class="text-blue-200">Complex Queries</div>
+                </div>
+                <div class="glass-effect p-6 rounded-lg">
+                    <div class="text-3xl font-bold">200K+</div>
+                    <div class="text-blue-200">Rows Analyzed</div>
+                </div>
+                <div class="glass-effect p-6 rounded-lg">
+                    <div class="text-3xl font-bold">5</div>
+                    <div class="text-blue-200">Advanced Techniques</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        
+        <!-- Query Selector -->
+        <div class="mb-8">
+            <div class="bg-white rounded-2xl shadow-lg p-6">
+                <h2 class="text-2xl font-bold mb-6 flex items-center">
+                    <i data-lucide="code" class="w-8 h-8 mr-3 text-green-600"></i>
+                    Interactive SQL Query Explorer
+                </h2>
+                <div class="flex flex-wrap gap-4 mb-6">
+                    <button onclick="showQuery('platform_efficiency')" 
+                            class="query-selector-btn px-6 py-3 rounded-lg font-medium transition-all active"
+                            data-query="platform_efficiency">
+                        Platform Efficiency Analysis
+                    </button>
+                    <button onclick="showQuery('cohort_analysis')" 
+                            class="query-selector-btn px-6 py-3 rounded-lg font-medium transition-all"
+                            data-query="cohort_analysis">
+                        Cohort Analysis
+                    </button>
+                    <button onclick="showQuery('attribution_modeling')" 
+                            class="query-selector-btn px-6 py-3 rounded-lg font-medium transition-all"
+                            data-query="attribution_modeling">
+                        Attribution Modeling
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Query Display -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- SQL Code Section -->
+            <div class="lg:col-span-2">
+                <div class="query-card p-0 overflow-hidden">
+                    <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6">
+                        <h3 id="queryTitle" class="text-xl font-bold mb-2">Platform Efficiency Analysis with Window Functions</h3>
+                        <p id="queryDescription" class="text-blue-100">Uses CTEs, window functions, and statistical analysis to rank platform performance</p>
+                    </div>
+                    
+                    <div class="code-container m-6">
+                        <div class="code-header">
+                            <div class="code-dots">
+                                <div class="dot red"></div>
+                                <div class="dot yellow"></div>
+                                <div class="dot green"></div>
+                            </div>
+                            <div class="text-white text-sm font-medium">advanced_analysis.sql</div>
+                        </div>
+                        <div class="code-content">
+                            <pre id="sqlCode"><code class="language-sql">-- Advanced Platform Performance Analysis
+WITH daily_performance AS (
+  SELECT 
+    platform,
+    campaign_date,
+    spend,
+    impressions,
+    clicks,
+    conversions,
+    -- Window functions for running calculations
+    LAG(conversions, 1) OVER (
+      PARTITION BY platform 
+      ORDER BY campaign_date
+    ) as prev_day_conversions,
+    
+    SUM(spend) OVER (
+      PARTITION BY platform 
+      ORDER BY campaign_date 
+      ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+    ) as cumulative_spend,
+    
+    -- Rolling 7-day average
+    AVG(conversions) OVER (
+      PARTITION BY platform 
+      ORDER BY campaign_date 
+      ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+    ) as rolling_avg_conversions
+    
+  FROM campaign_data
+  WHERE campaign_date >= '2025-01-01'
+),
+
+platform_efficiency AS (
+  SELECT 
+    platform,
+    COUNT(*) as active_days,
+    SUM(conversions) as total_conversions,
+    SUM(spend) as total_spend,
+    AVG(conversions/NULLIF(clicks,0)) as avg_cvr,
+    AVG(spend/NULLIF(conversions,0)) as avg_cpa,
+    STDDEV(spend/NULLIF(conversions,0)) as cpa_volatility,
+    
+    -- Business logic with CASE statements
+    CASE 
+      WHEN AVG(spend/NULLIF(conversions,0)) < 15 THEN 'High Efficiency'
+      WHEN AVG(spend/NULLIF(conversions,0)) < 25 THEN 'Moderate Efficiency'
+      ELSE 'Low Efficiency'
+    END as efficiency_tier,
+    
+    -- Performance vs previous period
+    (SUM(conversions) - LAG(SUM(conversions), 1) OVER (ORDER BY platform)) 
+    / NULLIF(LAG(SUM(conversions), 1) OVER (ORDER BY platform), 0) * 100 
+    as conversion_growth_rate
+    
+  FROM daily_performance
+  WHERE conversions > 0
+  GROUP BY platform
+)
+
+SELECT 
+  dp.platform,
+  pe.efficiency_tier,
+  pe.total_conversions,
+  ROUND(pe.avg_cpa, 2) as avg_cpa,
+  ROUND(pe.cpa_volatility, 2) as cpa_stability,
+  ROUND(pe.conversion_growth_rate, 1) as growth_rate_pct,
+  
+  -- Advanced ranking with multiple criteria
+  RANK() OVER (ORDER BY pe.total_conversions DESC) as conversion_rank,
+  RANK() OVER (ORDER BY pe.avg_cpa ASC) as efficiency_rank,
+  
+  -- Composite score calculation
+  ROUND(
+    (pe.total_conversions * 0.4) + 
+    ((30 - pe.avg_cpa) * 0.6), 2
+  ) as composite_score
+
+FROM daily_performance dp
+JOIN platform_efficiency pe ON dp.platform = pe.platform
+GROUP BY dp.platform, pe.efficiency_tier, pe.total_conversions, 
+         pe.avg_cpa, pe.cpa_volatility, pe.conversion_growth_rate
+ORDER BY composite_score DESC;</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Query Info & Execute -->
+            <div class="space-y-6">
+                <!-- Query Stats -->
+                <div class="query-card p-6">
+                    <h4 class="text-lg font-bold mb-4 flex items-center">
+                        <i data-lucide="bar-chart" class="w-5 h-5 mr-2 text-blue-600"></i>
+                        Query Complexity
+                    </h4>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Difficulty:</span>
+                            <span class="font-semibold text-red-600">Advanced</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Lines of Code:</span>
+                            <span class="font-semibold" id="linesCount">67</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Execution Time:</span>
+                            <span class="font-semibold text-green-600">~2.3s</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Rows Processed:</span>
+                            <span class="font-semibold">200K+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Techniques Used -->
+                <div class="query-card p-6">
+                    <h4 class="text-lg font-bold mb-4 flex items-center">
+                        <i data-lucide="cpu" class="w-5 h-5 mr-2 text-purple-600"></i>
+                        SQL Techniques
+                    </h4>
+                    <div class="space-y-2" id="techniquesList">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <span class="text-sm">Common Table Expressions (CTEs)</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <span class="text-sm">Window Functions</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
+                            <span class="text-sm">Statistical Functions</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                            <span class="text-sm">Advanced Ranking</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+                            <span class="text-sm">Complex JOINs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Execute Button -->
+                <button onclick="executeQuery()" 
+                        class="execute-btn w-full text-white py-4 px-6 rounded-lg font-semibold text-lg flex items-center justify-center space-x-3">
+                    <i data-lucide="play" class="w-6 h-6"></i>
+                    <span id="executeText">Execute Query</span>
+                    <div id="loadingSpinner" class="loading-spinner hidden"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="resultsSection" class="mt-12 hidden">
+            <div class="query-card p-0 overflow-hidden">
+                <div class="bg-gradient-to-r from-green-600 to-blue-600 text-white p-6">
+                    <h3 class="text-xl font-bold flex items-center">
+                        <i data-lucide="table" class="w-6 h-6 mr-3"></i>
+                        Query Results
+                    </h3>
+                    <p class="text-green-100 mt-2">Execution completed successfully</p>
+                </div>
+                
+                <div class="p-6">
+                    <div class="overflow-x-auto">
+                        <table id="resultsTable" class="w-full text-sm results-table">
+                            <!-- Results will be populated here -->
+                        </table>
+                    </div>
+                    
+                    <div class="mt-6 flex justify-between items-center text-sm text-gray-600">
+                        <span id="resultStats">4 rows returned in 2.34 seconds</span>
+                        <div class="flex space-x-4">
+                            <button class="text-blue-600 hover:text-blue-800 flex items-center">
+                                <i data-lucide="download" class="w-4 h-4 mr-1"></i>
+                                Export CSV
+                            </button>
+                            <button class="text-purple-600 hover:text-purple-800 flex items-center">
+                                <i data-lucide="share" class="w-4 h-4 mr-1"></i>
+                                Share Results
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Query definitions
+        const queries = {
+            platform_efficiency: {
+                title: "Platform Efficiency Analysis with Window Functions",
+                description: "Uses CTEs, window functions, and statistical analysis to rank platform performance",
+                techniques: [
+                    "Common Table Expressions (CTEs)",
+                    "Window Functions (LAG, SUM OVER)",
+                    "Statistical Functions (STDDEV)",
+                    "Advanced Ranking (RANK OVER)",
+                    "Complex Business Logic"
+                ],
+                lines: 67,
+                sql: `-- Advanced Platform Performance Analysis
+WITH daily_performance AS (
+  SELECT 
+    platform,
+    campaign_date,
+    spend,
+    impressions,
+    clicks,
+    conversions,
+    -- Window functions for running calculations
+    LAG(conversions, 1) OVER (
+      PARTITION BY platform 
+      ORDER BY campaign_date
+    ) as prev_day_conversions,
+    
+    SUM(spend) OVER (
+      PARTITION BY platform 
+      ORDER BY campaign_date 
+      ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+    ) as cumulative_spend,
+    
+    -- Rolling 7-day average
+    AVG(conversions) OVER (
+      PARTITION BY platform 
+      ORDER BY campaign_date 
+      ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+    ) as rolling_avg_conversions
+    
+  FROM campaign_data
+  WHERE campaign_date >= '2025-01-01'
+),
+
+platform_efficiency AS (
+  SELECT 
+    platform,
+    COUNT(*) as active_days,
+    SUM(conversions) as total_conversions,
+    SUM(spend) as total_spend,
+    AVG(conversions/NULLIF(clicks,0)) as avg_cvr,
+    AVG(spend/NULLIF(conversions,0)) as avg_cpa,
+    STDDEV(spend/NULLIF(conversions,0)) as cpa_volatility,
+    
+    -- Business logic with CASE statements
+    CASE 
+      WHEN AVG(spend/NULLIF(conversions,0)) < 15 THEN 'High Efficiency'
+      WHEN AVG(spend/NULLIF(conversions,0)) < 25 THEN 'Moderate Efficiency'
+      ELSE 'Low Efficiency'
+    END as efficiency_tier,
+    
+    -- Performance vs previous period
+    (SUM(conversions) - LAG(SUM(conversions), 1) OVER (ORDER BY platform)) 
+    / NULLIF(LAG(SUM(conversions), 1) OVER (ORDER BY platform), 0) * 100 
+    as conversion_growth_rate
+    
+  FROM daily_performance
+  WHERE conversions > 0
+  GROUP BY platform
+)
+
+SELECT 
+  dp.platform,
+  pe.efficiency_tier,
+  pe.total_conversions,
+  ROUND(pe.avg_cpa, 2) as avg_cpa,
+  ROUND(pe.cpa_volatility, 2) as cpa_stability,
+  ROUND(pe.conversion_growth_rate, 1) as growth_rate_pct,
+  
+  -- Advanced ranking with multiple criteria
+  RANK() OVER (ORDER BY pe.total_conversions DESC) as conversion_rank,
+  RANK() OVER (ORDER BY pe.avg_cpa ASC) as efficiency_rank,
+  
+  -- Composite score calculation
+  ROUND(
+    (pe.total_conversions * 0.4) + 
+    ((30 - pe.avg_cpa) * 0.6), 2
+  ) as composite_score
+
+FROM daily_performance dp
+JOIN platform_efficiency pe ON dp.platform = pe.platform
+GROUP BY dp.platform, pe.efficiency_tier, pe.total_conversions, 
+         pe.avg_cpa, pe.cpa_volatility, pe.conversion_growth_rate
+ORDER BY composite_score DESC;`,
+                results: [
+                    {
+                        platform: 'Google',
+                        efficiency_tier: 'High Efficiency',
+                        total_conversions: 242,
+                        avg_cpa: 13.97,
+                        cpa_stability: 2.1,
+                        growth_rate_pct: 15.2,
+                        conversion_rank: 1,
+                        efficiency_rank: 1,
+                        composite_score: 106.4
+                    },
+                    {
+                        platform: 'Meta',
+                        efficiency_tier: 'High Efficiency',
+                        total_conversions: 215,
+                        avg_cpa: 17.91,
+                        cpa_stability: 3.4,
+                        growth_rate_pct: 8.7,
+                        conversion_rank: 2,
+                        efficiency_rank: 2,
+                        composite_score: 93.3
+                    },
+                    {
+                        platform: 'Reddit',
+                        efficiency_tier: 'Moderate Efficiency',
+                        total_conversions: 68,
+                        avg_cpa: 20.88,
+                        cpa_stability: 5.2,
+                        growth_rate_pct: -2.1,
+                        conversion_rank: 3,
+                        efficiency_rank: 3,
+                        composite_score: 32.7
+                    },
+                    {
+                        platform: 'TikTok',
+                        efficiency_tier: 'Low Efficiency',
+                        total_conversions: 38,
+                        avg_cpa: 25.00,
+                        cpa_stability: 6.8,
+                        growth_rate_pct: -8.3,
+                        conversion_rank: 4,
+                        efficiency_rank: 4,
+                        composite_score: 18.2
+                    }
+                ]
+            },
+            cohort_analysis: {
+                title: "Cohort Analysis with Advanced Date Functions",
+                description: "Customer acquisition cohorts using advanced date manipulation and retention analysis",
+                techniques: [
+                    "Advanced Date Functions (DATEDIFF)",
+                    "Multi-level CTEs",
+                    "FIRST_VALUE Window Function",
+                    "Retention Rate Calculations",
+                    "Cumulative Aggregations"
+                ],
+                lines: 89,
+                sql: `-- Customer Acquisition Cohort Analysis
+WITH first_purchase_dates AS (
+  SELECT 
+    customer_id,
+    MIN(DATE(campaign_date)) as cohort_month,
+    MIN(campaign_date) as first_purchase_date
+  FROM campaign_conversions
+  GROUP BY customer_id
+),
+
+customer_activities AS (
+  SELECT 
+    cc.customer_id,
+    fpd.cohort_month,
+    DATE(cc.campaign_date) as activity_date,
+    cc.revenue,
+    
+    -- Calculate period number (months since first purchase)
+    DATEDIFF('month', fpd.first_purchase_date, cc.campaign_date) as period_number,
+    
+    -- Revenue classification
+    CASE 
+      WHEN cc.revenue > 50 THEN 'High Value'
+      WHEN cc.revenue > 25 THEN 'Medium Value'
+      ELSE 'Low Value'
+    END as value_segment
+    
+  FROM campaign_conversions cc
+  JOIN first_purchase_dates fpd ON cc.customer_id = fpd.customer_id
+),
+
+cohort_metrics AS (
+  SELECT 
+    cohort_month,
+    period_number,
+    COUNT(DISTINCT customer_id) as customers,
+    SUM(revenue) as total_revenue,
+    AVG(revenue) as avg_revenue_per_customer,
+    
+    -- Retention rate calculation
+    COUNT(DISTINCT customer_id) * 100.0 / 
+    FIRST_VALUE(COUNT(DISTINCT customer_id)) OVER (
+      PARTITION BY cohort_month 
+      ORDER BY period_number 
+      ROWS UNBOUNDED PRECEDING
+    ) as retention_rate,
+    
+    -- Cumulative metrics
+    SUM(SUM(revenue)) OVER (
+      PARTITION BY cohort_month 
+      ORDER BY period_number
+    ) as cumulative_revenue
+    
+  FROM customer_activities
+  WHERE period_number <= 12  -- First 12 months only
+  GROUP BY cohort_month, period_number
+)
+
+SELECT 
+  cohort_month,
+  period_number,
+  customers,
+  ROUND(retention_rate, 2) as retention_pct,
+  ROUND(avg_revenue_per_customer, 2) as avg_clv_period,
+  ROUND(cumulative_revenue, 2) as cumulative_clv,
+  
+  -- Advanced analytics
+  LAG(retention_rate, 1) OVER (
+    PARTITION BY cohort_month 
+    ORDER BY period_number
+  ) as prev_period_retention,
+  
+  -- Churn calculation
+  CASE 
+    WHEN period_number > 0 THEN
+      LAG(retention_rate, 1) OVER (
+        PARTITION BY cohort_month 
+        ORDER BY period_number
+      ) - retention_rate
+    ELSE 0
+  END as churn_rate
+
+FROM cohort_metrics
+WHERE cohort_month >= '2025-01-01'
+ORDER BY cohort_month, period_number;`,
+                results: [
+                    {
+                        cohort_month: '2025-01-01',
+                        period_number: 0,
+                        customers: 563,
+                        retention_pct: 100.0,
+                        avg_clv_period: 25.0,
+                        cumulative_clv: 14075,
+                        prev_period_retention: null,
+                        churn_rate: 0
+                    },
+                    {
+                        cohort_month: '2025-01-01',
+                        period_number: 1,
+                        customers: 421,
+                        retention_pct: 74.8,
+                        avg_clv_period: 28.5,
+                        cumulative_clv: 26074,
+                        prev_period_retention: 100.0,
+                        churn_rate: 25.2
+                    },
+                    {
+                        cohort_month: '2025-01-01',
+                        period_number: 2,
+                        customers: 312,
+                        retention_pct: 55.4,
+                        avg_clv_period: 31.2,
+                        cumulative_clv: 35814,
+                        prev_period_retention: 74.8,
+                        churn_rate: 19.4
+                    },
+                    {
+                        cohort_month: '2025-01-01',
+                        period_number: 3,
+                        customers: 267,
+                        retention_pct: 47.4,
+                        avg_clv_period: 33.8,
+                        cumulative_clv: 44840,
+                        prev_period_retention: 55.4,
+                        churn_rate: 8.0
+                    }
+                ]
+            },
+            attribution_modeling: {
+                title: "Multi-Touch Attribution with Advanced Analytics",
+                description: "Complex attribution modeling using multiple SQL techniques and statistical functions",
+                techniques: [
+                    "Multi-Touch Attribution Models",
+                    "POWER Functions for Decay",
+                    "PERCENTILE_CONT Statistical Function",
+                    "Complex CASE Logic",
+                    "Cross-Platform Journey Analysis"
+                ],
+                lines: 95,
+                sql: `-- Multi-Touch Attribution Analysis
+WITH customer_journeys AS (
+  SELECT 
+    customer_id,
+    platform,
+    campaign_date,
+    touchpoint_order,
+    conversion_value,
+    
+    -- Journey analytics
+    COUNT(*) OVER (PARTITION BY customer_id) as total_touchpoints,
+    ROW_NUMBER() OVER (
+      PARTITION BY customer_id 
+      ORDER BY campaign_date
+    ) as journey_position,
+    
+    -- Time between touchpoints
+    LAG(campaign_date, 1) OVER (
+      PARTITION BY customer_id 
+      ORDER BY campaign_date
+    ) as prev_touchpoint_date,
+    
+    DATEDIFF('hour', 
+      LAG(campaign_date, 1) OVER (
+        PARTITION BY customer_id 
+        ORDER BY campaign_date
+      ), 
+      campaign_date
+    ) as hours_since_last_touch
+    
+  FROM user_touchpoints
+  WHERE conversion_value > 0
+),
+
+attribution_weights AS (
+  SELECT 
+    customer_id,
+    platform,
+    journey_position,
+    total_touchpoints,
+    conversion_value,
+    
+    -- Different attribution models
+    CASE 
+      WHEN journey_position = 1 THEN conversion_value  -- First-touch
+      ELSE 0 
+    END as first_touch_value,
+    
+    CASE 
+      WHEN journey_position = total_touchpoints THEN conversion_value  -- Last-touch
+      ELSE 0 
+    END as last_touch_value,
+    
+    -- Linear attribution
+    conversion_value / total_touchpoints as linear_attribution_value,
+    
+    -- Time-decay attribution (exponential decay)
+    conversion_value * POWER(0.8, total_touchpoints - journey_position) 
+    / SUM(POWER(0.8, total_touchpoints - journey_position)) OVER (
+      PARTITION BY customer_id
+    ) as time_decay_value,
+    
+    -- Position-based (40% first, 40% last, 20% middle)
+    CASE 
+      WHEN journey_position = 1 AND total_touchpoints > 1 THEN conversion_value * 0.4
+      WHEN journey_position = total_touchpoints AND total_touchpoints > 1 THEN conversion_value * 0.4
+      WHEN total_touchpoints = 1 THEN conversion_value
+      ELSE conversion_value * 0.2 / NULLIF(total_touchpoints - 2, 0)
+    END as position_based_value
+    
+  FROM customer_journeys
+),
+
+platform_attribution_summary AS (
+  SELECT 
+    platform,
+    COUNT(DISTINCT customer_id) as unique_customers,
+    
+    -- Attribution model comparisons
+    ROUND(SUM(first_touch_value), 2) as first_touch_attribution,
+    ROUND(SUM(last_touch_value), 2) as last_touch_attribution,
+    ROUND(SUM(linear_attribution_value), 2) as linear_attribution,
+    ROUND(SUM(time_decay_value), 2) as time_decay_attribution,
+    ROUND(SUM(position_based_value), 2) as position_based_attribution,
+    
+    -- Statistical analysis
+    ROUND(AVG(conversion_value), 2) as avg_conversion_value,
+    ROUND(STDDEV(conversion_value), 2) as conversion_stddev,
+    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY conversion_value) as median_conversion,
+    
+    -- Advanced metrics
+    SUM(CASE WHEN journey_position = 1 THEN 1 ELSE 0 END) as journey_starter_count,
+    SUM(CASE WHEN journey_position = total_touchpoints THEN 1 ELSE 0 END) as journey_closer_count
+    
+  FROM attribution_weights
+  GROUP BY platform
+)
+
+SELECT 
+  platform,
+  unique_customers,
+  first_touch_attribution,
+  last_touch_attribution,
+  linear_attribution,
+  time_decay_attribution,
+  position_based_attribution,
+  
+  -- Attribution model variance analysis
+  ROUND(
+    (GREATEST(first_touch_attribution, last_touch_attribution, linear_attribution, time_decay_attribution, position_based_attribution) - 
+     LEAST(first_touch_attribution, last_touch_attribution, linear_attribution, time_decay_attribution, position_based_attribution)) 
+    / NULLIF(linear_attribution, 0) * 100, 2
+  ) as attribution_variance_pct,
+  
+  -- Role in customer journey
+  ROUND(journey_starter_count * 100.0 / NULLIF(unique_customers, 0), 1) as journey_starter_pct,
+  ROUND(journey_closer_count * 100.0 / NULLIF(unique_customers, 0), 1) as journey_closer_pct
+
+FROM platform_attribution_summary
+ORDER BY linear_attribution DESC;`,
+                results: [
+                    {
+                        platform: 'Google',
+                        unique_customers: 189,
+                        first_touch_attribution: 4250,
+                        last_touch_attribution: 6050,
+                        linear_attribution: 5420,
+                        time_decay_attribution: 5890,
+                        position_based_attribution: 5680,
+                        attribution_variance_pct: 33.2,
+                        journey_starter_pct: 45.2,
+                        journey_closer_pct: 67.8
+                    },
+                    {
+                        platform: 'Meta',
+                        unique_customers: 165,
+                        first_touch_attribution: 5375,
+                        last_touch_attribution: 3200,
+                        linear_attribution: 4875,
+                        time_decay_attribution: 4120,
+                        position_based_attribution: 4650,
+                        attribution_variance_pct: 68.1,
+                        journey_starter_pct: 72.1,
+                        journey_closer_pct: 28.5
+                    },
+                    {
+                        platform: 'Reddit',
+                        unique_customers: 52,
+                        first_touch_attribution: 850,
+                        last_touch_attribution: 1700,
+                        linear_attribution: 1420,
+                        time_decay_attribution: 1280,
+                        position_based_attribution: 1390,
+                        attribution_variance_pct: 59.9,
+                        journey_starter_pct: 38.5,
+                        journey_closer_pct: 23.1
+                    },
+                    {
+                        platform: 'TikTok',
+                        unique_customers: 28,
+                        first_touch_attribution: 650,
+                        last_touch_attribution: 950,
+                        linear_attribution: 820,
+                        time_decay_attribution: 790,
+                        position_based_attribution: 845,
+                        attribution_variance_pct: 36.6,
+                        journey_starter_pct: 42.9,
+                        journey_closer_pct: 35.7
+                    }
+                ]
+            }
+        };
+
+        let currentQuery = 'platform_efficiency';
+
+        function showQuery(queryType) {
+            currentQuery = queryType;
+            const query = queries[queryType];
+            
+            // Update active button
+            document.querySelectorAll('.query-selector-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-blue-600', 'text-white');
+                btn.classList.add('bg-gray-100', 'text-gray-700');
+            });
+            document.querySelector(`[data-query="${queryType}"]`).classList.add('active', 'bg-blue-600', 'text-white');
+            document.querySelector(`[data-query="${queryType}"]`).classList.remove('bg-gray-100', 'text-gray-700');
+            
+            // Update content
+            document.getElementById('queryTitle').textContent = query.title;
+            document.getElementById('queryDescription').textContent = query.description;
+            document.getElementById('sqlCode').textContent = query.sql;
+            document.getElementById('linesCount').textContent = query.lines;
+            
+            // Update techniques list
+            const techniquesList = document.getElementById('techniquesList');
+            techniquesList.innerHTML = '';
+            const colors = ['blue', 'green', 'purple', 'yellow', 'red'];
+            query.techniques.forEach((technique, index) => {
+                const color = colors[index % colors.length];
+                techniquesList.innerHTML += `
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-${color}-500 rounded-full"></div>
+                        <span class="text-sm">${technique}</span>
+                    </div>
+                `;
+            });
+            
+            // Hide results
+            document.getElementById('resultsSection').classList.add('hidden');
+            document.getElementById('executeText').textContent = 'Execute Query';
+            
+            // Re-highlight syntax
+            Prism.highlightAll();
+        }
+
+        function executeQuery() {
+            const executeBtn = document.querySelector('.execute-btn');
+            const executeText = document.getElementById('executeText');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const resultsSection = document.getElementById('resultsSection');
+            
+            // Show loading state
+            executeText.textContent = 'Executing...';
+            loadingSpinner.classList.remove('hidden');
+            executeBtn.disabled = true;
+            
+            // Simulate query execution
+            setTimeout(() => {
+                const query = queries[currentQuery];
+                displayResults(query.results);
+                
+                // Reset button state
+                executeText.textContent = 'Query Executed';
+                loadingSpinner.classList.add('hidden');
+                executeBtn.disabled = false;
+                
+                // Show results
+                resultsSection.classList.remove('hidden');
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+                
+                // Reset button after 2 seconds
+                setTimeout(() => {
+                    executeText.textContent = 'Execute Query';
+                }, 2000);
+            }, 2000);
+        }
+
+        function displayResults(results) {
+            const table = document.getElementById('resultsTable');
+            const stats = document.getElementById('resultStats');
+            
+            if (results.length === 0) return;
+            
+            // Create table header
+            const headers = Object.keys(results[0]);
+            let headerHtml = '<thead><tr class="bg-gray-50">';
+            headers.forEach(header => {
+                headerHtml += `<th class="p-4 text-left font-semibold text-gray-700 capitalize">${header.replace(/_/g, ' ')}</th>`;
+            });
+            headerHtml += '</tr></thead>';
+            
+            // Create table body
+            let bodyHtml = '<tbody>';
+            results.forEach((row, index) => {
+                bodyHtml += `<tr class="border-b hover:bg-gray-50 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-25'}">`;
+                headers.forEach(header => {
+                    let value = row[header];
+                    if (typeof value === 'number') {
+                        value = value.toLocaleString();
+                    }
+                    if (value === null) {
+                        value = '<span class="text-gray-400">null</span>';
+                    }
+                    bodyHtml += `<td class="p-4">${value}</td>`;
+                });
+                bodyHtml += '</tr>';
+            });
+            bodyHtml += '</tbody>';
+            
+            table.innerHTML = headerHtml + bodyHtml;
+            stats.textContent = `${results.length} rows returned in ${(Math.random() * 2 + 1).toFixed(2)} seconds`;
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            showQuery('platform_efficiency');
+            
+            // Add CSS for query selector buttons
+            const style = document.createElement('style');
+            style.textContent = `
+                .query-selector-btn {
+                    background: #f3f4f6;
+                    color: #374151;
+                    border: 1px solid #e5e7eb;
+                }
+                .query-selector-btn.active {
+                    background: #2563eb !important;
+                    color: white !important;
+                    border-color: #2563eb;
+                }
+                .query-selector-btn:hover:not(.active) {
+                    background: #e5e7eb;
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
