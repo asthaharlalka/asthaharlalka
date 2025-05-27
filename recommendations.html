@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendations - Boston Beats 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.js"></script>
+    <style>
+        .recommendation-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .recommendation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+        
+        .recommendation-card.immediate::before {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
+        .recommendation-card.strategic::before {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        }
+        
+        .recommendation-card.optimization::before {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        }
+        
+        .recommendation-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .priority-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .priority-high { background: #dc2626; color: white; }
+        .priority-medium { background: #d97706; color: white; }
+        .priority-low { background: #16a34a; color: white; }
+        
+        .impact-meter {
+            background: #f3f4f6;
+            border-radius: 8px;
+            height: 8px;
+            overflow: hidden;
+        }
+        
+        .impact-fill {
+            height: 100%;
+            border-radius: 8px;
+            transition: width 1s ease-in-out;
+        }
+        
+        .impact-high { background: linear-gradient(90deg, #10b981, #059669); }
+        .impact-medium { background: linear-gradient(90deg, #f59e0b, #d97706); }
+        .impact-low { background: linear-gradient(90deg, #6b7280, #4b5563); }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .interactive-timeline {
+            position: relative;
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item:hover {
+            transform: translateX(8px);
+        }
+        
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 3px solid;
+            background: white;
+            margin-right: 16px;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 8px;
+            top: 16px;
+            bottom: -8px;
+            width: 2px;
+            background: #e5e7eb;
+        }
+        
+        .impact-calculator {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+        
+        .metric-comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 16px;
+            align-items: center;
+        }
+        
+        .metric-before {
+            text-align: right;
+            color: #6b7280;
+        }
+        
+        .metric-after {
+            text-align: left;
+            color: #059669;
+            font-weight: 600;
+        }
+        
+        .metric-arrow {
+            color: #10b981;
+            font-size: 20px;
+        }
+        
+        .tab-button {
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            padding: 8px 16px;
+        }
+        
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .expandable-section {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .expandable-content.expanded {
+            max-height: 1000px;
+        }
+        
+        .sql-insight {
+            background: #1f2937;
+            color: #10b981;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Monaco', monospace;
+            font-size: 12px;
+            margin: 12px 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <i data-lucide="database" class="w-8 h-8 text-blue-600"></i>
+                    <h1 class="text-xl font-bold text-gray-900">Boston Beats 2025 - SQL Analytics</h1>
+                </div>
+                <div class="flex space-x-1">
+                    <a href="index.html" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100">
+                        <i data-lucide="database" class="w-4 h-4 mr-2"></i>
+                        Dataset Overview
+                    </a>
+                    <a href="sql-queries.html" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100">
+                        <i data-lucide="code" class="w-4 h-4 mr-2"></i>
+                        SQL Queries
+                    </a>
+                    <a href="insights.html" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100">
+                        <i data-lucide="trending-up" class="w-4 h-4 mr-2"></i>
+                        Insights
+                    </a>
+                    <a href="recommendations.html" class="flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-blue-100 text-blue-700">
+                        <i data-lucide="lightbulb" class="w-4 h-4 mr-2"></i>
+                        Recommendations
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="gradient-bg text-white py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-bold mb-4">SQL-Driven Strategic Recommendations</h1>
+                <p class="text-xl text-blue-100 max-w-3xl mx-auto">
+                    Data-backed decisions for immediate campaign optimization and long-term growth
+                </p>
+            </div>
+            
+            <!-- Impact Summary -->
+            <div class="glass-effect rounded-2xl p-8 max-w-4xl mx-auto">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-bold mb-4">Projected Business Impact</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="text-center">
+                        <div class="text-sm text-blue-200 mb-2">Current Performance</div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span>Total Revenue:</span>
+                                <span class="font-mono">$14,075</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Conversions:</span>
+                                <span class="font-mono">563</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Blended ROAS:</span>
+                                <span class="font-mono">3.56x</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Average CPA:</span>
+                                <span class="font-mono">$17.68</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="text-sm text-green-200 mb-2">Optimized Projection</div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span>Total Revenue:</span>
+                                <span class="font-mono text-green-300">$16,975 (+20.6%)</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Conversions:</span>
+                                <span class="font-mono text-green-300">679 (+20.6%)</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Optimized ROAS:</span>
+                                <span class="font-mono text-green-300">4.29x (+20.5%)</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Optimized CPA:</span>
+                                <span class="font-mono text-green-300">$14.63 (-17.2%)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-8 pt-6 border-t border-white/20">
+                    <div class="text-3xl font-bold text-green-300 mb-2">+$2,900</div>
+                    <div class="text-blue-200">Additional Revenue with Same $10K Budget</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        
+        <!-- Recommendation Categories -->
+        <div class="mb-8">
+            <div class="flex flex-wrap gap-4 justify-center">
+                <button onclick="showRecommendationCategory('all')" class="tab-button active" data-category="all">
+                    All Recommendations
+                </button>
+                <button onclick="showRecommendationCategory('immediate')" class="tab-button" data-category="immediate">
+                    Immediate Actions
+                </button>
+                <button onclick="showRecommendationCategory('strategic')" class="tab-button" data-category="strategic">
+                    Strategic Initiatives
+                </button>
+                <button onclick="showRecommendationCategory('optimization')" class="tab-button" data-category="optimization">
+                    Optimization Tactics
+                </button>
+            </div>
+        </div>
+
+        <!-- Immediate Actions -->
+        <div class="recommendation-category" data-category="immediate">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold text-center mb-8 text-green-700">Immediate SQL-Backed Actions</h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Budget Reallocation -->
+                    <div class="recommendation-card immediate p-8" onclick="toggleExpansion(this)">
+                        <div class="priority-badge priority-high">High Priority</div>
+                        <div class="expandable-section">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                                    <i data-lucide="arrow-right-left" class="w-6 h-6 text-green-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-900">Budget Reallocation</h3>
+                                    <p class="text-gray-600">Shift $300 from Reddit to Google</p>
+                                </div>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 ml-auto expand-icon"></i>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="sql-insight">
+                                    <strong>SQL Finding:</strong> Platform efficiency analysis shows Google achieving 4.5x ROAS vs 3.0x for Reddit
+                                </div>
+                                
+                                <div class="impact-calculator">
+                                    <h4 class="font-bold mb-4">Expected Impact</h4>
+                                    <div class="metric-comparison">
+                                        <div class="metric-before">Current Conversions: 310</div>
+                                        <div class="metric-arrow">→</div>
+                                        <div class="metric-after">Projected: 357 (+47)</div>
+                                    </div>
+                                    <div class="metric-comparison">
+                                        <div class="metric-before">Current Revenue: $7,750</div>
+                                        <div class="metric-arrow">→</div>
+                                        <div class="metric-after">Projected: $8,925 (+$1,175)</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-green-50 p-4 rounded-lg">
+                                    <div class="font-semibold text-green-800 mb-2">Implementation Timeline</div>
+                                    <div class="text-sm text-green-700">
+                                        • Week 1: Reduce Reddit budget by 50%<br>
+                                        • Week 2: Monitor performance metrics<br>
+                                        • Week 3: Complete reallocation if positive results<br>
+                                        • Week 4: Measure full impact
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="expandable-content">
+                            <div class="mt-6 pt-6 border-t border-gray-200">
+                                <h4 class="font-bold mb-4">Detailed Analysis</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gray-50 p-4 rounded-lg">
+                                        <div class="font-semibold text-gray-800 mb-2">Reddit Performance</div>
+                                        <div class="text-sm text-gray-600 space-y-1">
+                                            <div>CPA: $20.88 (40% above target)</div>
+                                            <div>ROAS: 3.0x (below threshold)</div>
+                                            <div>Volatility: σ = 5.2 (unstable)</div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50 p-4 rounded-lg">
+                                        <div class="font-semibold text-gray-800 mb-2">Google Efficiency</div>
+                                        <div class="text-sm text-gray-600 space-y-1">
+                                            <div>CPA: $13.97 (15% below forecast)</div>
+                                            <div>ROAS: 4.5x (exceeds target)</div>
+                                            <div>Volatility: σ = 2.1 (very stable)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Audience Optimization -->
+                    <div class="recommendation-card immediate p-8" onclick="toggleExpansion(this)">
+                        <div class="priority-badge priority-high">High Priority</div>
+                        <div class="expandable-section">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                    <i data-lucide="users" class="w-6 h-6 text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-900">Audience Optimization</h3>
+                                    <p class="text-gray-600">Increase 18-24 targeting by 40%</p>
+                                </div>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 ml-auto expand-icon"></i>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="sql-insight">
+                                    <strong>SQL Finding:</strong> Cohort analysis reveals 18-24 segment has 2.3x higher conversion rate and 74.8% retention
+                                </div>
+                                
+                                <div class="impact-calculator">
+                                    <h4 class="font-bold mb-4">Expected Impact</h4>
+                                    <div class="metric-comparison">
+                                        <div class="metric-before">Current 18-24 Conv: 180</div>
+                                        <div class="metric-arrow">→</div>
+                                        <div class="metric-after">Projected: 212 (+32)</div>
+                                    </div>
+                                    <div class="metric-comparison">
+                                        <div class="metric-before">Current CLV: $28.50</div>
+                                        <div class="metric-arrow">→</div>
+                                        <div class="metric-after">Projected: $33.00 (+$4.50)</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-blue-50 p-4 rounded-lg">
+                                    <div class="font-semibold text-blue-800 mb-2">Platform-Specific Targeting</div>
+                                    <div class="text-sm text-blue-700">
+                                        • Reddit: Focus 80% of budget on 18-24<br>
+                                        • Meta: Increase 18-24 audience share to 60%<br>
+                                        • Google: Adjust bid modifiers for younger demographics<br>
+                                        • TikTok: Native platform for this demographic
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="expandable-content">
+                            <div class="mt-6 pt-6 border-t border-gray-200">
+                                <canvas id="demographicChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Creative Refresh Strategy -->
+                    <div class="recommendation-card immediate p-8" onclick="toggleExpansion(this)">
+                        <div class="priority-badge priority-medium">Medium Priority</div>
+                        <div class="expandable-section">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
+                                    <i data-lucide="refresh-cw" class="w-6 h-6 text-yellow-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-900">Creative Refresh Strategy</h3>
+                                    <p class="text-gray-600">Weekly creative testing cycle</p>
+                                </div>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 ml-auto expand-icon"></i>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="sql-insight">
+                                    <strong>SQL Finding:</strong> Window function analysis shows TikTok CTR improved 180% after Day 12 creative refresh
+                                </div>
+                                
+                                <div class="impact-calculator">
+                                    <h4 class="font-bold mb-4">Historical Performance</h4>
+                                    <div class="metric-comparison">
+                                        <div class="metric-before">TikTok CTR Before: 1.8%</div>
+                                        <div class="metric-arrow">→</div>
+                                        <div class="metric-after">TikTok CTR After: 5.0% (+180%)</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-yellow-50 p-4 rounded-lg">
+                                    <div class="font-semibold text-yellow-800 mb-2">Refresh Schedule</div>
+                                    <div class="text-sm text-yellow-700">
+                                        • Monday: Analyze weekend performance<br>
+                                        • Tuesday: Deploy new creative variants<br>
+                                        • Thursday: Mid-week performance check<br>
+                                        • Sunday: Weekly performance summary
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="expandable-content">
+                            <div class="mt-6 pt-6 border-t border-gray-200">
+                                <h4 class="font-bold mb-4">Creative Performance Timeline</h4>
+                                <canvas id="creativePerformanceChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Attribution Strategy -->
+                    <div class="recommendation-card immediate p-8" onclick="toggleExpansion(this)">
+                        <div class="priority-badge priority-medium">Medium Priority</div>
+                        <div class="expandable-section">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                                    <i data-lucide="route" class="w-6 h-6 text-purple-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-900">Attribution Strategy</h3>
+                                    <p class="text-gray-600">Separate upper/lower funnel approach</p>
+                                </div>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 ml-auto expand-icon"></i>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="sql-insight">
+                                    <strong>SQL Finding:</strong> Multi-touch attribution shows Meta initiates 72% of journeys, Google closes 68%
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="bg-blue-50 p-4 rounded-lg">
+                                        <div class="font-semibold text-blue-800 mb-2">Meta: Upper Funnel</div>
+                                        <div class="text-sm text-blue-700">
+                                            • Awareness campaigns<br>
+                                            • Broad targeting<br>
+                                            • Video content focus<br>
+                                            • Brand messaging
+                                        </div>
+                                    </div>
+                                    <div class="bg-green-50 p-4 rounded-lg">
+                                        <div class="font-semibold text-green-800 mb-2">Google: Lower Funnel</div>
+                                        <div class="text-sm text-green-700">
+                                            • Conversion campaigns<br>
+                                            • Intent-based targeting<br>
+                                            • Performance messaging<br>
+                                            • Direct response
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-purple-50 p-4 rounded-lg">
+                                    <div class="font-semibold text-purple-800 mb-2">Expected Impact</div>
+                                    <div class="text-sm text-purple-700">
+                                        25% improvement in customer journey efficiency through role-specific optimization
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="expandable-content">
+                            <div class="mt-6 pt-6 border-t border-gray-200">
+                                <h4 class="font-bold mb-4">Attribution Model Comparison</h4>
+                                <canvas id="attributionComparisonChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategic Initiatives -->
+        <div class="recommendation-category" data-category="strategic">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold text-center mb-8 text-blue-700">Long-term Strategic Initiatives</h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Customer Journey Optimization -->
+                    <div class="recommendation-card strategic p-6">
+                        <div class="priority-badge priority-medium">Strategic</div>
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                <i data-lucide="map" class="w-5 h-5 text-blue-600"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900">Customer Journey Optimization</h3>
+                        </div>
+                        
+                        <div class="space-y-3 text-sm">
+                            <div class="flex items-start">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Implement sequential messaging based on attribution analysis</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Meta for awareness, Google for conversion</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Cross-platform frequency capping using user-level data</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Optimize for 3-touchpoint journey (highest efficiency)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <div class="text-sm text-gray-600">
+                                <strong>Timeline:</strong> 6-8 weeks implementation
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Infrastructure -->
+                    <div class="recommendation-card strategic p-6">
+                        <div class="priority-badge priority-high">Critical</div>
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                                <i data-lucide="database" class="w-5 h-5 text-green-600"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900">Data Infrastructure</h3>
+                        </div>
+                        
+                        <div class="space-y-3 text-sm">
+                            <div class="flex items-start">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Implement real-time data pipeline for daily optimization</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Set up automated alerts for CPA volatility (>2 standard deviations)</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Build cohort tracking for all acquisition channels</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Create attribution modeling dashboard</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <div class="text-sm text-gray-600">
+                                <strong>Timeline:</strong> 10-12 weeks development
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scale Preparation -->
+                    <div class="recommendation-card strategic p-6">
+                        <div class="priority-badge priority-low">Future</div>
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                                <i data-lucide="trending-up" class="w-5 h-5 text-purple-600"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900">Scale Preparation</h3>
+                        </div>
+                        
+                        <div class="space-y-3 text-sm">
+                            <div class="flex items-start">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Google can efficiently handle 50% budget increase</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Meta needs creative diversification before scaling</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Test YouTube based on audience overlap analysis</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Implement incrementality testing framework</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <div class="text-sm text-gray-600">
+                                <strong>Timeline:</strong> 3-6 months planning
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Optimization Tactics -->
+        <div class="recommendation-category" data-category="optimization">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold text-center mb-8 text-purple-700">Advanced Optimization Tactics</h2>
+                
+                <!-- Implementation Timeline -->
+                <div class="recommendation-card optimization p-8 mb-8">
+                    <h3 class="text-xl font-bold mb-6 flex items-center">
+                        <i data-lucide="calendar" class="w-6 h-6 mr-2 text-purple-600"></i>
+                        30-Day Implementation Roadmap
+                    </h3>
+                    
+                    <div class="interactive-timeline">
+                        <div class="timeline-item" onclick="highlightTimelineItem(this, 'week1')">
+                            <div class="timeline-line"></div>
+                            <div class="timeline-dot border-green-500"></div>
+                            <div class="flex-1">
+                                <div class="font-semibold text-green-700">Week 1: Budget Reallocation</div>
+                                <div class="text-sm text-gray-600">Shift Reddit budget to Google, implement audience adjustments</div>
+                                <div class="text-xs text-green-600 mt-1">Expected: +15% efficiency improvement</div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item" onclick="highlightTimelineItem(this, 'week2')">
+                            <div class="timeline-line"></div>
+                            <div class="timeline-dot border-blue-500"></div>
+                            <div class="flex-1">
+                                <div class="font-semibold text-blue-700">Week 2: Creative Refresh Launch</div>
+                                <div class="text-sm text-gray-600">Deploy new creative variants, establish testing framework</div>
+                                <div class="text-xs text-blue-600 mt-1">Expected: +25% CTR improvement</div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item" onclick="highlightTimelineItem(this, 'week3')">
+                            <div class="timeline-line"></div>
+                            <div class="timeline-dot border-purple-500"></div>
+                            <div class="flex-1">
+                                <div class="font-semibold text-purple-700">Week 3: Attribution Strategy</div>
+                                <div class="text-sm text-gray-600">Implement funnel-specific campaigns, adjust targeting</div>
+                                <div class="text-xs text-purple-600 mt-1">Expected: +20% journey efficiency</div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item" onclick="highlightTimelineItem(this, 'week4')">
+                            <div class="timeline-line"></div>
+                            <div class="timeline-dot border-orange-500"></div>
+                            <div class="flex-1">
+                                <div class="font-semibold text-orange-700">Week 4: Measurement & Optimization</div>
+                                <div class="text-sm text-gray-600">Analyze results, fine-tune parameters, plan next phase</div>
+                                <div class="text-xs text-orange-600 mt-1">Target: 20.6% total improvement achieved</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Tactics Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Seasonality Optimization -->
+                    <div class="recommendation-card optimization p-6">
+                        <h3 class="text-lg font-bold mb-4 flex items-center">
+                            <i data-lucide="calendar-clock" class="w-5 h-5 mr-2 text-purple-600"></i>
+                            Seasonality Optimization
+                        </h3>
+                        
+                        <div class="space-y-4">
+                            <div class="sql-insight">
+                                SELECT dayofweek, AVG(conversion_rate)<br>
+                                FROM campaign_data<br>
+                                WHERE campaign_date >= '2025-01-01'<br>
+                                GROUP BY dayofweek;
+                            </div>
+                            
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <div class="font-semibold text-purple-800 mb-2">Key Findings</div>
+                                <div class="text-sm text-purple-700 space-y-1">
+                                    <div>• Wed-Fri: 12% higher performance</div>
+                                    <div>• Monday: Lowest conversion rates</div>
+                                    <div>• Weekend: Moderate performance</div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-sm text-gray-600">
+                                <strong>Recommendation:</strong> Increase mid-week bids by 15%, reduce Monday spend by 20%
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Audience Overlap Analysis -->
+                    <div class="recommendation-card optimization p-6">
+                        <h3 class="text-lg font-bold mb-4 flex items-center">
+                            <i data-lucide="users" class="w-5 h-5 mr-2 text-purple-600"></i>
+                            Audience Overlap Optimization
+                        </h3>
+                        
+                        <div class="space-y-4">
+                            <div class="sql-insight">
+                                WITH platform_users AS (<br>
+                                &nbsp;&nbsp;SELECT customer_id, platform<br>
+                                &nbsp;&nbsp;FROM touchpoints<br>
+                                )<br>
+                                SELECT COUNT(*) as overlap<br>
+                                FROM platform_users p1<br>
+                                JOIN platform_users p2 ON p1.customer_id = p2.customer_id;
+                            </div>
+                            
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <div class="font-semibold text-purple-800 mb-2">Overlap Analysis</div>
+                                <div class="text-sm text-purple-700 space-y-1">
+                                    <div>• Meta-Google: 34% overlap</div>
+                                    <div>• Reddit-TikTok: 67% overlap</div>
+                                    <div>• Cross-platform frequency: 2.3x</div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-sm text-gray-600">
+                                <strong>Recommendation:</strong> Implement frequency capping across Reddit-TikTok to reduce waste
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Conversion Path Analysis -->
+                    <div class="recommendation-card optimization p-6">
+                        <h3 class="text-lg font-bold mb-4 flex items-center">
+                            <i data-lucide="route" class="w-5 h-5 mr-2 text-purple-600"></i>
+                            Conversion Path Optimization
+                        </h3>
+                        
+                        <div class="space-y-4">
+                            <div class="sql-insight">
+                                SELECT path, COUNT(*) as frequency,<br>
+                                &nbsp;&nbsp;AVG(conversion_value) as avg_value<br>
+                                FROM customer_journeys<br>
+                                WHERE conversion_value > 0<br>
+                                GROUP BY path<br>
+                                ORDER BY frequency DESC;
+                            </div>
+                            
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <div class="font-semibold text-purple-800 mb-2">Top Conversion Paths</div>
+                                <div class="text-sm text-purple-700 space-y-1">
+                                    <div>• Meta → Google: 34% of conversions</div>
+                                    <div>• Google only: 28% of conversions</div>
+                                    <div>• Meta → Reddit → Google: 12%</div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-sm text-gray-600">
+                                <strong>Recommendation:</strong> Optimize for Meta→Google path with sequential messaging
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Forecasting -->
+                    <div class="recommendation-card optimization p-6">
+                        <h3 class="text-lg font-bold mb-4 flex items-center">
+                            <i data-lucide="trending-up" class="w-5 h-5 mr-2 text-purple-600"></i>
+                            Performance Forecasting
+                        </h3>
+                        
+                        <div class="space-y-4">
+                            <div class="sql-insight">
+                                WITH trend_analysis AS (<br>
+                                &nbsp;&nbsp;SELECT platform, campaign_date,<br>
+                                &nbsp;&nbsp;LAG(conversions, 7) OVER (<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;PARTITION BY platform<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;ORDER BY campaign_date<br>
+                                &nbsp;&nbsp;) as prev_week<br>
+                                )<br>
+                                SELECT * FROM trend_analysis;
+                            </div>
+                            
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <div class="font-semibold text-purple-800 mb-2">30-Day Forecast</div>
+                                <div class="text-sm text-purple-700 space-y-1">
+                                    <div>• Google: +18% growth trajectory</div>
+                                    <div>• Meta: +12% with optimization</div>
+                                    <div>• Reddit: -5% decline expected</div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-sm text-gray-600">
+                                <strong>Recommendation:</strong> Prepare budget reallocation based on forecasted trends
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Metrics Dashboard -->
+        <div class="recommendation-card p-8 mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-center">Success Metrics & KPIs</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="target" class="w-8 h-8 text-green-600"></i>
+                    </div>
+                    <div class="text-2xl font-bold text-green-600 mb-1">$14.63</div>
+                    <div class="text-sm text-gray-600">Target CPA</div>
+                    <div class="text-xs text-green-600 mt-1">(-17.2% from current)</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="trending-up" class="w-8 h-8 text-blue-600"></i>
+                    </div>
+                    <div class="text-2xl font-bold text-blue-600 mb-1">4.29x</div>
+                    <div class="text-sm text-gray-600">Target ROAS</div>
+                    <div class="text-xs text-blue-600 mt-1">(+20.5% improvement)</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="users" class="w-8 h-8 text-purple-600"></i>
+                    </div>
+                    <div class="text-2xl font-bold text-purple-600 mb-1">679</div>
+                    <div class="text-sm text-gray-600">Target Conversions</div>
+                    <div class="text-xs text-purple-600 mt-1">(+116 additional)</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="dollar-sign" class="w-8 h-8 text-orange-600"></i>
+                    </div>
+                    <div class="text-2xl font-bold text-orange-600 mb-1">$2,900</div>
+                    <div class="text-sm text-gray-600">Additional Revenue</div>
+                    <div class="text-xs text-orange-600 mt-1">(Same $10K budget)</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Recommendation category management
+        function showRecommendationCategory(category) {
+            // Update active button
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-category="${category}"]`).classList.add('active');
+            
+            // Show/hide categories
+            const categories = document.querySelectorAll('.recommendation-category');
+            if (category === 'all') {
+                categories.forEach(cat => cat.style.display = 'block');
+            } else {
+                categories.forEach(cat => {
+                    if (cat.dataset.category === category) {
+                        cat.style.display = 'block';
+                    } else {
+                        cat.style.display = 'none';
+                    }
+                });
+            }
+        }
+
+        // Expandable sections
+        function toggleExpansion(card) {
+            const content = card.querySelector('.expandable-content');
+            const icon = card.querySelector('.expand-icon');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.classList.add('expanded');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Timeline interaction
+        function highlightTimelineItem(item, week) {
+            // Remove previous highlights
+            document.querySelectorAll('.timeline-item').forEach(el => {
+                el.style.backgroundColor = 'transparent';
+            });
+            
+            // Highlight selected item
+            item.style.backgroundColor = '#f3f4f6';
+            item.style.borderRadius = '8px';
+            item.style.padding = '8px';
+            
+            // Show detailed information (you could expand this)
+            console.log(`Highlighted ${week}`);
+        }
+
+        // Chart initialization
+        function initDemographicChart() {
+            const ctx = document.getElementById('demographicChart');
+            if (!ctx) return;
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['18-24', '25-29', '30-35'],
+                    datasets: [{
+                        label: 'Current Conversions',
+                        data: [180, 220, 163],
+                        backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                        borderColor: 'rgb(59, 130, 246)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Projected Conversions',
+                        data: [212, 235, 170],
+                        backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                        borderColor: 'rgb(16, 185, 129)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Conversions' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function initCreativePerformanceChart() {
+            const ctx = document.getElementById('creativePerformanceChart');
+            if (!ctx) return;
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Day 1', 'Day 5', 'Day 10', 'Day 12', 'Day 15', 'Day 20'],
+                    datasets: [{
+                        label: 'TikTok CTR %',
+                        data: [1.8, 1.6, 1.4, 5.0, 4.8, 4.5],
+                        borderColor: 'rgb(239, 68, 68)',
+                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                        tension: 0.4,
+                        pointRadius: 6,
+                        pointBackgroundColor: 'rgb(239, 68, 68)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'CTR %' }
+                        }
+                    },
+                    plugins: {
+                        annotation: {
+                            annotations: {
+                                line1: {
+                                    type: 'line',
+                                    xMin: 'Day 12',
+                                    xMax: 'Day 12',
+                                    borderColor: 'rgb(34, 197, 94)',
+                                    borderWidth: 2,
+                                    label: {
+                                        content: 'Creative Refresh',
+                                        enabled: true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function initAttributionComparisonChart() {
+            const ctx = document.getElementById('attributionComparisonChart');
+            if (!ctx) return;
+            
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['First-Touch', 'Last-Touch', 'Linear', 'Time-Decay', 'Position-Based'],
+                    datasets: [{
+                        label: 'Google',
+                        data: [4250, 6050, 5420, 5890, 5680],
+                        borderColor: 'rgb(34, 197, 94)',
+                        backgroundColor: 'rgba(34, 197, 94, 0.2)'
+                    }, {
+                        label: 'Meta',
+                        data: [5375, 3200, 4875, 4120, 4650],
+                        borderColor: 'rgb(59, 130, 246)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.2)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        r: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            showRecommendationCategory('all');
+            
+            // Initialize charts with delay
+            setTimeout(() => {
+                initDemographicChart();
+                initCreativePerformanceChart();
+                initAttributionComparisonChart();
+            }, 100);
+        });
+    </script>
+</body>
+</html>
