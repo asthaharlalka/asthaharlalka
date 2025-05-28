@@ -404,7 +404,7 @@
 
         
         <!-- Data Exploration Section -->
-        <div id="exploration" class="content-section active" style="display: none;">
+        <div id="exploration" class="content-section active">
             <h2 class="section-title">Dataset Structure & Business Context</h2>
             
             <div class="data-overview" id="stats-overview">
@@ -963,7 +963,9 @@ customer_value_scoring <span class="keyword">AS</span> (
         // Initialize the application
         document.addEventListener('DOMContentLoaded', async function() {
             await loadAndProcessData();
-            showSection('exploration');
+            // Ensure exploration section is visible
+            document.getElementById('exploration').style.display = 'block';
+            document.getElementById('exploration').classList.add('active');
         });
         
         // Load and process the marketing data
