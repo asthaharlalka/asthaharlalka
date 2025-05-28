@@ -1115,6 +1115,7 @@ customer_value_scoring <span class="keyword">AS</span> (
             const sections = document.querySelectorAll('.content-section');
             sections.forEach(section => {
                 section.classList.remove('active');
+                section.style.display = 'none';
             });
             
             // Remove active class from all buttons
@@ -1124,7 +1125,9 @@ customer_value_scoring <span class="keyword">AS</span> (
             });
             
             // Show selected section
-            document.getElementById(sectionId).classList.add('active');
+            const targetSection = document.getElementById(sectionId);
+            targetSection.classList.add('active');
+            targetSection.style.display = 'block';
             
             // Add active class to clicked button
             event.target.classList.add('active');
