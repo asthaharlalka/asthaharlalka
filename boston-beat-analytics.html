@@ -401,11 +401,7 @@
             </button>
         </div>
         
-        <!-- Loading indicator -->
-        <div id="loading-indicator" style="text-align: center; color: white; margin-bottom: 20px;">
-            <div class="loading"></div>
-            <p style="margin-top: 10px;">Loading and processing 200K marketing campaigns...</p>
-        </div>
+
         
         <!-- Data Exploration Section -->
         <div id="exploration" class="content-section active" style="display: none;">
@@ -428,7 +424,84 @@
                 </p>
             </div>
             
-            <h3 style="color: #667eea; margin-bottom: 20px; font-size: 1.5rem;">📋 Dataset Architecture</h3>
+            <h3 style="color: #667eea; margin-bottom: 20px; font-size: 1.5rem;">📋 Database Schema & Structure</h3>
+            <div style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); padding: 25px; border-radius: 12px; margin-bottom: 25px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <h4 style="color: #667eea; margin-bottom: 15px;">📊 Table: marketing_campaigns</h4>
+                        <div style="font-family: 'Monaco', monospace; font-size: 13px; background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #4ECDC4;">
+                            <strong>Primary Metrics:</strong><br>
+                            • Campaign_ID (INT) - Primary Key<br>
+                            • ROI (DECIMAL) - Return on Investment<br>
+                            • Conversion_Rate (DECIMAL) - 0.0-1.0 range<br>
+                            • Acquisition_Cost (INT) - USD amount<br>
+                            • Revenue (INT) - Calculated field<br><br>
+                            
+                            <strong>Performance KPIs:</strong><br>
+                            • Clicks (INT) - Total campaign clicks<br>
+                            • Impressions (INT) - Total impressions<br>
+                            • CTR (DECIMAL) - Click-through rate %<br>
+                            • CPC (DECIMAL) - Cost per click<br>
+                            • CPA (DECIMAL) - Cost per acquisition<br>
+                            • Engagement_Score (INT) - 1-10 scale
+                        </div>
+                    </div>
+                    <div>
+                        <h4 style="color: #667eea; margin-bottom: 15px;">🎯 Dimensional Attributes</h4>
+                        <div style="font-family: 'Monaco', monospace; font-size: 13px; background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #FF6B6B;">
+                            <strong>Campaign Dimensions:</strong><br>
+                            • Channel_Used (VARCHAR) - 6 channels<br>
+                            • Campaign_Type (VARCHAR) - 5 types<br>
+                            • Customer_Segment (VARCHAR) - 5 segments<br>
+                            • Target_Audience (VARCHAR) - Demographics<br>
+                            • Duration_Days (INT) - Campaign length<br><br>
+                            
+                            <strong>Company & Location:</strong><br>
+                            • Company (VARCHAR) - Client company<br>
+                            • Location (VARCHAR) - Geographic target<br>
+                            • Language (VARCHAR) - Campaign language<br>
+                            • Date (DATE) - Campaign start date
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px; padding: 15px; background: rgba(102, 126, 234, 0.1); border-radius: 8px;">
+                    <strong>🔧 SQL Optimization Notes:</strong>
+                    • Indexes on Channel_Used, Customer_Segment, Campaign_Type for fast GROUP BY operations
+                    • ROI and Conversion_Rate indexed for performance analytics
+                    • Date column supports time-series analysis with proper temporal indexing
+                    • Composite indexes on (Channel_Used, Campaign_Type, Customer_Segment) for multi-dimensional analysis
+                </div>
+            </div>
+            
+            <h3 style="color: #667eea; margin-bottom: 20px; font-size: 1.5rem;">📈 Sample Data Preview</h3>
+            <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 25px;">
+                <div style="background: linear-gradient(45deg, #667eea, #764ba2); color: white; padding: 15px; font-weight: bold;">
+                    First 10 Records from marketing_campaigns Table
+                </div>
+                <div style="overflow-x: auto;">
+                    <table id="sample-data-table" style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                        <thead style="background: #f8f9fa;">
+                            <tr>
+                                <th style="padding: 10px; border: 1px solid #dee2e6; font-weight: bold;">Campaign_ID</th>
+                                <th style="padding: 10px; border: 1px solid #dee2e6; font-weight: bold;">Company</th>
+                                <th style="padding: 10px; border: 1px solid #dee2e6; font-weight: bold;">Channel_Used</th>
+                                <th style="padding: 10px; border: 1px solid #dee2e6; font-weight: bold;">Campaign_Type</th>
+                                <th style="padding: 10px; border: 1px solid #dee2e6; font-weight: bold;">Customer_Segment</th>
+                                <th style="padding: 10px; border: 1px solid #dee2e6; font-weight: bold;">ROI</th>
+                                <th style="padding: 10px; border: 1px solid #dee2e6; font-weight: bold;">Conversion_Rate</th>
+                                <th style="padding: 10px; border: 1px solid #dee2e6; font-weight: bold;">Acquisition_Cost</th>
+                                <th style="padding: 10px; border: 1px solid #dee2e6; font-weight: bold;">Revenue</th>
+                                <th style="padding: 10px; border: 1px solid #dee2e6; font-weight: bold;">CTR (%)</th>
+                                <th style="padding: 10px; border: 1px solid #dee2e6; font-weight: bold;">Engagement_Score</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sample-data-body">
+                            <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div class="metric-grid">
                 <div class="metric-item">
                     <strong>Core Metrics</strong><br>
@@ -891,8 +964,6 @@ customer_value_scoring <span class="keyword">AS</span> (
         document.addEventListener('DOMContentLoaded', async function() {
             await loadAndProcessData();
             showSection('exploration');
-            document.getElementById('loading-indicator').style.display = 'none';
-            document.getElementById('exploration').style.display = 'block';
         });
         
         // Load and process the marketing data
@@ -909,6 +980,9 @@ customer_value_scoring <span class="keyword">AS</span> (
                 
                 // Update the UI with real statistics
                 updateStatsOverview(datasetStats);
+                
+                // Populate sample data table
+                populateSampleDataTable(marketingData.slice(0, 10));
                 
                 console.log('Data processing complete!');
             } catch (error) {
