@@ -194,14 +194,93 @@
             text-align: center;
         }
 
-        .schema-diagram {
-            background: #2c3e50;
-            color: #ecf0f1;
-            padding: 25px;
-            border-radius: 10px;
+        .schema-diagram-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             margin: 20px 0;
-            font-family: 'Courier New', monospace;
-            overflow-x: auto;
+        }
+
+        .schema-svg {
+            width: 100%;
+            height: auto;
+            max-height: 600px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            background: linear-gradient(to right, #f8f9fa 0%, #ffffff 50%, #f8f9fa 100%);
+        }
+
+        .table-group {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .table-group:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+        }
+
+        .table-group rect {
+            transition: all 0.3s ease;
+        }
+
+        .table-group:hover rect {
+            stroke-width: 3;
+        }
+
+        .schema-legend {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        .schema-legend h4 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .schema-svg {
+                max-height: 400px;
+            }
+            
+            .legend-items {
+                grid-template-columns: 1fr;
+            }
+            
+            .schema-diagram-container {
+                padding: 15px;
+            }
         }
 
         .query-container {
@@ -639,68 +718,326 @@
                 </div>
 
                 <div class="schema-visualization">
-                    <h3 style="color: #667eea; margin-bottom: 20px;"><i class="fas fa-sitemap"></i> Database Schema Visualization</h3>
-                    <div class="schema-diagram">
-<strong>NORTHWIND DATABASE SCHEMA</strong>
-═══════════════════════════════════════════════════════════════════
-
-<strong>📊 CORE BUSINESS TABLES</strong>
-┌─────────────────────────────────────────────────────────────────┐
-│                        ORDERS (~16,282)                         │
-│  ┌─OrderID─┐ ┌─CustomerID─┐ ┌─EmployeeID─┐ ┌──OrderDate──┐      │
-│  │   PK    │ │    FK      │ │     FK     │ │  DateTime   │      │
-│  └─────────┘ └────────────┘ └────────────┘ └─────────────┘      │
-└─────────────────────────────────────────────────────────────────┘
-                    │                │               │
-                    ▼                ▼               ▼
-    ┌─────────────────────┐  ┌───────────────┐  ┌─────────────┐
-    │   CUSTOMERS (93)    │  │ EMPLOYEES (9) │  │ORDER DETAILS│
-    │ ┌─CustomerID─┐      │  │┌─EmployeeID─┐ │  │  (609,283)  │
-    │ │    PK      │      │  ││    PK     │ │  │┌─OrderID──┐ │
-    │ └───────────┘      │  │└───────────┘ │  ││    FK    │ │
-    │ CompanyName        │  │ FirstName     │  │└──────────┘ │
-    │ Country            │  │ LastName      │  │┌─ProductID─┐│
-    │ City               │  │ Title         │  ││    FK     ││
-    └────────────────────┘  └───────────────┘  │└───────────┘│
-                                               │ UnitPrice   │
-                                               │ Quantity    │
-                                               │ Discount    │
-                                               └─────────────┘
-                                                      │
-                                                      ▼
-                                               ┌─────────────┐
-                                               │ PRODUCTS    │
-                                               │    (77)     │
-                                               │┌─ProductID─┐│
-                                               ││    PK     ││
-                                               │└───────────┘│
-                                               │ ProductName │
-                                               │ UnitPrice   │
-                                               │ UnitsInStock│
-                                               └─────────────┘
-                                                      │
-                                                      ▼
-                                               ┌─────────────┐
-                                               │ CATEGORIES  │
-                                               │     (8)     │
-                                               │┌─CategoryID─┐│
-                                               ││     PK     ││
-                                               │└────────────┘│
-                                               │ CategoryName│
-                                               └─────────────┘
-
-<strong>🌍 SUPPORTING TABLES</strong>
-Regions (4) → Territories (53) → EmployeeTerritories (49)
-Suppliers (29) → Products
-Shippers (3) → Orders
-
-<strong>📈 KEY RELATIONSHIPS</strong>
-• Orders ←→ OrderDetails (1:Many)
-• Customers ←→ Orders (1:Many) 
-• Employees ←→ Orders (1:Many)
-• Products ←→ OrderDetails (1:Many)
-• Categories ←→ Products (1:Many)
-• Suppliers ←→ Products (1:Many)
+                    <h3 style="color: #667eea; margin-bottom: 20px;"><i class="fas fa-sitemap"></i> Interactive Database Schema Diagram</h3>
+                    <div class="schema-diagram-container">
+                        <!-- SVG Schema Diagram -->
+                        <svg viewBox="0 0 1400 1000" class="schema-svg">
+                            <!-- Relationship Lines -->
+                            <defs>
+                                <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+                                        refX="9" refY="3.5" orient="auto">
+                                    <polygon points="0 0, 10 3.5, 0 7" fill="#666" />
+                                </marker>
+                            </defs>
+                            
+                            <!-- Relationship Lines -->
+                            <!-- Regions to Territories -->
+                            <line x1="120" y1="100" x2="280" y2="100" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+                            
+                            <!-- Territories to EmployeeTerritories -->
+                            <line x1="400" y1="130" x2="480" y2="200" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+                            
+                            <!-- Employees to EmployeeTerritories -->
+                            <line x1="480" y1="300" x2="520" y2="250" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+                            
+                            <!-- Employees to Orders -->
+                            <line x1="500" y1="360" x2="580" y2="420" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+                            
+                            <!-- Customers to Orders -->
+                            <line x1="280" y1="450" x2="580" y2="450" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+                            
+                            <!-- Orders to OrderDetails -->
+                            <line x1="720" y1="470" x2="820" y2="520" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+                            
+                            <!-- OrderDetails to Products -->
+                            <line x1="960" y1="540" x2="1080" y2="540" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+                            
+                            <!-- Products to Categories -->
+                            <line x1="1220" y1="510" x2="1280" y2="430" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+                            
+                            <!-- Suppliers to Products -->
+                            <line x1="1080" y1="700" x2="1150" y2="620" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+                            
+                            <!-- Shippers to Orders -->
+                            <line x1="480" y1="520" x2="580" y2="480" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+                            
+                            <!-- CustomerDemographics to CustomerCustomerDemo -->
+                            <line x1="120" y1="600" x2="280" y2="600" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+                            
+                            <!-- CustomerCustomerDemo to Customers -->
+                            <line x1="400" y1="580" x2="480" y2="520" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+                            
+                            <!-- Regions Table -->
+                            <g class="table-group" data-table="regions">
+                                <rect x="40" y="60" width="120" height="80" rx="8" fill="#E3F2FD" stroke="#2196F3" stroke-width="2"/>
+                                <rect x="40" y="60" width="120" height="25" rx="8" fill="#2196F3"/>
+                                <text x="100" y="77" text-anchor="middle" fill="white" font-weight="bold" font-size="11">🌍 REGIONS</text>
+                                <text x="50" y="100" fill="#333" font-size="9" font-weight="bold">🔑 RegionID</text>
+                                <text x="50" y="115" fill="#666" font-size="8">RegionDescription</text>
+                                <text x="140" y="75" fill="white" font-size="9" font-weight="bold">4</text>
+                            </g>
+                            
+                            <!-- Territories Table -->
+                            <g class="table-group" data-table="territories">
+                                <rect x="200" y="60" width="120" height="100" rx="8" fill="#E8F5E8" stroke="#4CAF50" stroke-width="2"/>
+                                <rect x="200" y="60" width="120" height="25" rx="8" fill="#4CAF50"/>
+                                <text x="260" y="77" text-anchor="middle" fill="white" font-weight="bold" font-size="11">🗺️ TERRITORIES</text>
+                                <text x="210" y="100" fill="#333" font-size="9" font-weight="bold">🔑 TerritoryID</text>
+                                <text x="210" y="115" fill="#666" font-size="8">TerritoryDescription</text>
+                                <text x="210" y="130" fill="#666" font-size="8">🔗 RegionID</text>
+                                <text x="300" y="75" fill="white" font-size="9" font-weight="bold">53</text>
+                            </g>
+                            
+                            <!-- EmployeeTerritories Table -->
+                            <g class="table-group" data-table="employeeterritories">
+                                <rect x="360" y="180" width="140" height="100" rx="8" fill="#FFF3E0" stroke="#FF9800" stroke-width="2"/>
+                                <rect x="360" y="180" width="140" height="25" rx="8" fill="#FF9800"/>
+                                <text x="430" y="197" text-anchor="middle" fill="white" font-weight="bold" font-size="10">👥🗺️ EMPLOYEE TERRITORIES</text>
+                                <text x="370" y="220" fill="#333" font-size="9" font-weight="bold">🔗 EmployeeID</text>
+                                <text x="370" y="235" fill="#333" font-size="9" font-weight="bold">🔗 TerritoryID</text>
+                                <text x="480" y="195" fill="white" font-size="9" font-weight="bold">49</text>
+                            </g>
+                            
+                            <!-- Employees Table -->
+                            <g class="table-group" data-table="employees">
+                                <rect x="360" y="300" width="140" height="140" rx="8" fill="#E8F8F0" stroke="#50E3C2" stroke-width="2"/>
+                                <rect x="360" y="300" width="140" height="25" rx="8" fill="#50E3C2"/>
+                                <text x="430" y="317" text-anchor="middle" fill="white" font-weight="bold" font-size="12">👥 EMPLOYEES</text>
+                                <text x="370" y="340" fill="#333" font-size="9" font-weight="bold">🔑 EmployeeID</text>
+                                <text x="370" y="355" fill="#666" font-size="8">FirstName</text>
+                                <text x="370" y="368" fill="#666" font-size="8">LastName</text>
+                                <text x="370" y="381" fill="#666" font-size="8">Title</text>
+                                <text x="370" y="394" fill="#666" font-size="8">BirthDate</text>
+                                <text x="370" y="407" fill="#666" font-size="8">HireDate</text>
+                                <text x="370" y="420" fill="#666" font-size="8">🔗 ReportsTo</text>
+                                <text x="480" y="315" fill="white" font-size="9" font-weight="bold">9</text>
+                            </g>
+                            
+                            <!-- CustomerDemographics Table -->
+                            <g class="table-group" data-table="customerdemographics">
+                                <rect x="40" y="560" width="140" height="80" rx="8" fill="#F3E5F5" stroke="#9C27B0" stroke-width="2"/>
+                                <rect x="40" y="560" width="140" height="25" rx="8" fill="#9C27B0"/>
+                                <text x="110" y="577" text-anchor="middle" fill="white" font-weight="bold" font-size="10">📊 CUSTOMER DEMOGRAPHICS</text>
+                                <text x="50" y="600" fill="#333" font-size="9" font-weight="bold">🔑 CustomerTypeID</text>
+                                <text x="50" y="615" fill="#666" font-size="8">CustomerDesc</text>
+                                <text x="160" y="575" fill="white" font-size="9" font-weight="bold">*</text>
+                            </g>
+                            
+                            <!-- CustomerCustomerDemo Table -->
+                            <g class="table-group" data-table="customercustomerdemo">
+                                <rect x="220" y="560" width="140" height="80" rx="8" fill="#FCE4EC" stroke="#E91E63" stroke-width="2"/>
+                                <rect x="220" y="560" width="140" height="25" rx="8" fill="#E91E63"/>
+                                <text x="290" y="577" text-anchor="middle" fill="white" font-weight="bold" font-size="9">📊👤 CUSTOMER DEMO</text>
+                                <text x="230" y="600" fill="#333" font-size="9" font-weight="bold">🔗 CustomerID</text>
+                                <text x="230" y="615" fill="#333" font-size="9" font-weight="bold">🔗 CustomerTypeID</text>
+                                <text x="340" y="575" fill="white" font-size="9" font-weight="bold">*</text>
+                            </g>
+                            
+                            <!-- Customers Table -->
+                            <g class="table-group" data-table="customers">
+                                <rect x="40" y="400" width="140" height="140" rx="8" fill="#E8F4F8" stroke="#4A90E2" stroke-width="2"/>
+                                <rect x="40" y="400" width="140" height="25" rx="8" fill="#4A90E2"/>
+                                <text x="110" y="417" text-anchor="middle" fill="white" font-weight="bold" font-size="12">👤 CUSTOMERS</text>
+                                <text x="50" y="440" fill="#333" font-size="9" font-weight="bold">🔑 CustomerID</text>
+                                <text x="50" y="455" fill="#666" font-size="8">CompanyName</text>
+                                <text x="50" y="468" fill="#666" font-size="8">ContactName</text>
+                                <text x="50" y="481" fill="#666" font-size="8">ContactTitle</text>
+                                <text x="50" y="494" fill="#666" font-size="8">Country</text>
+                                <text x="50" y="507" fill="#666" font-size="8">City</text>
+                                <text x="50" y="520" fill="#666" font-size="8">Phone</text>
+                                <text x="160" y="415" fill="white" font-size="9" font-weight="bold">93</text>
+                            </g>
+                            
+                            <!-- Orders Table -->
+                            <g class="table-group" data-table="orders">
+                                <rect x="580" y="380" width="140" height="160" rx="8" fill="#FFF4E6" stroke="#F5A623" stroke-width="2"/>
+                                <rect x="580" y="380" width="140" height="25" rx="8" fill="#F5A623"/>
+                                <text x="650" y="397" text-anchor="middle" fill="white" font-weight="bold" font-size="12">📦 ORDERS</text>
+                                <text x="590" y="420" fill="#333" font-size="9" font-weight="bold">🔑 OrderID</text>
+                                <text x="590" y="435" fill="#666" font-size="8">🔗 CustomerID</text>
+                                <text x="590" y="448" fill="#666" font-size="8">🔗 EmployeeID</text>
+                                <text x="590" y="461" fill="#666" font-size="8">OrderDate</text>
+                                <text x="590" y="474" fill="#666" font-size="8">RequiredDate</text>
+                                <text x="590" y="487" fill="#666" font-size="8">ShippedDate</text>
+                                <text x="590" y="500" fill="#666" font-size="8">🔗 ShipVia</text>
+                                <text x="590" y="513" fill="#666" font-size="8">Freight</text>
+                                <text x="590" y="526" fill="#666" font-size="8">ShipName</text>
+                                <text x="700" y="395" fill="white" font-size="9" font-weight="bold">16K</text>
+                            </g>
+                            
+                            <!-- Shippers Table -->
+                            <g class="table-group" data-table="shippers">
+                                <rect x="360" y="500" width="120" height="80" rx="8" fill="#F3E5F5" stroke="#8E24AA" stroke-width="2"/>
+                                <rect x="360" y="500" width="120" height="25" rx="8" fill="#8E24AA"/>
+                                <text x="420" y="517" text-anchor="middle" fill="white" font-weight="bold" font-size="11">🚚 SHIPPERS</text>
+                                <text x="370" y="540" fill="#333" font-size="9" font-weight="bold">🔑 ShipperID</text>
+                                <text x="370" y="555" fill="#666" font-size="8">CompanyName</text>
+                                <text x="370" y="568" fill="#666" font-size="8">Phone</text>
+                                <text x="460" y="515" fill="white" font-size="9" font-weight="bold">3</text>
+                            </g>
+                            
+                            <!-- OrderDetails Table -->
+                            <g class="table-group" data-table="orderdetails">
+                                <rect x="820" y="480" width="140" height="120" rx="8" fill="#F0F8E8" stroke="#7ED321" stroke-width="2"/>
+                                <rect x="820" y="480" width="140" height="25" rx="8" fill="#7ED321"/>
+                                <text x="890" y="497" text-anchor="middle" fill="white" font-weight="bold" font-size="11">📋 ORDER DETAILS</text>
+                                <text x="830" y="520" fill="#333" font-size="9" font-weight="bold">🔗 OrderID</text>
+                                <text x="830" y="535" fill="#333" font-size="9" font-weight="bold">🔗 ProductID</text>
+                                <text x="830" y="550" fill="#666" font-size="8">UnitPrice</text>
+                                <text x="830" y="563" fill="#666" font-size="8">Quantity</text>
+                                <text x="830" y="576" fill="#666" font-size="8">Discount</text>
+                                <text x="940" y="495" fill="white" font-size="9" font-weight="bold">609K</text>
+                            </g>
+                            
+                            <!-- Products Table -->
+                            <g class="table-group" data-table="products">
+                                <rect x="1080" y="480" width="140" height="160" rx="8" fill="#F4E8FF" stroke="#9013FE" stroke-width="2"/>
+                                <rect x="1080" y="480" width="140" height="25" rx="8" fill="#9013FE"/>
+                                <text x="1150" y="497" text-anchor="middle" fill="white" font-weight="bold" font-size="12">📦 PRODUCTS</text>
+                                <text x="1090" y="520" fill="#333" font-size="9" font-weight="bold">🔑 ProductID</text>
+                                <text x="1090" y="535" fill="#666" font-size="8">ProductName</text>
+                                <text x="1090" y="548" fill="#666" font-size="8">🔗 SupplierID</text>
+                                <text x="1090" y="561" fill="#666" font-size="8">🔗 CategoryID</text>
+                                <text x="1090" y="574" fill="#666" font-size="8">QuantityPerUnit</text>
+                                <text x="1090" y="587" fill="#666" font-size="8">UnitPrice</text>
+                                <text x="1090" y="600" fill="#666" font-size="8">UnitsInStock</text>
+                                <text x="1090" y="613" fill="#666" font-size="8">UnitsOnOrder</text>
+                                <text x="1090" y="626" fill="#666" font-size="8">Discontinued</text>
+                                <text x="1200" y="495" fill="white" font-size="9" font-weight="bold">77</text>
+                            </g>
+                            
+                            <!-- Categories Table -->
+                            <g class="table-group" data-table="categories">
+                                <rect x="1280" y="380" width="120" height="100" rx="8" fill="#FFE8E8" stroke="#D0021B" stroke-width="2"/>
+                                <rect x="1280" y="380" width="120" height="25" rx="8" fill="#D0021B"/>
+                                <text x="1340" y="397" text-anchor="middle" fill="white" font-weight="bold" font-size="11">🏷️ CATEGORIES</text>
+                                <text x="1290" y="420" fill="#333" font-size="9" font-weight="bold">🔑 CategoryID</text>
+                                <text x="1290" y="435" fill="#666" font-size="8">CategoryName</text>
+                                <text x="1290" y="448" fill="#666" font-size="8">Description</text>
+                                <text x="1290" y="461" fill="#666" font-size="8">Picture</text>
+                                <text x="1380" y="395" fill="white" font-size="9" font-weight="bold">8</text>
+                            </g>
+                            
+                            <!-- Suppliers Table -->
+                            <g class="table-group" data-table="suppliers">
+                                <rect x="940" y="680" width="140" height="140" rx="8" fill="#FFF8E1" stroke="#FFB300" stroke-width="2"/>
+                                <rect x="940" y="680" width="140" height="25" rx="8" fill="#FFB300"/>
+                                <text x="1010" y="697" text-anchor="middle" fill="white" font-weight="bold" font-size="11">🏭 SUPPLIERS</text>
+                                <text x="950" y="720" fill="#333" font-size="9" font-weight="bold">🔑 SupplierID</text>
+                                <text x="950" y="735" fill="#666" font-size="8">CompanyName</text>
+                                <text x="950" y="748" fill="#666" font-size="8">ContactName</text>
+                                <text x="950" y="761" fill="#666" font-size="8">ContactTitle</text>
+                                <text x="950" y="774" fill="#666" font-size="8">Address</text>
+                                <text x="950" y="787" fill="#666" font-size="8">City</text>
+                                <text x="950" y="800" fill="#666" font-size="8">Country</text>
+                                <text x="950" y="813" fill="#666" font-size="8">Phone</text>
+                                <text x="1060" y="695" fill="white" font-size="9" font-weight="bold">29</text>
+                            </g>
+                            
+                            <!-- Relationship Labels -->
+                            <text x="200" y="95" fill="#666" font-size="8" text-anchor="middle">1:Many</text>
+                            <text x="340" y="95" fill="#666" font-size="8" text-anchor="middle">1:Many</text>
+                            <text x="440" y="165" fill="#666" font-size="8" text-anchor="middle">Many:Many</text>
+                            <text x="440" y="335" fill="#666" font-size="8" text-anchor="middle">1:Many</text>
+                            <text x="430" y="425" fill="#666" font-size="8" text-anchor="middle">1:Many</text>
+                            <text x="650" y="455" fill="#666" font-size="8" text-anchor="middle">1:Many</text>
+                            <text x="880" y="535" fill="#666" font-size="8" text-anchor="middle">1:Many</text>
+                            <text x="1150" y="525" fill="#666" font-size="8" text-anchor="middle">1:Many</text>
+                            <text x="1250" y="425" fill="#666" font-size="8" text-anchor="middle">1:Many</text>
+                            <text x="1015" y="640" fill="#666" font-size="8" text-anchor="middle">1:Many</text>
+                            <text x="430" y="510" fill="#666" font-size="8" text-anchor="middle">1:Many</text>
+                            <text x="200" y="595" fill="#666" font-size="8" text-anchor="middle">1:Many</text>
+                            <text x="340" y="590" fill="#666" font-size="8" text-anchor="middle">Many:Many</text>
+                            
+                        </svg>
+                        
+                        <!-- Legend -->
+                        <div class="schema-legend">
+                            <h4><i class="fas fa-info-circle"></i> Complete Northwind Database Schema</h4>
+                            <div class="legend-items">
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #2196F3;"></div>
+                                    <span>Geographic Tables (Regions, Territories)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #50E3C2;"></div>
+                                    <span>Human Resources (Employees)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #4A90E2;"></div>
+                                    <span>Customer Management</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #F5A623;"></div>
+                                    <span>Order Processing</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #7ED321;"></div>
+                                    <span>Transaction Details</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #9013FE;"></div>
+                                    <span>Product Catalog</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #FFB300;"></div>
+                                    <span>Supply Chain</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #8E24AA;"></div>
+                                    <span>Shipping & Logistics</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span><strong>🔑</strong> Primary Key</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span><strong>🔗</strong> Foreign Key</span>
+                                </div>
+                            </div>
+                            <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                <h5 style="margin-bottom: 10px;"><i class="fas fa-database"></i> Database Statistics</h5>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; font-size: 0.9rem;">
+                                    <div><strong>13</strong> Total Tables</div>
+                                    <div><strong>609K+</strong> Order Details</div>
+                                    <div><strong>16K+</strong> Orders</div>
+                                    <div><strong>93</strong> Customers</div>
+                                    <div><strong>77</strong> Products</div>
+                                    <div><strong>29</strong> Suppliers</div>
+                                    <div><strong>53</strong> Territories</div>
+                                    <div><strong>9</strong> Employees</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
+                        <!-- Legend -->
+                        <div class="schema-legend">
+                            <h4><i class="fas fa-info-circle"></i> Schema Legend</h4>
+                            <div class="legend-items">
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #4A90E2;"></div>
+                                    <span>Core Business Tables</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #7ED321;"></div>
+                                    <span>Transaction Details</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #9013FE;"></div>
+                                    <span>Product Catalog</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #50E3C2;"></div>
+                                    <span>Human Resources</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span><strong>🔑</strong> Primary Key</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span><strong>🔗</strong> Foreign Key</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div style="text-align: center; margin: 30px 0;">
