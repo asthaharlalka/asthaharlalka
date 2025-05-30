@@ -1205,6 +1205,7 @@ ORDER BY avg_lifetime_revenue DESC;</pre>
                     </div>
                     <div class="query-code">
                         <pre>-- QUERY 2: Product Performance Analysis 
+
 WITH product_performance AS (
   SELECT 
     p.ProductID,
@@ -1230,13 +1231,13 @@ SELECT
   current_list_price,
   total_revenue,
   total_units_sold,
+  order_frequency,
   avg_discount_percent,
   UnitsInStock,
-  ROW_NUMBER() OVER (ORDER BY total_revenue DESC) as revenue_rank,
   CASE 
-    WHEN total_revenue >= 20000000 THEN 'Star Performer'
-    WHEN total_revenue >= 10000000 THEN 'Solid Contributor'
-    WHEN total_revenue >= 2000000 THEN 'Moderate Performer'
+    WHEN total_revenue >= 20000 AND total_units_sold >= 1000 THEN 'Star Performer'
+    WHEN total_revenue >= 10000 OR total_units_sold >= 500 THEN 'Solid Contributor'
+    WHEN total_revenue >= 2000 THEN 'Moderate Performer'
     ELSE 'Underperformer'
   END as performance_tier
 FROM product_performance
@@ -1253,6 +1254,8 @@ LIMIT 10;</pre>
                                     <th>List Price</th>
                                     <th>Total Revenue</th>
                                     <th>Units Sold</th>
+                                    <th>Order Frequency</th>
+                                    <th>Average Discount Percentage</th>
                                     <th>Stock Remaining</th>
                                     <th>Performance Tier</th>
                                 </tr>
@@ -1264,6 +1267,8 @@ LIMIT 10;</pre>
                                     <td>$263.50</td>
                                     <td>$53,265,895.23</td>
                                     <td>202,234</td>
+                                    <td>7905</td>
+                                    <td>0.01%</td>
                                     <td style="color: red; font-weight: bold;">⚠️ 17</td>
                                     <td>Star Performer</td>
                                 </tr>
@@ -1273,6 +1278,8 @@ LIMIT 10;</pre>
                                     <td>$123.79</td>
                                     <td>$24,623,469.23</td>
                                     <td>199,010</td>
+                                    <td>7847</td>
+                                    <td>0.03%</td>
                                     <td style="color: red; font-weight: bold;">⚠️ 0</td>
                                     <td>Star Performer</td>
                                 </tr>
@@ -1282,6 +1289,8 @@ LIMIT 10;</pre>
                                     <td>$97.00</td>
                                     <td>$19,423,037.50</td>
                                     <td>200,258</td>
+                                    <td>7871</td>
+                                    <td>0.01%</td>
                                     <td>29</td>
                                     <td>Star Performer</td>
                                 </tr>
@@ -1291,6 +1300,8 @@ LIMIT 10;</pre>
                                     <td>$81.00</td>
                                     <td>$16,653,807.36</td>
                                     <td>205,637</td>
+                                    <td>7999</td>
+                                    <td>0.01%</td>
                                     <td>40</td>
                                     <td>Star Performer</td>
                                 </tr>
@@ -1300,9 +1311,67 @@ LIMIT 10;</pre>
                                     <td>$62.50</td>
                                     <td>$12,604,671.88</td>
                                     <td>201,747</td>
+                                    <td>7871</td>
+                                    <td>0.03%</td>
                                     <td>42</td>
                                     <td>Star Performer</td>
                                 </tr>
+                                <tr>
+                                    <td><strong>Raclette Courdavault</strong></td>
+                                    <td>Dairy Products</td>
+                                    <td>$55.00</td>
+                                    <td>$11,216,410.70</td>
+                                    <td>204,137</td>
+                                    <td>7982</td>
+                                    <td>0.03%</td>
+                                    <td>79</td>
+                                    <td>Star Performer</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Manjimup Dried Apples</strong></td>
+                                    <td>Produce</td>
+                                    <td>$53.00</td>
+                                    <td>$10,664,768.65</td>
+                                    <td>201,319</td>
+                                    <td>7915</td>
+                                    <td>0.03%</td>
+                                    <td>20</td>
+                                    <td>Star Performer</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Tarte au sucre</strong></td>
+                                    <td>Confections</td>
+                                    <td>$49.30</td>
+                                    <td>$9,952,936.07</td>
+                                    <td>202,010</td>
+                                    <td>7910</td>
+                                    <td>0.03%</td>
+                                    <td>17</td>
+                                    <td>Star Performer</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Ipoh Coffee</strong></td>
+                                    <td>Beverages</td>
+                                    <td>$46.00</td>
+                                    <td>$9,333,374.70</td>
+                                    <td>202,968</td>
+                                    <td>7927</td>
+                                    <td>0.02%</td>
+                                    <td>17</td>
+                                    <td>Star Performer</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Rössle Sauerkraut</strong></td>
+                                    <td>Produce</td>
+                                    <td>$45.60</td>
+                                    <td>$9,252,765.44</td>
+                                    <td>202,988</td>
+                                    <td>7957</td>
+                                    <td>0.02%</td>
+                                    <td>26</td>
+                                    <td>Star Performer</td>
+                                </tr>
+
                             </tbody>
                         </table>
                         <button class="insights-btn" onclick="showInsights(2)">
