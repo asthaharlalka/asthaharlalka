@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astha Harlalka - Portfolio</title>
     
-    <!-- Enhanced CSS with improved aesthetics and mobile navigation -->
     <style>
-        /* Basic reset and fonts */
+        /* CSS Reset */
         * {
             margin: 0;
             padding: 0;
@@ -21,7 +20,6 @@
             background-color: #f9fafb;
         }
         
-        /* Container for content */
         .container {
             width: 90%;
             max-width: 1200px;
@@ -29,7 +27,7 @@
             padding: 0 15px;
         }
         
-        /* Header styling - improved aesthetics */
+        /* Header Styles */
         header {
             background-color: white;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
@@ -43,30 +41,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        
-        .logo {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            z-index: 101;
+            flex-wrap: wrap;
         }
         
         .logo h1 {
             font-size: 26px;
             color: #2563eb;
             letter-spacing: -0.5px;
-            display: block;
         }
         
         .logo p {
             font-size: 15px;
             color: #666;
             margin-top: 5px;
-            display: block;
         }
         
-        /* Mobile menu button */
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -74,52 +63,45 @@
             color: #333;
             font-size: 24px;
             cursor: pointer;
-            z-index: 101;
-        }
-        
-        /* Navigation menu - improved aesthetics with mobile support */
-        nav {
-            transition: all 0.3s ease;
         }
         
         nav ul {
             display: flex;
             list-style: none;
-        }
-        
-        nav ul li {
-            margin-left: 30px;
+            gap: 30px;
+            align-items: center;
         }
         
         nav ul li a {
             text-decoration: none;
             color: #333;
             font-weight: 600;
-            transition: all 0.3s;
+            transition: color 0.3s;
             padding: 5px 2px;
-            position: relative;
-        }
-        
-        nav ul li a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background: #2563eb;
-            left: 0;
-            bottom: 0;
-            transition: width 0.3s;
         }
         
         nav ul li a:hover {
             color: #2563eb;
         }
         
-        nav ul li a:hover:after {
-            width: 100%;
+        .resume-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #2563eb;
+            background-color: rgba(37, 99, 235, 0.1);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s;
         }
         
-        /* Mobile navigation styles */
+        .resume-btn:hover {
+            background-color: #2563eb;
+            color: white;
+        }
+        
+        /* Mobile Navigation */
         @media (max-width: 768px) {
             .mobile-menu-btn {
                 display: block;
@@ -146,12 +128,7 @@
             nav ul {
                 flex-direction: column;
                 align-items: center;
-            }
-            
-            nav ul li {
-                margin: 0 0 20px 0;
-                width: 100%;
-                text-align: center;
+                gap: 20px;
             }
             
             nav ul li a {
@@ -176,30 +153,7 @@
             }
         }
         
-        /* Resume button styling */
-        .resume-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: #2563eb;
-            background-color: rgba(37, 99, 235, 0.1);
-            padding: 8px 15px;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        
-        .resume-btn:hover {
-            background-color: #2563eb;
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        .resume-icon {
-            font-size: 18px;
-        }
-        
-        /* Section styling - consistent across all sections */
+        /* Section Styles */
         section {
             padding: 70px 0;
         }
@@ -224,25 +178,22 @@
             transform: translateX(-50%);
         }
         
-        /* Hero section - improved layout with mobile responsiveness */
+        /* Hero Section */
         .hero {
             background-color: #f0f5ff;
             padding: 80px 0;
         }
         
         .hero-content {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr;
             gap: 40px;
+            align-items: center;
         }
         
         @media (min-width: 768px) {
             .hero-content {
-                flex-direction: row;
-            }
-            
-            .hero-text, .hero-card {
-                flex: 1;
+                grid-template-columns: 1fr 1fr;
             }
         }
         
@@ -253,12 +204,6 @@
             color: #111;
         }
         
-        @media (max-width: 768px) {
-            .hero-text h2 {
-                font-size: 28px;
-            }
-        }
-        
         .hero-text p {
             margin-bottom: 25px;
             font-size: 18px;
@@ -266,6 +211,7 @@
             line-height: 1.7;
         }
         
+        /* Buttons */
         .btn {
             display: inline-block;
             padding: 12px 24px;
@@ -287,7 +233,6 @@
         .btn-primary:hover {
             background-color: #1d4ed8;
             transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(37, 99, 235, 0.3);
         }
         
         .btn-secondary {
@@ -300,10 +245,9 @@
         .btn-secondary:hover {
             background-color: #f9fafb;
             transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.08);
         }
         
-        /* Card styling - consistent across all sections */
+        /* Card Styles */
         .card {
             background-color: white;
             border-radius: 12px;
@@ -319,7 +263,7 @@
             box-shadow: 0 12px 20px rgba(0,0,0,0.08);
         }
         
-        /* Highlights in hero section */
+        /* Highlights */
         .highlight-list {
             list-style: none;
         }
@@ -341,6 +285,7 @@
             margin-right: 18px;
             color: #2563eb;
             font-size: 20px;
+            flex-shrink: 0;
         }
         
         .highlight-content h3 {
@@ -353,9 +298,10 @@
             font-size: 15px;
             color: #555;
             line-height: 1.6;
+            margin: 0;
         }
         
-        /* Project card styling - FIXED AND IMPROVED */
+        /* Project Styles */
         .project-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -384,7 +330,6 @@
             box-shadow: 0 15px 20px rgba(0,0,0,0.1);
         }
         
-        /* Featured project special styling */
         .featured-project {
             border: 2px solid #2563eb;
             background: linear-gradient(135deg, #f0f5ff 0%, #ffffff 100%);
@@ -393,7 +338,6 @@
         @media (min-width: 768px) {
             .featured-project {
                 grid-column: 1 / -1;
-                max-width: none;
             }
             
             .featured-project .project-body {
@@ -401,17 +345,6 @@
                 grid-template-columns: 2fr 1fr;
                 gap: 30px;
                 align-items: start;
-            }
-            
-            .featured-project .project-main-content {
-                display: flex;
-                flex-direction: column;
-            }
-            
-            .featured-project .project-actions {
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
             }
         }
         
@@ -428,6 +361,7 @@
         .project-header h3 {
             font-size: 20px;
             line-height: 1.4;
+            margin: 0;
         }
         
         .project-body {
@@ -465,7 +399,6 @@
             background-color: #bfdbfe;
         }
         
-        /* Project link styling - improved */
         .project-link {
             color: #2563eb;
             text-decoration: none;
@@ -485,31 +418,6 @@
             transform: translateX(3px);
         }
         
-        /* Featured project buttons */
-        .project-btn-primary {
-            background: #2563eb;
-            color: white;
-            border: none;
-        }
-        
-        .project-btn-primary:hover {
-            background: #1d4ed8;
-            transform: translateY(-2px);
-        }
-        
-        .project-btn-secondary {
-            border: 2px solid #2563eb;
-            color: #2563eb;
-            background: transparent;
-        }
-        
-        .project-btn-secondary:hover {
-            background: #2563eb;
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        /* Featured project info box */
         .project-info-box {
             background: rgba(37, 99, 235, 0.05);
             border-radius: 8px;
@@ -525,29 +433,7 @@
             font-weight: 600;
         }
         
-        /* Mobile project layout fixes */
-        @media (max-width: 767px) {
-            .featured-project .project-body {
-                display: flex;
-                flex-direction: column;
-            }
-            
-            .featured-project .project-actions {
-                margin-top: 20px;
-            }
-            
-            .project-actions {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .project-link {
-                width: 100%;
-            }
-        }
-        
-        /* Skills section - improved aesthetics */
+        /* Skills Section */
         .skills-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -581,7 +467,49 @@
             transform: translateY(-2px);
         }
         
-        /* Contact section - improved aesthetics */
+        /* Experience Styles */
+        .experience-item {
+            margin-bottom: 30px;
+        }
+        
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        
+        .experience-header h4 {
+            font-size: 20px;
+            color: #111;
+            margin-right: 10px;
+        }
+        
+        .experience-header span {
+            color: #666;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .experience-title {
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        
+        .experience-list {
+            list-style-position: outside;
+            padding-left: 20px;
+        }
+        
+        .experience-list li {
+            margin-bottom: 10px;
+            color: #444;
+        }
+        
+        /* Contact Section */
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -617,64 +545,12 @@
             background-color: #bfdbfe;
         }
         
-        /* Experience styling - consistent format */
-        .experience-item {
-            margin-bottom: 30px;
-        }
-        
-        .experience-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            align-items: flex-start;
-            flex-wrap: wrap;
-        }
-        
-        .experience-header h4 {
-            font-size: 20px;
-            color: #111;
-            margin-right: 10px;
-        }
-        
-        .experience-header span {
-            color: #666;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-        
-        @media (max-width: 576px) {
-            .experience-header {
-                flex-direction: column;
-            }
-            
-            .experience-header span {
-                margin-top: 5px;
-            }
-        }
-        
-        .experience-title {
-            font-weight: 700;
-            color: #2563eb;
-            margin-bottom: 12px;
-            font-size: 16px;
-        }
-        
-        .experience-list {
-            list-style-position: outside;
-            padding-left: 20px;
-        }
-        
-        .experience-list li {
-            margin-bottom: 10px;
-            color: #444;
-        }
-        
-        /* Section backgrounds - alternating for visual separation */
+        /* Utility Classes */
         .alt-bg {
             background-color: #f0f5ff;
         }
         
-        /* Footer styling - improved aesthetics */
+        /* Footer */
         footer {
             background-color: #1e293b;
             color: white;
@@ -685,6 +561,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 20px;
         }
         
         @media (min-width: 768px) {
@@ -708,19 +585,13 @@
         .social-links {
             display: flex;
             gap: 20px;
-            margin-top: 20px;
-        }
-        
-        @media (min-width: 768px) {
-            .social-links {
-                margin-top: 0;
-            }
         }
         
         .social-link {
             color: #94a3b8;
             font-size: 24px;
             transition: all 0.3s;
+            text-decoration: none;
         }
         
         .social-link:hover {
@@ -737,8 +608,12 @@
             font-size: 14px;
         }
         
-        /* Responsive fixes for smaller screens */
-        @media (max-width: 576px) {
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero-text h2 {
+                font-size: 28px;
+            }
+            
             .section-title {
                 font-size: 28px;
             }
@@ -763,6 +638,14 @@
                 text-align: center;
                 margin-right: 0;
             }
+            
+            .experience-header {
+                flex-direction: column;
+            }
+            
+            .experience-header span {
+                margin-top: 5px;
+            }
         }
     </style>
 </head>
@@ -776,10 +659,7 @@
                     <p>Marketing & Business Analytics Professional</p>
                 </div>
                 
-                <!-- Mobile Menu Button (Hamburger) -->
                 <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
-                
-                <!-- Overlay for mobile menu background -->
                 <div class="overlay"></div>
                 
                 <nav>
@@ -789,7 +669,9 @@
                         <li><a href="#projects">Projects</a></li>
                         <li><a href="#skills">Skills</a></li>
                         <li><a href="#contact">Contact</a></li>
-                        <li><a href="resume.pdf" download="Astha_Harlalka_Resume.pdf" class="resume-btn"><span class="resume-icon">📄</span> Resume</a></li>
+                        <li><a href="resume.pdf" download="Astha_Harlalka_Resume.pdf" class="resume-btn">
+                            <span class="resume-icon">📄</span> Resume
+                        </a></li>
                     </ul>
                 </nav>
             </div>
@@ -814,9 +696,7 @@
                         <h3 style="margin-bottom: 20px; font-size: 22px;">Professional Highlights</h3>
                         <ul class="highlight-list">
                             <li class="highlight-item">
-                                <div class="highlight-icon">
-                                    <i>🔍</i>
-                                </div>
+                                <div class="highlight-icon">🔍</div>
                                 <div class="highlight-content">
                                     <h3>Advanced Data Analytics</h3>
                                     <p>Python, R, SQL, Machine Learning, LLMs, AI</p>
@@ -824,9 +704,7 @@
                             </li>
                             
                             <li class="highlight-item">
-                                <div class="highlight-icon">
-                                    <i>💼</i>
-                                </div>
+                                <div class="highlight-icon">💼</div>
                                 <div class="highlight-content">
                                     <h3>Industry Experience</h3>
                                     <p>Deloitte (Capstone), Publicis Global Delivery</p>
@@ -834,20 +712,16 @@
                             </li>
                             
                             <li class="highlight-item">
-                                <div class="highlight-icon">
-                                    <i>🎓</i>
-                                </div>
+                                <div class="highlight-icon">🎓</div>
                                 <div class="highlight-content">
                                     <h3>Education</h3>
-                                    <p>• MS in Business Analytics, Carnegie Mellon University</p>
-                                    <p>• Bachelor of Commerce, Narsee Monjee College of Commerce and Economics</p>
+                                    <p>MS in Business Analytics, Carnegie Mellon University</p>
+                                    <p>Bachelor of Commerce, Narsee Monjee College</p>
                                 </div>
                             </li>
                             
                             <li class="highlight-item">
-                                <div class="highlight-icon">
-                                    <i>🏆</i>
-                                </div>
+                                <div class="highlight-icon">🏆</div>
                                 <div class="highlight-content">
                                     <h3>Recognition</h3>
                                     <p>Two-time "Achiever" awardee, recognized by CEO at Publicis</p>
@@ -898,10 +772,8 @@
                 </div>
             </div>
             
-            <!-- Work Experience Section -->
             <h3 style="font-size: 24px; margin-bottom: 25px; color: #333; text-align: center;">Work Experience</h3>
             <div class="card">
-                <!-- Experience 1 -->
                 <div class="experience-item">
                     <div class="experience-header">
                         <h4>Deloitte Consulting US (Capstone Project)</h4>
@@ -915,7 +787,6 @@
                     </ul>
                 </div>
 
-                <!-- Experience 2 -->
                 <div class="experience-item">
                     <div class="experience-header">
                         <h4>Publicis Global Delivery</h4>
@@ -929,7 +800,6 @@
                     </ul>
                 </div>
 
-                <!-- Experience 3 -->
                 <div class="experience-item">
                     <div class="experience-header">
                         <h4>Publicis Global Delivery</h4>
@@ -943,7 +813,6 @@
                     </ul>
                 </div>
 
-                <!-- Experience 4 -->
                 <div class="experience-item" style="margin-bottom: 0;">
                     <div class="experience-header">
                         <h4>Publicis Global Delivery</h4>
@@ -965,36 +834,36 @@
         <div class="container">
             <h2 class="section-title">Analytics Projects</h2>
             <div class="project-grid">
-               <!-- FEATURED PROJECT - Northwind Trading Analytics -->
-               <div class="project-card featured-project">
-                   <div class="project-header">
-                       <h3>📊 Northwind Trading Company - Advanced SQL Marketing Analytics</h3>
-                   </div>
-                   <div class="project-body">
-                       <div class="project-main-content">
-                           <p class="project-description">
-                               <strong>Comprehensive business intelligence transformation</strong> analyzing 600,000+ transactions to rescue a declining trading company. Uncovered the "Inverted Customer Pyramid" phenomenon where supposedly "at-risk" customers generated 32.5% of revenue, identified $77M inventory crisis, and developed data-driven strategies that projected 1,726% ROI with $127.7M revenue increase potential.
-                           </p>
-                           
-                           <div class="project-tags">
-                               <span class="tag" style="background: #dbeafe; color: #1e40af;">Advanced SQL</span>
-                               <span class="tag" style="background: #dcfce7; color: #166534;">600K+ Transactions</span>
-                               <span class="tag" style="background: #fef3c7; color: #92400e;">Customer Segmentation</span>
-                               <span class="tag" style="background: #fce7f3; color: #be185d;">Strategic Analytics</span>
-                               <span class="tag" style="background: #e0e7ff; color: #3730a3;">Business Intelligence</span>
-                               <span class="tag" style="background: #f3e8ff; color: #7c3aed;">Revenue Optimization</span>
-                           </div>
-                           
-                           <div class="project-info-box">
-                               <p>🚀 <strong>Business Impact Story:</strong> Transformed raw transaction data into actionable strategies that identified critical inventory risks, revealed hidden customer value patterns, and delivered a roadmap for 15% profit margin improvement across global markets.</p>
-                           </div>
-                       </div>
-                       
-                       <div class="project-actions">
-                           <a href="northwind-analytics.html" class="project-link">View Details</a>
-                       </div>
-                   </div>
-               </div>
+                <!-- FEATURED PROJECT - Northwind Trading Analytics -->
+                <div class="project-card featured-project">
+                    <div class="project-header">
+                        <h3>📊 Northwind Trading Company - Advanced SQL Marketing Analytics</h3>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-main-content">
+                            <p class="project-description">
+                                <strong>Comprehensive business intelligence transformation</strong> analyzing 600,000+ transactions to rescue a declining trading company. Uncovered the "Inverted Customer Pyramid" phenomenon where supposedly "at-risk" customers generated 32.5% of revenue, identified $77M inventory crisis, and developed data-driven strategies that projected 1,726% ROI with $127.7M revenue increase potential.
+                            </p>
+                            
+                            <div class="project-tags">
+                                <span class="tag" style="background: #dbeafe; color: #1e40af;">Advanced SQL</span>
+                                <span class="tag" style="background: #dcfce7; color: #166534;">600K+ Transactions</span>
+                                <span class="tag" style="background: #fef3c7; color: #92400e;">Customer Segmentation</span>
+                                <span class="tag" style="background: #fce7f3; color: #be185d;">Strategic Analytics</span>
+                                <span class="tag" style="background: #e0e7ff; color: #3730a3;">Business Intelligence</span>
+                                <span class="tag" style="background: #f3e8ff; color: #7c3aed;">Revenue Optimization</span>
+                            </div>
+                            
+                            <div class="project-info-box">
+                                <p>🚀 <strong>Business Impact Story:</strong> Transformed raw transaction data into actionable strategies that identified critical inventory risks, revealed hidden customer value patterns, and delivered a roadmap for 15% profit margin improvement across global markets.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="project-actions">
+                            <a href="northwind-analytics.html" class="project-link">View Details</a>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- PROJECT 1 -->
                 <div class="project-card">
@@ -1160,18 +1029,14 @@
             <div class="contact-grid">
                 <!-- Email contact -->
                 <div class="card contact-item">
-                    <div class="contact-icon">
-                        <i>✉️</i>
-                    </div>
+                    <div class="contact-icon">✉️</div>
                     <h3 style="margin-bottom: 12px; font-size: 22px;">Email</h3>
                     <p style="font-size: 16px;">aharlalk@tepper.cmu.edu</p>
                 </div>
                 
                 <!-- LinkedIn contact -->
                 <div class="card contact-item">
-                    <div class="contact-icon">
-                        <i>👔</i>
-                    </div>
+                    <div class="contact-icon">👔</div>
                     <h3 style="margin-bottom: 12px; font-size: 22px;">LinkedIn</h3>
                     <p style="margin-bottom: 15px; font-size: 16px;">Connect with me</p>
                     <a href="https://www.linkedin.com/in/asthaharlalka" class="project-link">LinkedIn Profile →</a>
@@ -1201,7 +1066,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript for mobile menu toggle and smooth scrolling -->
+    <!-- JavaScript -->
     <script>
         // Update the current year in the footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
@@ -1246,16 +1111,15 @@
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
                     window.scrollTo({
-                        top: targetElement.offsetTop - 70, // Adjust for header height
+                        top: targetElement.offsetTop - 70,
                         behavior: 'smooth'
                     });
                 }
             });
         });
 
-        // Add some interactive effects
+        // Add scroll animations
         document.addEventListener('DOMContentLoaded', function() {
-            // Animate cards on scroll (optional enhancement)
             const observerOptions = {
                 threshold: 0.1,
                 rootMargin: '0px 0px -50px 0px'
