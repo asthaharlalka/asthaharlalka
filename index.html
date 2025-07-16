@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astha Harlalka - Portfolio</title>
+    <title>Astha Harlalka - Marketing Analytics Professional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         /* CSS Reset */
@@ -13,24 +14,46 @@
             box-sizing: border-box;
         }
         
+        :root {
+            --primary-beige: #F5F1E8;
+            --warm-brown: #8B5A3C;
+            --deep-brown: #5D3F2E;
+            --sage-green: #7A8471;
+            --forest-green: #556B2F;
+            --cream: #FAF8F3;
+            --charcoal: #2C2C2C;
+            --soft-grey: #6B7280;
+            --accent-gold: #D4AF37;
+            --white: #FFFFFF;
+        }
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.7;
-            color: #333;
-            background-color: #f9fafb;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--charcoal);
+            background: linear-gradient(135deg, var(--cream) 0%, var(--primary-beige) 100%);
+            overflow-x: hidden;
         }
         
         .container {
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 15px;
+            padding: 0 20px;
+        }
+        
+        /* Typography */
+        .serif-heading {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            letter-spacing: -0.02em;
         }
         
         /* Header Styles */
         header {
-            background-color: white;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(139, 90, 60, 0.1);
             padding: 20px 0;
             position: sticky;
             top: 0;
@@ -45,22 +68,27 @@
         }
         
         .logo h1 {
-            font-size: 26px;
-            color: #2563eb;
-            letter-spacing: -0.5px;
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: var(--deep-brown);
+            font-weight: 600;
+            letter-spacing: -0.02em;
         }
         
         .logo p {
-            font-size: 15px;
-            color: #666;
-            margin-top: 5px;
+            font-size: 14px;
+            color: var(--sage-green);
+            margin-top: 2px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
         
         .mobile-menu-btn {
             display: none;
             background: none;
             border: none;
-            color: #333;
+            color: var(--deep-brown);
             font-size: 24px;
             cursor: pointer;
         }
@@ -68,37 +96,60 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 30px;
+            gap: 35px;
             align-items: center;
         }
         
         nav ul li a {
             text-decoration: none;
-            color: #333;
-            font-weight: 600;
-            transition: color 0.3s;
-            padding: 5px 2px;
+            color: var(--charcoal);
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.3s ease;
+            padding: 8px 0;
+            position: relative;
+            letter-spacing: 0.3px;
+        }
+        
+        nav ul li a:before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background: linear-gradient(90deg, var(--warm-brown), var(--sage-green));
+            transition: width 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        nav ul li a:hover:before {
+            width: 100%;
         }
         
         nav ul li a:hover {
-            color: #2563eb;
+            color: var(--warm-brown);
         }
         
         .resume-btn {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            color: #2563eb;
-            background-color: rgba(37, 99, 235, 0.1);
-            padding: 8px 15px;
-            border-radius: 6px;
+            color: var(--white);
+            background: linear-gradient(135deg, var(--warm-brown) 0%, var(--deep-brown) 100%);
+            padding: 12px 24px;
+            border-radius: 50px;
             font-weight: 600;
-            transition: all 0.3s;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 90, 60, 0.3);
         }
         
         .resume-btn:hover {
-            background-color: #2563eb;
-            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 90, 60, 0.4);
         }
         
         /* Mobile Navigation */
@@ -114,8 +165,8 @@
                 width: 75%;
                 max-width: 300px;
                 height: 100vh;
-                background-color: white;
-                box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+                background: linear-gradient(135deg, var(--white) 0%, var(--cream) 100%);
+                box-shadow: -5px 0 25px rgba(0,0,0,0.1);
                 padding-top: 80px;
                 transition: right 0.3s ease;
                 z-index: 100;
@@ -128,13 +179,7 @@
             nav ul {
                 flex-direction: column;
                 align-items: center;
-                gap: 20px;
-            }
-            
-            nav ul li a {
-                display: block;
-                padding: 10px 15px;
-                font-size: 18px;
+                gap: 25px;
             }
             
             .overlay {
@@ -144,7 +189,8 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: rgba(0,0,0,0.5);
+                background: rgba(44, 44, 44, 0.6);
+                backdrop-filter: blur(5px);
                 z-index: 99;
             }
             
@@ -161,10 +207,12 @@
         .section-title {
             text-align: center;
             margin-bottom: 50px;
-            font-size: 32px;
-            color: #111;
+            font-family: 'Playfair Display', serif;
+            font-size: 38px;
+            color: var(--deep-brown);
             position: relative;
-            font-weight: 700;
+            font-weight: 600;
+            letter-spacing: -0.02em;
         }
         
         .section-title:after {
@@ -172,16 +220,18 @@
             position: absolute;
             width: 80px;
             height: 3px;
-            background-color: #2563eb;
-            bottom: -15px;
+            background: linear-gradient(90deg, var(--warm-brown), var(--sage-green));
+            bottom: -20px;
             left: 50%;
             transform: translateX(-50%);
+            border-radius: 2px;
         }
         
         /* Hero Section */
         .hero {
-            background-color: #f0f5ff;
-            padding: 80px 0;
+            background: linear-gradient(135deg, var(--cream) 0%, rgba(245, 241, 232, 0.8) 50%, var(--primary-beige) 100%);
+            padding: 80px 0 100px;
+            position: relative;
         }
         
         .hero-content {
@@ -193,74 +243,137 @@
         
         @media (min-width: 768px) {
             .hero-content {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 2fr 1fr;
+                gap: 50px;
             }
         }
         
         .hero-text h2 {
-            font-size: 36px;
-            margin-bottom: 18px;
-            line-height: 1.3;
-            color: #111;
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            color: var(--deep-brown);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        
+        .hero-text .subtitle {
+            font-size: 22px;
+            color: var(--sage-green);
+            margin-bottom: 25px;
+            font-weight: 500;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
         }
         
         .hero-text p {
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             font-size: 18px;
-            color: #555;
+            color: var(--soft-grey);
             line-height: 1.7;
+            max-width: 600px;
+        }
+        
+        /* Profile Image */
+        .profile-section {
+            text-align: center;
+        }
+        
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--warm-brown);
+            box-shadow: 0 10px 30px rgba(139, 90, 60, 0.3);
+            margin-bottom: 20px;
+        }
+        
+        .profile-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: var(--deep-brown);
+            margin-bottom: 10px;
+        }
+        
+        .profile-info p {
+            color: var(--sage-green);
+            font-weight: 500;
+            font-size: 16px;
         }
         
         /* Buttons */
         .btn {
             display: inline-block;
-            padding: 12px 24px;
-            border-radius: 6px;
+            padding: 14px 28px;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
             letter-spacing: 0.5px;
-            margin-right: 12px;
-            margin-bottom: 12px;
-            transition: all 0.3s;
+            margin-right: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            text-transform: uppercase;
         }
         
         .btn-primary {
-            background-color: #2563eb;
-            color: white;
-            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            background: linear-gradient(135deg, var(--warm-brown) 0%, var(--deep-brown) 100%);
+            color: var(--white);
+            box-shadow: 0 6px 20px rgba(139, 90, 60, 0.3);
         }
         
         .btn-primary:hover {
-            background-color: #1d4ed8;
             transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 90, 60, 0.4);
         }
         
         .btn-secondary {
-            background-color: white;
-            color: #333;
-            border: 1px solid #ddd;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--deep-brown);
+            border: 2px solid var(--sage-green);
+            backdrop-filter: blur(10px);
         }
         
         .btn-secondary:hover {
-            background-color: #f9fafb;
+            background: var(--sage-green);
+            color: var(--white);
             transform: translateY(-2px);
         }
         
         /* Card Styles */
         .card {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
-            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(139, 90, 60, 0.1);
+            padding: 35px;
             margin-bottom: 25px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid rgba(0,0,0,0.03);
+            border: 1px solid rgba(139, 90, 60, 0.1);
+            position: relative;
+        }
+        
+        .card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--warm-brown), var(--sage-green));
+            border-radius: 15px 15px 0 0;
         }
         
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(0,0,0,0.08);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(139, 90, 60, 0.15);
+        }
+        
+        /* Professional Summary */
+        .summary-card {
+            background: linear-gradient(135deg, rgba(245, 241, 232, 0.9) 0%, rgba(255, 255, 255, 0.9) 100%);
+            border: 2px solid var(--warm-brown);
         }
         
         /* Highlights */
@@ -272,31 +385,42 @@
             display: flex;
             align-items: flex-start;
             margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(245, 241, 232, 0.4);
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+        
+        .highlight-item:hover {
+            background: rgba(245, 241, 232, 0.6);
         }
         
         .highlight-icon {
-            width: 48px;
-            height: 48px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            background-color: #dbeafe;
+            background: linear-gradient(135deg, var(--sage-green), var(--forest-green));
             display: flex;
             align-items: center;
             justify-content: center;
             margin-right: 18px;
-            color: #2563eb;
+            color: var(--white);
             font-size: 20px;
             flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(122, 132, 113, 0.3);
         }
         
         .highlight-content h3 {
+            font-family: 'Playfair Display', serif;
             font-size: 18px;
             margin-bottom: 6px;
-            color: #111;
+            color: var(--deep-brown);
+            font-weight: 600;
         }
         
         .highlight-content p {
             font-size: 15px;
-            color: #555;
+            color: var(--soft-grey);
             line-height: 1.6;
             margin: 0;
         }
@@ -315,24 +439,42 @@
         }
         
         .project-card {
-            border-radius: 12px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 15px rgba(0,0,0,0.08);
-            background-color: white;
-            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 10px 25px rgba(139, 90, 60, 0.12);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
             height: 100%;
             display: flex;
             flex-direction: column;
+            border: 1px solid rgba(139, 90, 60, 0.1);
         }
         
         .project-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 20px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(139, 90, 60, 0.18);
         }
         
         .featured-project {
-            border: 2px solid #2563eb;
-            background: linear-gradient(135deg, #f0f5ff 0%, #ffffff 100%);
+            background: linear-gradient(135deg, rgba(245, 241, 232, 0.95) 0%, rgba(255, 255, 255, 0.95) 100%);
+            border: 2px solid var(--warm-brown);
+            position: relative;
+        }
+        
+        .featured-project:before {
+            content: 'FEATURED PROJECT';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, var(--accent-gold), #B8860B);
+            color: var(--white);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            z-index: 3;
         }
         
         @media (min-width: 768px) {
@@ -349,23 +491,21 @@
         }
         
         .project-header {
-            background-color: #2563eb;
-            color: white;
-            padding: 20px 25px;
-        }
-        
-        .featured-project .project-header {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            background: linear-gradient(135deg, var(--deep-brown) 0%, var(--warm-brown) 100%);
+            color: var(--white);
+            padding: 25px;
         }
         
         .project-header h3 {
+            font-family: 'Playfair Display', serif;
             font-size: 20px;
             line-height: 1.4;
             margin: 0;
+            font-weight: 600;
         }
         
         .project-body {
-            padding: 25px;
+            padding: 30px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -373,9 +513,10 @@
         
         .project-description {
             margin-bottom: 20px;
-            color: #555;
+            color: var(--soft-grey);
             line-height: 1.7;
             flex-grow: 1;
+            font-size: 15px;
         }
         
         .project-tags {
@@ -386,51 +527,36 @@
         }
         
         .tag {
-            background-color: #dbeafe;
-            color: #1e40af;
-            padding: 6px 12px;
+            background: linear-gradient(135deg, rgba(122, 132, 113, 0.1), rgba(139, 90, 60, 0.1));
+            color: var(--deep-brown);
+            padding: 6px 14px;
             border-radius: 20px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
-            transition: all 0.2s;
-        }
-        
-        .tag:hover {
-            background-color: #bfdbfe;
+            border: 1px solid rgba(139, 90, 60, 0.2);
         }
         
         .project-link {
-            color: #2563eb;
+            color: var(--white);
+            background: linear-gradient(135deg, var(--sage-green), var(--forest-green));
             text-decoration: none;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 14px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
             margin-top: auto;
-            padding: 10px 15px;
-            border-radius: 6px;
+            padding: 12px 20px;
+            border-radius: 25px;
             text-align: center;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
         
         .project-link:hover {
-            transform: translateX(3px);
-        }
-        
-        .project-info-box {
-            background: rgba(37, 99, 235, 0.05);
-            border-radius: 8px;
-            border-left: 4px solid #2563eb;
-            padding: 15px;
-            margin: 15px 0;
-        }
-        
-        .project-info-box p {
-            font-size: 14px;
-            margin: 0;
-            color: #1e40af;
-            font-weight: 600;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(122, 132, 113, 0.3);
         }
         
         /* Skills Section */
@@ -446,6 +572,14 @@
             }
         }
         
+        .skill-category h3 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
+            color: var(--warm-brown);
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
         .skill-tags {
             display: flex;
             flex-wrap: wrap;
@@ -453,48 +587,60 @@
         }
         
         .skill-tag {
-            background-color: #dbeafe;
-            color: #1e40af;
+            background: linear-gradient(135deg, rgba(122, 132, 113, 0.15), rgba(139, 90, 60, 0.15));
+            color: var(--deep-brown);
             padding: 8px 16px;
             border-radius: 20px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
-            transition: all 0.2s;
+            border: 1px solid rgba(139, 90, 60, 0.2);
+            transition: all 0.3s ease;
         }
         
         .skill-tag:hover {
-            background-color: #bfdbfe;
+            background: linear-gradient(135deg, var(--warm-brown), var(--sage-green));
+            color: var(--white);
             transform: translateY(-2px);
         }
         
         /* Experience Styles */
         .experience-item {
-            margin-bottom: 30px;
+            margin-bottom: 35px;
+            padding: 25px;
+            background: rgba(245, 241, 232, 0.3);
+            border-radius: 12px;
+            border-left: 4px solid var(--sage-green);
         }
         
         .experience-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             align-items: flex-start;
             flex-wrap: wrap;
         }
         
         .experience-header h4 {
+            font-family: 'Playfair Display', serif;
             font-size: 20px;
-            color: #111;
-            margin-right: 10px;
+            color: var(--deep-brown);
+            margin-right: 15px;
+            font-weight: 600;
         }
         
         .experience-header span {
-            color: #666;
+            color: var(--sage-green);
             font-weight: 600;
             white-space: nowrap;
+            background: rgba(122, 132, 113, 0.1);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 13px;
         }
         
         .experience-title {
             font-weight: 700;
-            color: #2563eb;
+            color: var(--warm-brown);
             margin-bottom: 12px;
             font-size: 16px;
         }
@@ -506,7 +652,8 @@
         
         .experience-list li {
             margin-bottom: 10px;
-            color: #444;
+            color: var(--soft-grey);
+            line-height: 1.6;
         }
         
         /* Contact Section */
@@ -530,30 +677,29 @@
             width: 70px;
             height: 70px;
             border-radius: 50%;
-            background-color: #dbeafe;
-            color: #2563eb;
+            background: linear-gradient(135deg, var(--sage-green), var(--forest-green));
+            color: var(--white);
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px;
             font-size: 28px;
-            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(122, 132, 113, 0.3);
         }
         
         .contact-item:hover .contact-icon {
-            transform: scale(1.1);
-            background-color: #bfdbfe;
+            transform: scale(1.05);
         }
         
         /* Utility Classes */
         .alt-bg {
-            background-color: #f0f5ff;
+            background: linear-gradient(135deg, rgba(245, 241, 232, 0.5) 0%, rgba(250, 248, 243, 0.8) 100%);
         }
         
         /* Footer */
         footer {
-            background-color: #1e293b;
-            color: white;
+            background: linear-gradient(135deg, var(--deep-brown) 0%, var(--charcoal) 100%);
+            color: var(--white);
             padding: 40px 0 30px;
         }
         
@@ -573,13 +719,15 @@
         }
         
         .footer-branding h3 {
+            font-family: 'Playfair Display', serif;
             font-size: 22px;
             margin-bottom: 5px;
-            color: #fff;
+            font-weight: 600;
         }
         
         .footer-branding p {
-            color: #cbd5e1;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
         }
         
         .social-links {
@@ -588,30 +736,37 @@
         }
         
         .social-link {
-            color: #94a3b8;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 24px;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             text-decoration: none;
+            padding: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
         }
         
         .social-link:hover {
-            color: white;
-            transform: translateY(-3px);
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.2);
         }
         
         .copyright {
             text-align: center;
-            border-top: 1px solid #334155;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
             margin-top: 30px;
             padding-top: 25px;
-            color: #94a3b8;
+            color: rgba(255, 255, 255, 0.6);
             font-size: 14px;
         }
         
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .hero-text h2 {
-                font-size: 28px;
+                font-size: 32px;
+            }
+            
+            .hero-text .subtitle {
+                font-size: 18px;
             }
             
             .section-title {
@@ -619,7 +774,12 @@
             }
             
             .card {
-                padding: 20px;
+                padding: 25px;
+            }
+            
+            .profile-image {
+                width: 150px;
+                height: 150px;
             }
             
             .highlight-item {
@@ -656,7 +816,7 @@
             <div class="header-content">
                 <div class="logo">
                     <h1>Astha Harlalka</h1>
-                    <p>Marketing & Business Analytics Professional</p>
+                    <p>Marketing Analytics Professional</p>
                 </div>
                 
                 <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
@@ -666,11 +826,12 @@
                     <ul>
                         <li><a href="#home">Home</a></li>
                         <li><a href="#about">About</a></li>
+                        <li><a href="#experience">Experience</a></li>
                         <li><a href="#projects">Projects</a></li>
                         <li><a href="#skills">Skills</a></li>
                         <li><a href="#contact">Contact</a></li>
                         <li><a href="resume.pdf" download="Astha_Harlalka_Resume.pdf" class="resume-btn">
-                            <span class="resume-icon">📄</span> Resume
+                            Download Resume
                         </a></li>
                     </ul>
                 </nav>
@@ -683,51 +844,22 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h2>Marketing & Business Analytics Professional</h2>
-                    <p>Carnegie Mellon MSBA graduate with proven expertise in marketing analytics, data science, and AI-driven solutions.</p>
+                    <h2 class="serif-heading">Marketing Strategy Through Data-Driven Leadership</h2>
+                    <p class="subtitle">3+ Years of High-Impact Marketing Analytics Excellence</p>
+                    <p>Experienced Marketing Data Analyst specializing in campaign optimization, budget allocation, and product strategy through advanced analytics. Known for blending technical expertise with strong business acumen and executive-ready communication.</p>
                     <div>
-                        <a href="#projects" class="btn btn-primary">View Projects</a>
-                        <a href="#contact" class="btn btn-secondary">Contact Me</a>
+                        <a href="#projects" class="btn btn-primary">View Portfolio</a>
+                        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
                     </div>
                 </div>
                 
-                <div class="hero-card">
-                    <div class="card">
-                        <h3 style="margin-bottom: 20px; font-size: 22px;">Professional Highlights</h3>
-                        <ul class="highlight-list">
-                            <li class="highlight-item">
-                                <div class="highlight-icon">🔍</div>
-                                <div class="highlight-content">
-                                    <h3>Advanced Data Analytics</h3>
-                                    <p>Python, R, SQL, Machine Learning, LLMs, AI</p>
-                                </div>
-                            </li>
-                            
-                            <li class="highlight-item">
-                                <div class="highlight-icon">💼</div>
-                                <div class="highlight-content">
-                                    <h3>Industry Experience</h3>
-                                    <p>Deloitte (Capstone), Publicis Global Delivery</p>
-                                </div>
-                            </li>
-                            
-                            <li class="highlight-item">
-                                <div class="highlight-icon">🎓</div>
-                                <div class="highlight-content">
-                                    <h3>Education</h3>
-                                    <p>MS in Business Analytics, Carnegie Mellon University</p>
-                                    <p>Bachelor of Commerce, Narsee Monjee College</p>
-                                </div>
-                            </li>
-                            
-                            <li class="highlight-item">
-                                <div class="highlight-icon">🏆</div>
-                                <div class="highlight-content">
-                                    <h3>Recognition</h3>
-                                    <p>Two-time "Achiever" awardee, recognized by CEO at Publicis</p>
-                                </div>
-                            </li>
-                        </ul>
+                <div class="profile-section">
+                    <!-- Replace 'your-photo.jpg' with your actual photo file -->
+                    <img src="your-photo.jpg" alt="Astha Harlalka" class="profile-image">
+                    <div class="profile-info">
+                        <h3 class="serif-heading">Astha Harlalka</h3>
+                        <p>Marketing Analytics Professional</p>
+                        <p>Carnegie Mellon University | 4.0 GPA</p>
                     </div>
                 </div>
             </div>
@@ -737,53 +869,92 @@
     <!-- About Section -->
     <section id="about">
         <div class="container">
-            <h2 class="section-title">About Me</h2>
+            <h2 class="section-title serif-heading">Professional Summary</h2>
             
-            <div class="card" style="margin-bottom: 40px;">
-                <p style="margin-bottom: 15px;">
-                    I'm a business and marketing analytics professional with a Master of Science in Business Analytics from Carnegie Mellon University's Tepper School of Business. I bring a unique blend of technical expertise in data science and machine learning, paired with hands-on experience in marketing analytics and process optimization.
+            <div class="card summary-card">
+                <p style="font-size: 18px; line-height: 1.7; margin-bottom: 20px;">
+                    <strong>Driving marketing strategy through data-backed leadership.</strong> Marketing Data Analyst with 3+ years of experience shaping campaign, budget, and product decisions through high-impact analytics. Known for blending technical expertise (SQL, Python, GA4, A/B testing) with strong business acumen, stakeholder alignment, and executive-ready communication.
                 </p>
-                <p style="margin-bottom: 15px;">
-                    At organizations like Publicis, I've led high-impact initiatives that enhanced ad spend efficiency, improved customer acquisition strategies, and automated workflows—unlocking measurable business value. I specialize in turning complex data into actionable insights that inform strategy and drive performance.
-                </p>
-                <p>
-                   I'm passionate about using AI and advanced analytics to solve real-world business challenges. My approach combines analytical rigor, strategic thinking, and strong communication to deliver data-driven solutions that align with business goals and drive sustainable growth.
+                <p style="font-size: 18px; line-height: 1.7;">
+                    Trusted partner to cross-functional teams, with a proven track record of influencing strategy and delivering measurable growth across channels. Currently pursuing Master of Science in Business Analytics at Carnegie Mellon University's Tepper School of Business with a perfect 4.0 GPA.
                 </p>
             </div>
             
-            <h3 style="font-size: 24px; margin-bottom: 25px; color: #333; text-align: center;">Education</h3>
-            <div class="card" style="margin-bottom: 40px;">
+            <h3 class="serif-heading" style="font-size: 28px; margin-bottom: 30px; color: var(--deep-brown); text-align: center;">Core Competencies</h3>
+            <div class="card">
+                <ul class="highlight-list">
+                    <li class="highlight-item">
+                        <div class="highlight-icon">📊</div>
+                        <div class="highlight-content">
+                            <h3>Data-Driven Marketing Strategy</h3>
+                            <p>Campaign optimization, budget allocation, and strategic decision-making through advanced analytics</p>
+                        </div>
+                    </li>
+                    
+                    <li class="highlight-item">
+                        <div class="highlight-icon">🎯</div>
+                        <div class="highlight-content">
+                            <h3>Marketing Mix Modeling & Attribution</h3>
+                            <p>MMM, Multi-Touch Attribution, and advanced experimentation design for marketing optimization</p>
+                        </div>
+                    </li>
+                    
+                    <li class="highlight-item">
+                        <div class="highlight-icon">🔬</div>
+                        <div class="highlight-content">
+                            <h3>Advanced Marketing Analytics</h3>
+                            <p>A/B Testing, Churn Prediction, LTV Forecasting, CAC Optimization, and Statistical Hypothesis Testing</p>
+                        </div>
+                    </li>
+                    
+                    <li class="highlight-item">
+                        <div class="highlight-icon">📈</div>
+                        <div class="highlight-content">
+                            <h3>Executive Communication & Leadership</h3>
+                            <p>Insight storytelling, cross-functional collaboration, stakeholder alignment, and team enablement</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <h3 class="serif-heading" style="font-size: 28px; margin-bottom: 30px; color: var(--deep-brown); text-align: center;">Education</h3>
+            <div class="card">
                 <div style="margin-bottom: 30px;">
-                    <h4 style="font-size: 20px; margin-bottom: 8px; color: #2563eb;">Carnegie Mellon University – Tepper School of Business</h4>
-                    <p style="font-weight: bold;">Master of Science in Business Analytics (Merit Scholarship)</p>
-                    <p>GPA: 4.00/4.00 | May 2025</p>
-                    <p style="margin-top: 10px;">
-                        <span style="font-weight: bold;">Leadership:</span> Student Leadership Council – Operations Officer and GSA Representative
+                    <h4 class="serif-heading" style="font-size: 22px; margin-bottom: 10px; color: var(--warm-brown);">Carnegie Mellon University – Tepper School of Business</h4>
+                    <p style="font-weight: bold; font-size: 17px; color: var(--deep-brown);">Master of Science in Business Analytics (Merit Scholarship Recipient)</p>
+                    <p style="font-size: 15px; color: var(--sage-green); font-weight: 600;">Perfect GPA: 4.00/4.00 | May 2025</p>
+                    <p style="margin-top: 12px; font-size: 15px;">
+                        <span style="font-weight: bold; color: var(--warm-brown);">Leadership:</span> Student Leadership Council – Operations Officer and GSA Representative
                     </p>
                 </div>
                 
                 <div>
-                    <h4 style="font-size: 20px; margin-bottom: 8px; color: #2563eb;">Narsee Monjee College of Commerce and Economics</h4>
-                    <p style="font-weight: bold;">Bachelor of Commerce (Financial Accounting and Auditing)</p>
-                    <p>GPA: 3.82/4.00 | May 2021</p>
-                    <p style="margin-top: 10px;">
-                        <span style="font-weight: bold;">Leadership:</span> Performing Arts Association – Marketing & Finance Head; Finance and Investment Cell – Elected Director
+                    <h4 class="serif-heading" style="font-size: 22px; margin-bottom: 10px; color: var(--warm-brown);">Narsee Monjee College of Commerce and Economics</h4>
+                    <p style="font-weight: bold; font-size: 17px; color: var(--deep-brown);">Bachelor of Commerce (Financial Accounting and Auditing)</p>
+                    <p style="font-size: 15px; color: var(--sage-green); font-weight: 600;">GPA: 3.82/4.00 | May 2021</p>
+                    <p style="margin-top: 12px; font-size: 15px;">
+                        <span style="font-weight: bold; color: var(--warm-brown);">Leadership:</span> Performing Arts Association – Marketing & Finance Head; Finance and Investment Cell – Elected Director
                     </p>
                 </div>
             </div>
-            
-            <h3 style="font-size: 24px; margin-bottom: 25px; color: #333; text-align: center;">Work Experience</h3>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="alt-bg">
+        <div class="container">
+            <h2 class="section-title serif-heading">Professional Experience</h2>
             <div class="card">
                 <div class="experience-item">
                     <div class="experience-header">
-                        <h4>Deloitte Consulting US (Capstone Project)</h4>
+                        <h4>Deloitte Consulting US (Capstone - Carnegie Mellon University)</h4>
                         <span>Jan 2025 - Apr 2025</span>
                     </div>
-                    <p class="experience-title">Simulated Consumer Testing with AI</p>
+                    <p class="experience-title">Generative-AI Marketing Analytics Consultant</p>
                     <ul class="experience-list">
-                        <li>LLM Integration & AI Technology Creation: Built an AI tool using Flask, LLMs, and Selenium to simulate 25+ customer personas and evaluate website content, UX, and key marketing elements such as message clarity, CTA effectiveness, and brand perception, saving over 12,000 hours of manual review across 1,000+ websites.</li>
-                        <li>UX Optimization & Business Impact: Engineered automated testing and persona flows with Selenium, enabling a 25% increase in website usability scores and driving adoption of strategic recommendations by client teams.</li>
-                        <li>Insight Validation: Benchmarked persona feedback across multiple LLMs, applying a 70% agreeableness threshold to reduce hallucinations and ensure high-confidence insights for optimizing conversion funnels, UX, and content performance.</li>
+                        <li><strong>LLM Integration & AI Technology Creation:</strong> Built an AI tool using Flask, LLMs, and Selenium to simulate 25+ customer personas and evaluate website content, UX and key marketing elements such as message clarity, CTA effectiveness, and brand perception, saving over 12,000 hours of manual review across 1,000+ websites.</li>
+                        <li><strong>UX Optimization & Business Impact:</strong> Engineered automated testing and persona flows with Selenium, enabling a 25% increase in website usability scores and driving adoption of strategic recommendations by client teams.</li>
+                        <li><strong>Insight Validation:</strong> Benchmarked persona feedback across multiple LLMs, applying a 70% agreeableness threshold to reduce hallucinations and ensure high-confidence insights for optimizing conversion funnels, UX, and content performance.</li>
                     </ul>
                 </div>
 
@@ -792,11 +963,12 @@
                         <h4>Publicis Global Delivery</h4>
                         <span>Jul 2023 - Jan 2024</span>
                     </div>
-                    <p class="experience-title">Associate Manager</p>
+                    <p class="experience-title">Associate Manager, Marketing Analytics and Paid Media Optimization</p>
                     <ul class="experience-list">
-                        <li>Revenue Growth: Created A/B testing frameworks, analyzed marketing data using SQL and Python, and optimized ad delivery improving return on ad spend (ROAS) by ~30%, generating $7.2M in incremental revenue for clients.</li>
-                        <li>Data Analytics and Ad Optimization: Decreased trafficking errors by 13% month-on-month, saving an estimated 40+ hours/month of manual rework, through deep analysis of delivery KPIs using SQL and Tableau.</li>
-                        <li>Process Automation: Proposed and delivered automation initiatives that cut manual workload by 25%, strategically positioning the team to scale services and manage $2M in added revenue from a key Media & Entertainment account.</li>
+                        <li><strong>Revenue Growth:</strong> Created A/B testing frameworks, attribution modeling strategies & analyzed data with SQL & Python, optimized ad delivery improving return on ad spend (ROAS) by ~30%, generating $7.2M in incremental revenue for clients.</li>
+                        <li><strong>Marketing Analytics and Ad Optimization:</strong> Decreased trafficking errors using event tracking insights via Google Tag Manager (GTM) by 13% month-on-month, saving an estimated 40+ hours/month of manual rework, through deep analysis of delivery KPIs using SQL and Tableau.</li>
+                        <li><strong>Process Automation:</strong> Proposed and delivered automation initiatives that cut manual workload by 25%, strategically positioning the team to scale services and manage $2M in added revenue from a key Media & Entertainment account.</li>
+                        <li><strong>Team Enablement & Marketing Training Leadership:</strong> Served as Training Lead for onboarding 9 new analysts across global offices; developed SOPs, led hands-on workshops, and resolved 100+ technical blockers, accelerating ramp-up time by 30% and ensuring SLA compliance across client accounts.</li>
                     </ul>
                 </div>
 
@@ -805,11 +977,12 @@
                         <h4>Publicis Global Delivery</h4>
                         <span>Feb 2022 - Jun 2023</span>
                     </div>
-                    <p class="experience-title">Ad Operations Analyst</p>
+                    <p class="experience-title">Ad Operations and Media Performance Analyst</p>
                     <ul class="experience-list">
-                        <li>Process Improvement: Led global ad operations process evaluation to identify pain points and drive compliance improvements across 15+ countries, enabling 3,500+ error-free campaign deliveries (an unprecedented milestone).</li>
-                        <li>Performance Analysis: Analyzed CM360 trafficking logs, QA failure rates, and time-to-live metrics to identify workflow inefficiencies, improving efficiency by 48% and reducing turnaround time by 42%.</li>
-                        <li>Ad Fraud & Viewability Analysis: Reduced invalid traffic exposure by ~35% using IAS (Integral Ad Science) insights, improving ad spend efficiency and media delivery quality across campaigns.</li>
+                        <li><strong>Process Improvement:</strong> Led global ad operations process evaluation to identify pain points and drive compliance improvements across 15+ countries, enabling 3,500+ error-free campaign deliveries (an unprecedented milestone).</li>
+                        <li><strong>Performance Analysis:</strong> Analyzed CM360 trafficking logs, DV360 performance metrics, QA failure rates, and time-to-live metrics to identify workflow inefficiencies, improving efficiency by 48% and reducing turnaround time by 42%.</li>
+                        <li><strong>Marketing Fraud & Viewability Analysis:</strong> Reduced invalid traffic exposure by ~35% using IAS (Integral Ad Science) insights, improving ad spend efficiency and media delivery quality across campaigns.</li>
+                        <li><strong>Data Governance:</strong> Designed data pipelines with GDPR-compliant event tracking logic, reducing risk exposure and supporting SLA-compliant campaign launches.</li>
                     </ul>
                 </div>
 
@@ -818,49 +991,48 @@
                         <h4>Publicis Global Delivery</h4>
                         <span>Jun 2021 - Jan 2022</span>
                     </div>
-                    <p class="experience-title">Analyst</p>
+                    <p class="experience-title">Marketing Analyst</p>
                     <ul class="experience-list">
-                        <li>Customer Acquisition and Media Optimization: Designed and executed A/B tests to evaluate creative and media performance, increasing click-through rates (CTR) by 25% and reducing customer acquisition costs (CAC) by 18%.</li>
-                        <li>Project Management: Effectively managed coordination and optimized task assignment to maintain ~95% team utilization.</li>
-                        <li>Ad Trafficking: Streamlined ad trafficking processes, reducing errors for special request projects and saving ~120 hours/week.</li>
+                        <li><strong>Customer Acquisition and Media Optimization:</strong> Designed and executed A/B tests to evaluate creative and media performance, increasing click-through rates (CTR) by 25% and reducing customer acquisition costs (CAC) by 18%.</li>
+                        <li><strong>Project Management:</strong> Effectively managed coordination and optimized task assignment to maintain ~95% team utilization.</li>
+                        <li><strong>Ad Trafficking:</strong> Streamlined ad trafficking processes, reducing errors for special request projects and saving ~120 hours/week.</li>
                     </ul>
+                    <div style="margin-top: 15px; padding: 15px; background: rgba(212, 175, 55, 0.1); border-radius: 10px; border-left: 4px solid var(--accent-gold);">
+                        <p style="font-weight: 600; color: var(--deep-brown); margin: 0;"><strong>Recognition:</strong> Two-time "Achiever" awardee, recognized by the CEO for outstanding performance.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="alt-bg">
+    <section id="projects">
         <div class="container">
-            <h2 class="section-title">Analytics Projects</h2>
+            <h2 class="section-title serif-heading">Marketing Analytics Projects</h2>
             <div class="project-grid">
-                <!-- FEATURED PROJECT - Northwind Trading Analytics -->
+                <!-- FEATURED PROJECT -->
                 <div class="project-card featured-project">
                     <div class="project-header">
-                        <h3>📊 Northwind Trading Company - Advanced SQL Marketing Analytics</h3>
+                        <h3>Predictive Investment Strategy - Marketing Performance Optimization</h3>
                     </div>
                     <div class="project-body">
                         <div class="project-main-content">
                             <p class="project-description">
-                                <strong>Comprehensive business intelligence transformation</strong> analyzing 600,000+ transactions to rescue a declining trading company. Uncovered the "Inverted Customer Pyramid" phenomenon where supposedly "at-risk" customers generated 32.5% of revenue, identified $77M inventory crisis, and developed data-driven strategies that projected 1,726% ROI with $127.7M revenue increase potential.
+                                Engineered an end-to-end LendingClub pipeline with ML models for return and default prediction, including K-means risk clustering and an integer-optimized portfolio of 100 loans, yielding a 28% return at 8.4% risk and delivering over four times the ROI of baseline portfolios. Applied advanced marketing analytics principles to investment optimization.
                             </p>
                             
                             <div class="project-tags">
-                                <span class="tag" style="background: #dbeafe; color: #1e40af;">Advanced SQL</span>
-                                <span class="tag" style="background: #dcfce7; color: #166534;">600K+ Transactions</span>
-                                <span class="tag" style="background: #fef3c7; color: #92400e;">Customer Segmentation</span>
-                                <span class="tag" style="background: #fce7f3; color: #be185d;">Strategic Analytics</span>
-                                <span class="tag" style="background: #e0e7ff; color: #3730a3;">Business Intelligence</span>
-                                <span class="tag" style="background: #f3e8ff; color: #7c3aed;">Revenue Optimization</span>
-                            </div>
-                            
-                            <div class="project-info-box">
-                                <p>🚀 <strong>Business Impact Story:</strong> Transformed raw transaction data into actionable strategies that identified critical inventory risks, revealed hidden customer value patterns, and delivered a roadmap for 15% profit margin improvement across global markets.</p>
+                                <span class="tag">Python</span>
+                                <span class="tag">Machine Learning</span>
+                                <span class="tag">K-means Clustering</span>
+                                <span class="tag">Portfolio Optimization</span>
+                                <span class="tag">Risk Analysis</span>
+                                <span class="tag">ROI Optimization</span>
                             </div>
                         </div>
                         
                         <div class="project-actions">
-                            <a href="northwind-analytics.html" class="project-link">View Details</a>
+                            <a href="#" class="project-link">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -868,76 +1040,96 @@
                 <!-- PROJECT 1 -->
                 <div class="project-card">
                     <div class="project-header">
-                        <h3>Predictive Modelling for Customer Acquisition</h3>
+                        <h3>Predictive Marketing for Customer Acquisition</h3>
                     </div>
                     <div class="project-body">
                         <p class="project-description">
-                            Developed predictive logistic regression and decision tree models in R to optimize a bank's telemarketing campaign, improving customer targeting and achieving a 90% cost reduction and 2.5x increase in net profit.
+                            Developed predictive logistic regression & decision tree models in R to optimize a bank's telemarketing campaign, improving customer targeting and achieving a 90% cost reduction and 2.5x increase in net profit.
                         </p>
                         <div class="project-tags">
-                            <span class="tag">R</span>
+                            <span class="tag">R Programming</span>
                             <span class="tag">Predictive Modeling</span>
-                            <span class="tag">Logistic Regression</span>
-                            <span class="tag">Decision Trees</span>
+                            <span class="tag">Customer Acquisition</span>
+                            <span class="tag">Telemarketing Optimization</span>
                         </div>
-                        <a href="predictive-modelling.html" class="project-link">View Details →</a>
+                        <a href="#" class="project-link">View Project</a>
                     </div>
                 </div>
                 
                 <!-- PROJECT 2 -->
                 <div class="project-card">
                     <div class="project-header">
-                        <h3>Cell2Cell Proactive Retention Campaign</h3>
+                        <h3>Churn Prediction and Customer Retention Marketing</h3>
                     </div>
                     <div class="project-body">
                         <p class="project-description">
-                            Designed a churn prediction model in Python and implemented a proactive retention strategy using an Excel simulator to optimize offers for at-risk mobile customers, improving LTV by $4.39M and achieving 757% ROI.
+                            Designed a churn prediction model in Python & implemented a proactive retention strategy using an Excel simulator to optimize offers for at-risk customers, improving LTV by $4.39M & achieving 757% ROI.
                         </p>
                         <div class="project-tags">
                             <span class="tag">Python</span>
                             <span class="tag">Churn Prediction</span>
                             <span class="tag">Customer Retention</span>
-                            <span class="tag">ROI Optimization</span>
+                            <span class="tag">LTV Optimization</span>
                         </div>
-                        <a href="cell2cell-proactive.html" class="project-link">View Details →</a>
+                        <a href="#" class="project-link">View Project</a>
                     </div>
                 </div>
                 
                 <!-- PROJECT 3 -->
                 <div class="project-card">
                     <div class="project-header">
-                        <h3>Competitive Analysis using Topic Models</h3>
+                        <h3>Competitive Marketing Analysis using Topic Models</h3>
                     </div>
                     <div class="project-body">
                         <p class="project-description">
-                            Utilized LDA and Euclidean distance in Python to cluster 1,100+ films by topic and identify optimal 2014 release date for The Maze Runner, reducing direct-release competition by 23%.
+                            Utilized LDA and Euclidean distance in Python to cluster 1,100+ films by topic and identify optimal 2014 release date for "The Maze Runner", reducing direct-release competition by 23%.
                         </p>
                         <div class="project-tags">
                             <span class="tag">Python</span>
-                            <span class="tag">LDA</span>
-                            <span class="tag">Topic Modeling</span>
+                            <span class="tag">LDA Topic Modeling</span>
                             <span class="tag">Competitive Analysis</span>
+                            <span class="tag">Marketing Strategy</span>
                         </div>
-                        <a href="competitive-analysis.html" class="project-link">View Details →</a>
+                        <a href="#" class="project-link">View Project</a>
                     </div>
                 </div>
                 
                 <!-- PROJECT 4 -->
                 <div class="project-card">
                     <div class="project-header">
-                        <h3>Ford Ka Market Segmentation</h3>
+                        <h3>Ford Ka Marketing Segmentation Strategy</h3>
                     </div>
                     <div class="project-body">
                         <p class="project-description">
-                            Applied k-means clustering in R on demographic and psychographic data to segment small-car buyers and identify high-MQL clusters for Ford Ka, boosting alignment with trend- and value-driven consumers.
+                            Applied k-means clustering on demographic and psychographic data to segment small-car buyers and identify high-MQL clusters; boosted alignment with trend- and value-driven consumers, informing Ford's go-to-market strategy.
                         </p>
                         <div class="project-tags">
-                            <span class="tag">R</span>
-                            <span class="tag">K-means Clustering</span>
+                            <span class="tag">R Programming</span>
                             <span class="tag">Market Segmentation</span>
-                            <span class="tag">Consumer Analysis</span>
+                            <span class="tag">Customer Clustering</span>
+                            <span class="tag">Go-to-Market Strategy</span>
                         </div>
-                        <a href="ford-ka-segmentation.html" class="project-link">View Details →</a>
+                        <a href="#" class="project-link">View Project</a>
+                    </div>
+                </div>
+                
+                <!-- PROJECT 5 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Ethical AI in Insurance Marketing</h3>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-description">
+                            Assessed fairness, privacy, and explainability in insurance claim prediction models using LIME, DiCE, and FairLearn; developed a governance framework to reduce disparate impact across intersectional groups and support responsible AI adoption.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Ethical AI</span>
+                            <span class="tag">LIME</span>
+                            <span class="tag">FairLearn</span>
+                            <span class="tag">Governance Framework</span>
+                        </div>
+                        <a href="#" class="project-link">View Project</a>
                     </div>
                 </div>
             </div>
@@ -945,76 +1137,85 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills">
+    <section id="skills" class="alt-bg">
         <div class="container">
-            <h2 class="section-title">Skills & Expertise</h2>
+            <h2 class="section-title serif-heading">Technical Skills & Marketing Expertise</h2>
             
             <div class="skills-grid">
                 <!-- SKILL CATEGORY 1 -->
-                <div class="card">
-                    <h3 style="margin-bottom: 18px; color: #2563eb; font-size: 20px;">Programming & ML Frameworks</h3>
+                <div class="card skill-category">
+                    <h3>Programming and Analytics</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Python (Pandas, NumPy, Scikit-learn, XGBoost)</span>
                         <span class="skill-tag">R</span>
                         <span class="skill-tag">Advanced SQL</span>
-                        <span class="skill-tag">Scikit-learn</span>
-                        <span class="skill-tag">PyTorch</span>
-                        <span class="skill-tag">TensorFlow</span>
-                        <span class="skill-tag">XGBoost</span>
-                        <span class="skill-tag">LLMs</span>
-                        <span class="skill-tag">Prompt Engineering</span>
+                        <span class="skill-tag">Statistical Analysis</span>
                     </div>
                 </div>
                 
                 <!-- SKILL CATEGORY 2 -->
-                <div class="card">
-                    <h3 style="margin-bottom: 18px; color: #2563eb; font-size: 20px;">Databases & Data Handling</h3>
+                <div class="card skill-category">
+                    <h3>Marketing & Web Analytics</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Google Analytics (GA4)</span>
+                        <span class="skill-tag">CM360</span>
+                        <span class="skill-tag">DV360</span>
+                        <span class="skill-tag">Integral Ad Science (IAS)</span>
+                        <span class="skill-tag">Google Tag Manager (GTM)</span>
+                        <span class="skill-tag">HubSpot CRM</span>
+                        <span class="skill-tag">Mailchimp</span>
+                        <span class="skill-tag">Impact (Affiliate)</span>
+                    </div>
+                </div>
+                
+                <!-- SKILL CATEGORY 3 -->
+                <div class="card skill-category">
+                    <h3>Databases and Data Handling</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">SQL</span>
                         <span class="skill-tag">NoSQL (MongoDB)</span>
-                        <span class="skill-tag">Pandas</span>
-                        <span class="skill-tag">NumPy</span>
-                        <span class="skill-tag">Data Cleaning</span>
+                        <span class="skill-tag">Data Cleaning & Manipulation</span>
                         <span class="skill-tag">ETL/ELT</span>
                         <span class="skill-tag">Data Storytelling</span>
                     </div>
                 </div>
                 
-                <!-- SKILL CATEGORY 3 -->
-                <div class="card">
-                    <h3 style="margin-bottom: 18px; color: #2563eb; font-size: 20px;">Tools & Automation</h3>
+                <!-- SKILL CATEGORY 4 -->
+                <div class="card skill-category">
+                    <h3>Visualization & Business Intelligence</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">Tableau</span>
                         <span class="skill-tag">Power BI</span>
-                        <span class="skill-tag">Advanced Excel</span>
-                        <span class="skill-tag">Flask</span>
-                        <span class="skill-tag">Selenium</span>
-                        <span class="skill-tag">VBA</span>
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">Jira</span>
-                        <span class="skill-tag">Airtable</span>
-                        <span class="skill-tag">WordPress</span>
-                        <span class="skill-tag">Adobe Analytics</span>
-                        <span class="skill-tag">Google Analytics</span>
-                        <span class="skill-tag">CM360</span>
-                        <span class="skill-tag">Integral Ad Science</span>
+                        <span class="skill-tag">Advanced Microsoft Excel (VBA, Power Query)</span>
+                        <span class="skill-tag">Looker (Google Data Studio)</span>
                     </div>
                 </div>
                 
-                <!-- SKILL CATEGORY 4 -->
-                <div class="card">
-                    <h3 style="margin-bottom: 18px; color: #2563eb; font-size: 20px;">Marketing Analytics & Strategy</h3>
+                <!-- SKILL CATEGORY 5 -->
+                <div class="card skill-category">
+                    <h3>Marketing Analytics Methods</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">A/B Testing</span>
-                        <span class="skill-tag">Marketing Mix Modeling</span>
-                        <span class="skill-tag">Multi-Touch Attribution</span>
-                        <span class="skill-tag">Campaign Analysis</span>
-                        <span class="skill-tag">Growth Marketing</span>
+                        <span class="skill-tag">A/B & Multivariate Testing</span>
+                        <span class="skill-tag">Marketing Mix Modeling (MMM)</span>
+                        <span class="skill-tag">Multi-Touch Attribution (MTA)</span>
                         <span class="skill-tag">Churn Prediction</span>
-                        <span class="skill-tag">Forecasting</span>
-                        <span class="skill-tag">Customer Journey Mapping</span>
-                        <span class="skill-tag">Optimization</span>
-                        <span class="skill-tag">Budget Optimization</span>
+                        <span class="skill-tag">LTV Forecasting</span>
+                        <span class="skill-tag">Brand Lift</span>
+                        <span class="skill-tag">Incrementality Testing</span>
+                        <span class="skill-tag">Hypothesis Testing</span>
+                    </div>
+                </div>
+                
+                <!-- SKILL CATEGORY 6 -->
+                <div class="card skill-category">
+                    <h3>Workflow and Automation</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Flask</span>
+                        <span class="skill-tag">Selenium</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">Airtable</span>
+                        <span class="skill-tag">Jira</span>
+                        <span class="skill-tag">WordPress</span>
                     </div>
                 </div>
             </div>
@@ -1022,24 +1223,34 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="alt-bg">
+    <section id="contact">
         <div class="container">
-            <h2 class="section-title">Contact Me</h2>
+            <h2 class="section-title serif-heading">Let's Connect</h2>
             
             <div class="contact-grid">
                 <!-- Email contact -->
                 <div class="card contact-item">
-                    <div class="contact-icon">✉️</div>
-                    <h3 style="margin-bottom: 12px; font-size: 22px;">Email</h3>
-                    <p style="font-size: 16px;">aharlalk@tepper.cmu.edu</p>
+                    <div class="contact-icon">📧</div>
+                    <h3 class="serif-heading" style="margin-bottom: 15px; font-size: 22px; color: var(--deep-brown);">Email</h3>
+                    <p style="font-size: 16px; color: var(--soft-grey); margin-bottom: 15px;">Ready to discuss marketing analytics opportunities?</p>
+                    <p style="font-size: 16px; font-weight: 600; color: var(--warm-brown);">aharlalk@tepper.cmu.edu</p>
                 </div>
                 
                 <!-- LinkedIn contact -->
                 <div class="card contact-item">
-                    <div class="contact-icon">👔</div>
-                    <h3 style="margin-bottom: 12px; font-size: 22px;">LinkedIn</h3>
-                    <p style="margin-bottom: 15px; font-size: 16px;">Connect with me</p>
-                    <a href="https://www.linkedin.com/in/asthaharlalka" class="project-link">LinkedIn Profile →</a>
+                    <div class="contact-icon">💼</div>
+                    <h3 class="serif-heading" style="margin-bottom: 15px; font-size: 22px; color: var(--deep-brown);">LinkedIn</h3>
+                    <p style="margin-bottom: 20px; font-size: 16px; color: var(--soft-grey);">Connect for professional networking</p>
+                    <a href="https://www.linkedin.com/in/asthaharlalka" class="project-link">View Profile</a>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <div class="card" style="max-width: 600px; margin: 0 auto;">
+                    <h3 class="serif-heading" style="margin-bottom: 20px; font-size: 24px; color: var(--deep-brown);">Ready to Drive Marketing Excellence Together?</h3>
+                    <p style="font-size: 16px; line-height: 1.7; color: var(--soft-grey);">
+                        Whether you're looking to optimize marketing campaigns, implement advanced analytics, or drive data-backed marketing strategy, I bring the expertise to deliver measurable results. Let's discuss how we can achieve exceptional marketing performance together.
+                    </p>
                 </div>
             </div>
         </div>
@@ -1050,18 +1261,18 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-branding">
-                    <h3>Astha Harlalka</h3>
-                    <p>Marketing & Business Analytics Professional</p>
+                    <h3 class="serif-heading">Astha Harlalka</h3>
+                    <p>Marketing Analytics Professional</p>
                 </div>
                 
                 <div class="social-links">
-                    <a href="mailto:aharlalk@tepper.cmu.edu" class="social-link" title="Email">✉️</a>
-                    <a href="https://www.linkedin.com/in/asthaharlalka" class="social-link" title="LinkedIn">👔</a>
+                    <a href="mailto:aharlalk@tepper.cmu.edu" class="social-link" title="Email">📧</a>
+                    <a href="https://www.linkedin.com/in/asthaharlalka" class="social-link" title="LinkedIn">💼</a>
                 </div>
             </div>
             
             <div class="copyright">
-                <p>&copy; <span id="current-year">2025</span> Astha Harlalka. All rights reserved.</p>
+                <p>&copy; <span id="current-year">2025</span> Astha Harlalka. Professional marketing analytics portfolio.</p>
             </div>
         </div>
     </footer>
@@ -1111,36 +1322,23 @@
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
                     window.scrollTo({
-                        top: targetElement.offsetTop - 70,
+                        top: targetElement.offsetTop - 80,
                         behavior: 'smooth'
                     });
                 }
             });
         });
 
-        // Add scroll animations
-        document.addEventListener('DOMContentLoaded', function() {
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, observerOptions);
-
-            // Observe all cards for animation
-            document.querySelectorAll('.card, .project-card').forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(card);
-            });
+        // Header background change on scroll (subtle effect)
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 8px 25px rgba(139, 90, 60, 0.12)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 4px 15px rgba(139, 90, 60, 0.08)';
+            }
         });
     </script>
 </body>
