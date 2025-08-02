@@ -69,8 +69,7 @@
         }
         
         .logo {
-            text-align: center;
-            flex: 1;
+            text-align: left;
         }
         
         .logo h1 {
@@ -102,7 +101,7 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 30px;
+            gap: 15px;
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
@@ -111,24 +110,35 @@
         nav ul li a {
             text-decoration: none;
             color: var(--charcoal);
-            font-weight: 600;
-            font-size: 14px;
+            font-weight: 500;
+            font-size: 15px;
             transition: all 0.3s ease;
-            padding: 12px 20px;
+            padding: 8px 16px;
             position: relative;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            border-radius: 25px;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(139, 90, 60, 0.1);
+            letter-spacing: 0.3px;
+            border-radius: 8px;
+        }
+        
+        nav ul li a:before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 4px;
+            left: 50%;
+            background: linear-gradient(90deg, var(--warm-brown), var(--sage-green));
+            transition: width 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 1px;
+        }
+        
+        nav ul li a:hover:before {
+            width: calc(100% - 32px);
         }
         
         nav ul li a:hover {
-            color: var(--white);
-            background: linear-gradient(135deg, var(--warm-brown), var(--sage-green));
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(139, 90, 60, 0.3);
+            color: var(--warm-brown);
+            background: rgba(139, 90, 60, 0.05);
         }
         
         .resume-btn {
@@ -623,6 +633,15 @@
             margin-bottom: 10px;
         }
         
+        .cert-institution {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--warm-brown);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
         .cert-skills {
             color: var(--soft-grey);
             font-size: 14px;
@@ -914,8 +933,8 @@
             }
             
             nav ul li a {
-                padding: 10px 15px;
-                font-size: 12px;
+                padding: 10px 12px;
+                font-size: 13px;
             }
         }
     </style>
@@ -927,7 +946,7 @@
             <div class="header-content">
                 <div class="logo">
                     <h1>Astha Harlalka</h1>
-                    <p>Marketing Analyst</p>
+                    <p>Marketing and Growth Analyst</p>
                 </div>
                 
                 <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
@@ -1238,6 +1257,7 @@
                     <li class="certification-item">
                         <a href="https://raw.githubusercontent.com/asthaharlalka/asthaharlalka/main/stanford-loyalty-cert.pdf" target="_blank" class="cert-link">
                             <h3 class="cert-name">Create Customers for Life: How to Understand, Measure and Drive Loyalty</h3>
+                            <p class="cert-institution">Stanford University</p>
                             <span class="cert-year">(2024)</span>
                             <p class="cert-skills">Customer loyalty measurement | Retention strategies | Lifetime value optimization | Customer experience analytics</p>
                         </a>
@@ -1246,6 +1266,7 @@
                     <li class="certification-item">
                         <a href="https://raw.githubusercontent.com/asthaharlalka/asthaharlalka/main/wharton-people-analytics.pdf" target="_blank" class="cert-link">
                             <h3 class="cert-name">People Analytics</h3>
+                            <p class="cert-institution">Wharton University</p>
                             <span class="cert-year">(2024)</span>
                             <p class="cert-skills">Customer behavior analysis | Advanced segmentation | Predictive modeling | Data-driven insights</p>
                         </a>
@@ -1254,6 +1275,7 @@
                     <li class="certification-item">
                         <a href="https://raw.githubusercontent.com/asthaharlalka/asthaharlalka/main/wharton-analytics-customer.pdf" target="_blank" class="cert-link">
                             <h3 class="cert-name">Customer Analytics</h3>
+                            <p class="cert-institution">Wharton University</p>
                             <span class="cert-year">(2024)</span>
                             <p class="cert-skills">Customer behavior modeling | Segmentation strategies | Predictive analytics | Marketing optimization</p>
                         </a>
@@ -1262,6 +1284,7 @@
                     <li class="certification-item">
                         <a href="https://raw.githubusercontent.com/asthaharlalka/asthaharlalka/main/google-ga4-cert.pdf" target="_blank" class="cert-link">
                             <h3 class="cert-name">Google Analytics Individual Qualification (GA4)</h3>
+                            <p class="cert-institution">Google LLC</p>
                             <span class="cert-year">(2025)</span>
                             <p class="cert-skills">GA4 implementation | Event tracking | Conversion optimization | Advanced reporting | Data analysis</p>
                         </a>
@@ -1270,6 +1293,7 @@
                     <li class="certification-item">
                         <a href="https://raw.githubusercontent.com/asthaharlalka/asthaharlalka/main/hubspot-digital-marketing-cert.png" target="_blank" class="cert-link">
                             <h3 class="cert-name">Digital Marketing Certification</h3>
+                            <p class="cert-institution">HubSpot Academy</p>
                             <span class="cert-year">(2025)</span>
                             <p class="cert-skills">Digital marketing strategy | Campaign optimization | Performance measurement | ROI analysis</p>
                         </a>
@@ -1278,6 +1302,7 @@
                     <li class="certification-item">
                         <a href="https://raw.githubusercontent.com/asthaharlalka/asthaharlalka/main/hubspot-inbound-cert.png" target="_blank" class="cert-link">
                             <h3 class="cert-name">Inbound Marketing Certification</h3>
+                            <p class="cert-institution">HubSpot Academy</p>
                             <span class="cert-year">(2025)</span>
                             <p class="cert-skills">Inbound methodology | Content marketing | Lead nurturing | Conversion optimization</p>
                         </a>
@@ -1417,7 +1442,7 @@
             <div class="footer-content">
                 <div class="footer-branding">
                     <h3 class="serif-heading">Astha Harlalka</h3>
-                    <p>Marketing Analyst</p>
+                    <p>Marketing and Growth Analyst</p>
                 </div>
                 
                 <div class="social-links">
