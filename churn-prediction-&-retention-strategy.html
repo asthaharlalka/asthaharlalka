@@ -107,6 +107,41 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(139, 90, 60, 0.4);
         }
+
+        /* Back to Home Button */
+        .back-home {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(139, 90, 60, 0.1);
+            padding: 15px 0;
+        }
+        
+        .back-home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--deep-brown);
+            background: rgba(245, 241, 232, 0.8);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 1px solid rgba(139, 90, 60, 0.2);
+        }
+        
+        .back-home-btn:hover {
+            background: var(--sage-green);
+            color: var(--white);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(122, 132, 113, 0.3);
+        }
+        
+        .back-home-btn .icon {
+            width: 14px;
+            height: 14px;
+        }
         
         /* Action Buttons */
         .action-buttons {
@@ -497,6 +532,18 @@
     </style>
 </head>
 <body>
+
+    <!-- Back to Home -->
+    <section class="back-home">
+        <div class="container">
+            <a href="https://asthaharlalka.com/" class="back-home-btn">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="m15 18-6-6 6-6"/>
+                </svg>
+                Back to Portfolio
+            </a>
+        </div>
+    </section>
     <!-- Header -->
     <header>
         <div class="container">
