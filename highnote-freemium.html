@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High Note Freemium Conversion Analysis & Strategy</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/asthaharlalka/asthaharlalka/main/icon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-beige: #F5F1E8;
+            --warm-brown: #8B5A3C;
+            --deep-brown: #5D3F2E;
+            --sage-green: #7A8471;
+            --forest-green: #556B2F;
+            --cream: #FAF8F3;
+            --charcoal: #2C2C2C;
+            --soft-grey: #6B7280;
+            --accent-gold: #D4AF37;
+            --white: #FFFFFF;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--charcoal);
+            background: linear-gradient(135deg, var(--cream) 0%, var(--primary-beige) 100%);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Typography */
+        .serif-heading {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        
+        /* Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(139, 90, 60, 0.1);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: var(--deep-brown);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        
+        .logo p {
+            font-size: 14px;
+            color: var(--sage-green);
+            margin-top: 2px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        
+        /* GitHub Button */
+        .github-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--white);
+            background: linear-gradient(135deg, var(--warm-brown) 0%, var(--deep-brown) 100%);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 90, 60, 0.3);
+            text-decoration: none;
+        }
+        
+        .github-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 90, 60, 0.4);
+        }
+
+        /* Back to Home Button */
+        .back-home {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(139, 90, 60, 0.1);
+            padding: 15px 0;
+        }
+        
+        .back-home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--deep-brown);
+            background: rgba(245, 241, 232, 0.8);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 1px solid rgba(139, 90, 60, 0.2);
+        }
+        
+        .back-home-btn:hover {
+            background: var(--sage-green);
+            color: var(--white);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(122, 132, 113, 0.3);
+        }
+        
+        .back-home-btn .icon {
+            width: 14px;
+            height: 14px;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 90, 60, 0.3);
+        }
+        
+        .btn-primary {
+            color: var(--white);
+            background: linear-gradient(135deg, var(--warm-brown) 0%, var(--deep-brown) 100%);
+        }
+        
+        .btn-secondary {
+            color: var(--deep-brown);
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid var(--sage-green);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 90, 60, 0.4);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--sage-green);
+            color: var(--white);
+        }
+        
+        .icon {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--cream) 0%, rgba(245, 241, 232, 0.8) 50%, var(--primary-beige) 100%);
+            padding: 80px 0 100px;
+            position: relative;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            color: var(--deep-brown);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        
+        .hero .subtitle {
+            font-size: 22px;
+            color: var(--sage-green);
+            margin-bottom: 25px;
+            font-weight: 500;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+        
+        .hero p {
+            margin-bottom: 30px;
+            font-size: 18px;
+            color: var(--soft-grey);
+            line-height: 1.7;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 70px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-family: 'Playfair Display', serif;
+            font-size: 38px;
+            color: var(--deep-brown);
+            position: relative;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        
+        .section-title:after {
+            content: "";
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--warm-brown), var(--sage-green));
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        /* Card Styles */
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(139, 90, 60, 0.1);
+            padding: 35px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(139, 90, 60, 0.1);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--warm-brown), var(--sage-green));
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(139, 90, 60, 0.15);
+        }
+        
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .metric {
+            text-align: center;
+            background: linear-gradient(135deg, var(--sage-green), var(--forest-green));
+            color: white;
+            padding: 25px 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(122, 132, 113, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .metric:hover {
+            transform: translateY(-3px);
+        }
+        
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: bold;
+            display: block;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .metric-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .skill-category {
+            background: rgba(245, 241, 232, 0.4);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid var(--sage-green);
+        }
+        
+        .skill-category h3 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
+            color: var(--warm-brown);
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .skill-list {
+            list-style: none;
+        }
+        
+        .skill-list li {
+            padding: 0.5rem 0;
+            color: var(--soft-grey);
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .skill-list li:before {
+            content: "▸ ";
+            color: var(--sage-green);
+            font-weight: bold;
+            margin-right: 8px;
+            margin-top: 2px;
+        }
+        
+        /* Code Block */
+        .code-block {
+            background: var(--deep-brown);
+            color: var(--cream);
+            padding: 25px;
+            border-radius: 12px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 20px 0;
+            border: 1px solid rgba(139, 90, 60, 0.2);
+        }
+        
+        /* Highlight Box */
+        .highlight {
+            background: linear-gradient(135deg, rgba(245, 241, 232, 0.8) 0%, rgba(255, 255, 255, 0.8) 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid var(--warm-brown);
+            margin: 25px 0;
+        }
+        
+        .highlight p {
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+        
+        /* Tags */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, rgba(122, 132, 113, 0.15), rgba(139, 90, 60, 0.15));
+            color: var(--deep-brown);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid rgba(139, 90, 60, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .tag:hover {
+            background: linear-gradient(135deg, var(--warm-brown), var(--sage-green));
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+        
+        /* Featured Card */
+        .featured-card {
+            background: linear-gradient(135deg, rgba(245, 241, 232, 0.9) 0%, rgba(255, 255, 255, 0.9) 100%);
+            border: 2px solid var(--warm-brown);
+            position: relative;
+        }
+        
+        .featured-card:before {
+            background: linear-gradient(90deg, var(--accent-gold), #B8860B);
+        }
+        
+        .featured-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, var(--accent-gold), #B8860B);
+            color: var(--white);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        /* Results List */
+        .results-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .results-list li {
+            padding: 12px 0;
+            color: var(--soft-grey);
+            display: flex;
+            align-items: flex-start;
+            border-bottom: 1px solid rgba(139, 90, 60, 0.1);
+        }
+        
+        .results-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .results-list li:before {
+            content: "✓ ";
+            color: var(--forest-green);
+            font-weight: bold;
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+        
+        /* Utility Classes */
+        .alt-bg {
+            background: linear-gradient(135deg, rgba(245, 241, 232, 0.5) 0%, rgba(250, 248, 243, 0.8) 100%);
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .mb-0 {
+            margin-bottom: 0;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero .subtitle {
+                font-size: 18px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .card {
+                padding: 25px;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                gap: 10px;
+            }
+            
+            .btn {
+                flex: 1;
+                min-width: 180px;
+                justify-content: center;
+            }
+            
+            .header-content {
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Back to Home -->
+    <section class="back-home">
+        <div class="container">
+            <a href="https://asthaharlalka.com/" class="back-home-btn">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="m15 18-6-6 6-6"/>
+                </svg>
+                Back to Portfolio
+            </a>
+        </div>
+    </section>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>High Note Freemium Conversion Analysis & Strategy</h1>
+                </div>
+                
+                <a href="https://github.com/asthaharlalka/highnote-freemium-analysis" class="github-btn">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    View on GitHub
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="serif-heading">Predictive Analytics for Freemium-to-Premium Conversion Optimization</h1>
+            <p class="subtitle">Data-driven strategy to maximize subscription revenue in digital music streaming</p>
+            <p>Comprehensive analysis of High Note's freemium user base utilizing advanced machine learning models to identify conversion drivers, optimize user engagement strategies, and develop actionable recommendations for sustainable revenue growth in competitive digital streaming markets.</p>
+            
+            <div class="metrics-grid">
+                <div class="metric">
+                    <span class="metric-value">93.6%</span>
+                    <span class="metric-label">Model Accuracy</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-value">0.86</span>
+                    <span class="metric-label">AUC Score</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-value">70.7%</span>
+                    <span class="metric-label">Loved Tracks Impact</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-value">1.2M+</span>
+                    <span class="metric-label">Users Analyzed</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Overview -->
+    <section>
+        <div class="container">
+            <h2 class="section-title serif-heading">Project Overview</h2>
+            
+            <div class="card featured-card">
+                <div class="featured-badge">Strategic Analysis</div>
+                <div class="highlight">
+                    <p><strong>Business Challenge:</strong> High Note faced the classic freemium conundrum - how to convert free users to paid premium subscribers while maintaining user engagement and competitive positioning. With only 3% conversion rate industry-wide and 1.2M+ free users generating limited ad revenue, the company needed data-driven insights to optimize their conversion strategy.</p>
+                </div>
+                
+                <p style="font-size: 18px; line-height: 1.7; margin-bottom: 25px;">
+                    Developed a comprehensive predictive analytics framework using decision trees and logistic regression to identify key conversion drivers in High Note's freemium model. The analysis revealed that <strong>engagement behavior, social influence, and user interaction patterns</strong> are the strongest predictors of premium conversion, leading to targeted strategies that could significantly improve subscription rates while reducing churn.
+                </p>
+                
+                <div class="tags">
+                    <span class="tag">R Programming</span>
+                    <span class="tag">Decision Trees</span>
+                    <span class="tag">Logistic Regression</span>
+                    <span class="tag">Predictive Analytics</span>
+                    <span class="tag">Freemium Strategy</span>
+                    <span class="tag">User Engagement</span>
+                    <span class="tag">Digital Marketing</span>
+                    <span class="tag">Excel Modeling</span>
+                </div>
+                
+                <div class="action-buttons">
+                    <a href="https://github.com/asthaharlalka/highnote-freemium-analysis" class="btn btn-primary">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.30 3.297-1.30.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        View Complete Analysis
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Approach -->
+    <section class="alt-bg">
+        <div class="container">
+            <h2 class="section-title serif-heading">Technical Methodology</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Predictive Modeling & Analysis</h3>
+                    <ul class="skill-list">
+                        <li>Decision tree analysis with pruning optimization (93.6% accuracy, 0.86 AUC)</li>
+                        <li>Logistic regression with stepwise variable selection and interaction terms</li>
+                        <li>ROC curve analysis and model performance comparison</li>
+                        <li>Missing data imputation strategies and feature engineering</li>
+                        <li>Cross-validation and train/test/validation sample methodology</li>
+                    </ul>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Data Processing & Visualization</h3>
+                    <ul class="skill-list">
+                        <li>Comprehensive exploratory data analysis with 1.2M+ user records</li>
+                        <li>Advanced scatter plot matrices and correlation analysis</li>
+                        <li>Confusion matrix evaluation and lift analysis</li>
+                        <li>Box plot distributions for conversion vs. non-conversion segments</li>
+                        <li>Statistical significance testing and descriptive analytics</li>
+                    </ul>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Business Strategy Development</h3>
+                    <ul class="skill-list">
+                        <li>Conversion funnel optimization and user journey mapping</li>
+                        <li>Engagement-based segmentation and targeting strategies</li>
+                        <li>Churn prediction and retention campaign development</li>
+                        <li>ROI-focused marketing recommendations with measurable KPIs</li>
+                        <li>Competitive benchmarking against industry conversion rates</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Findings & Results -->
+    <section>
+        <div class="container">
+            <h2 class="section-title serif-heading">Key Findings & Strategic Insights</h2>
+            
+            <div class="card">
+                <h3 class="serif-heading" style="font-size: 24px; margin-bottom: 20px; color: var(--warm-brown);">Primary Conversion Drivers Identified</h3>
+                
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Engagement Behavior (70.7% Impact)</h3>
+                        <ul class="skill-list">
+                            <li>Loved Tracks growth shows strongest correlation with premium conversion</li>
+                            <li>Users increasing song listening activity (7.9% importance) demonstrate higher upgrade intent</li>
+                            <li>Active playlist creation and track interaction signal investment in platform</li>
+                            <li>High engagement users show 17.5% conversion rate vs. 1% baseline</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Social Network Effects (8.6% Impact)</h3>
+                        <ul class="skill-list">
+                            <li>Users with premium subscriber friends are 2.4% more likely to upgrade</li>
+                            <li>Growing friend connections correlate with higher conversion rates</li>
+                            <li>Community involvement through posts and comments drives subscription intent</li>
+                            <li>Younger user networks (average friend age) show strongest conversion patterns</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    <p><strong>Model Performance:</strong> Decision tree analysis outperformed logistic regression with 93.6% accuracy and 0.86 AUC score, identifying clear behavioral patterns that predict premium conversion with high confidence and providing actionable insights for targeted marketing campaigns.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="serif-heading" style="font-size: 22px; margin-bottom: 20px; color: var(--warm-brown);">Strategic Conversion Framework</h3>
+                
+                <div class="metrics-grid">
+                    <div class="metric" style="background: linear-gradient(135deg, var(--accent-gold), #B8860B);">
+                        <span class="metric-value">24x</span>
+                        <span class="metric-label">Premium User Value</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">3%</span>
+                        <span class="metric-label">Industry Conversion Rate</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">37K</span>
+                        <span class="metric-label">Current Premium Users</span>
+                    </div>
+                    <div class="metric" style="background: linear-gradient(135deg, var(--soft-grey), var(--charcoal));">
+                        <span class="metric-value">$3</span>
+                        <span class="metric-label">Monthly Premium Price</span>
+                    </div>
+                </div>
+                
+                <h3 class="serif-heading" style="font-size: 22px; margin-bottom: 20px; color: var(--warm-brown);">Critical Success Factors</h3>
+                <ul class="results-list">
+                    <li><strong>Engagement Threshold:</strong> Users with high engagement levels show 17.5% conversion rate compared to 1% baseline</li>
+                    <li><strong>Social Influence:</strong> Premium friends and growing social networks significantly impact conversion decisions</li>
+                    <li><strong>Behavioral Patterns:</strong> Active content curation (loved tracks, playlists) indicates platform investment</li>
+                    <li><strong>Age Demographics:</strong> Younger users (20s) demonstrate highest engagement and conversion potential</li>
+                    <li><strong>Network Effects:</strong> Social features and community involvement drive long-term platform loyalty</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology & Implementation -->
+    <section class="alt-bg">
+        <div class="container">
+            <h2 class="section-title serif-heading">Methodology & Implementation</h2>
+            
+            <div class="card">
+                <h3 class="serif-heading text-center" style="font-size: 24px; margin-bottom: 30px; color: var(--warm-brown);">Three-Phase Analytical Framework</h3>
+                
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Phase 1: Data Preparation & Exploration</h3>
+                        <ul class="skill-list">
+                            <li>Comprehensive data cleaning with missing value imputation strategies</li>
+                            <li>Exploratory data analysis across demographic and behavioral variables</li>
+                            <li>Train/validation/test sample creation with 60/30/10 split methodology</li>
+                            <li>Feature engineering for engagement deltas and social network metrics</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Phase 2: Predictive Model Development</h3>
+                        <ul class="skill-list">
+                            <li>Decision tree modeling with complexity parameter optimization</li>
+                            <li>Stepwise logistic regression with interaction term evaluation</li>
+                            <li>Cross-validation and pruning techniques for model generalization</li>
+                            <li>ROC analysis and AUC comparison for model selection</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Phase 3: Strategic Recommendation</h3>
+                        <ul class="skill-list">
+                            <li>Conversion driver analysis and feature importance ranking</li>
+                            <li>User segmentation based on engagement and social behavior</li>
+                            <li>Targeted marketing strategy development with measurable outcomes</li>
+                            <li>Churn prevention and retention optimization framework</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="code-block">
+# Key R implementation for decision tree analysis
+ctree.full = rpart(adopter~., data=rfreemium[trainsample,crvarlist], 
+                   control=rpart.control(cp=0.0005), model=TRUE)
+ctree = prune(ctree.full, cp=0.001)
+padopter.tree = predict(ctree, newdata=rfreemium, type='vector')
+rocpred.tree = prediction(padopter.tree[validsample], trueadopter[validsample])
+                </div>
+                
+                <div class="highlight">
+                    <p><strong>Model Innovation:</strong> Selected decision tree over logistic regression based on superior AUC performance (0.86 vs 0.61), providing interpretable business rules while maintaining high predictive accuracy for identifying high-conversion probability users.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategic Recommendations -->
+    <section>
+        <div class="container">
+            <h2 class="section-title serif-heading">Strategic Recommendations & Action Plan</h2>
+            
+            <div class="skills-grid">
+                <div class="card">
+                    <h3 class="serif-heading" style="color: var(--warm-brown); margin-bottom: 15px;">Engagement-Driven Conversion Strategy</h3>
+                    <ul class="skill-list">
+                        <li>Implement gamification features including achievement badges and reward points system</li>
+                        <li>Offer limited-time premium perks when users hit engagement milestones (50+ loved tracks)</li>
+                        <li>Create "Daily Personal Mix" playlists based on user's loved track patterns</li>
+                        <li>Provide early access to new music releases for highly engaged free users</li>
+                        <li>Develop progressive engagement campaigns targeting users showing increased activity</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3 class="serif-heading" style="color: var(--warm-brown); margin-bottom: 15px;">Social Network Optimization</h3>
+                    <ul class="skill-list">
+                        <li>Launch premium referral program with monetary benefits for both referrer and referee</li>
+                        <li>Introduce group subscription plans ($12/month for 5 users vs $15 individual)</li>
+                        <li>Enable collaborative playlist features and friend activity feeds</li>
+                        <li>Target users with premium friends through personalized upgrade campaigns</li>
+                        <li>Create community challenges and social features that encourage friend interaction</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="serif-heading text-center" style="font-size: 24px; margin-bottom: 20px; color: var(--warm-brown);">Demographic-Targeted Initiatives</h3>
+                
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Young Adult Focus (Primary Target)</h3>
+                        <ul class="skill-list">
+                            <li>Student subscription bundles with Notion, Grammarly, and other academic tools</li>
+                            <li>Campus ambassador programs for organic growth and brand loyalty</li>
+                            <li>Social media integration and viral sharing features for playlist discovery</li>
+                            <li>Trendy UI/UX updates with modern design elements and micro-animations</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>30+ Demographics (Secondary Target)</h3>
+                        <ul class="skill-list">
+                            <li>Tailored discount promotions for users with higher disposable income</li>
+                            <li>Family plan options and multi-device streaming capabilities</li>
+                            <li>Premium-only content and exclusive artist interviews</li>
+                            <li>Simplified onboarding with transparent pricing and easy cancellation</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    <p><strong>Implementation Priority:</strong> Focus on high-engagement users first, as they show 17x higher conversion rates. Deploy social influence campaigns targeting users with premium friends, while developing long-term engagement strategies for broader user base conversion.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools & Technologies -->
+    <section class="alt-bg">
+        <div class="container">
+            <h2 class="section-title serif-heading">Tools & Technologies</h2>
+            
+            <div class="card">
+                <h3 class="serif-heading text-center" style="font-size: 24px; margin-bottom: 30px; color: var(--warm-brown);">Advanced Analytics Implementation</h3>
+                
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Statistical Computing & Machine Learning</h3>
+                        <ul class="skill-list">
+                            <li>R Programming for advanced statistical analysis and modeling</li>
+                            <li>Decision tree implementation with rpart and complexity parameter tuning</li>
+                            <li>Logistic regression with stepwise selection and interaction modeling</li>
+                            <li>ROC/AUC analysis using ROCR package for model evaluation</li>
+                            <li>Cross-validation techniques and performance metric calculation</li>
+                            <li>Missing data handling and feature engineering methodologies</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Data Visualization & Business Intelligence</h3>
+                        <ul class="skill-list">
+                            <li>Advanced plotting with ggplot2 and lattice for multi-dimensional analysis</li>
+                            <li>Confusion matrix visualization and lift analysis charts</li>
+                            <li>Scatter plot matrices and correlation heatmaps</li>
+                            <li>Box plot distributions for segment comparison analysis</li>
+                            <li>Excel-based logistic regression simulator for business stakeholder communication</li>
+                            <li>Interactive model response visualization with plotmo and visreg</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <a href="https://github.com/asthaharlalka/highnote-freemium-analysis" class="btn btn-primary">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.30 3.297-1.30.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        View R Scripts & Models
+                    </a>
+                    <a href="#" class="btn btn-secondary">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/>
+                            <path d="m9 22 3-8 3 8"/>
+                            <path d="M5 3h14a2 2 0 0 1 2 2v4H3V5a2 2 0 0 1 2-2Z"/>
+                        </svg>
+                        Excel Simulator
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Impact & Applications -->
+    <section class="alt-bg">
+        <div class="container">
+            <h2 class="section-title serif-heading">Business Impact & Applications</h2>
+            
+            <div class="skills-grid">
+                <div class="card">
+                    <h3 class="serif-heading" style="color: var(--warm-brown); margin-bottom: 15px;">Revenue Optimization Strategies</h3>
+                    <ul class="skill-list">
+                        <li>Enhanced UX/UI design focusing on engagement and conversion funnel optimization</li>
+                        <li>Targeted demographic campaigns with age-specific pricing and bundling strategies</li>
+                        <li>Churn prevention through RFM analysis and personalized re-engagement campaigns</li>
+                        <li>Subscription pause options and tiered membership benefits for retention</li>
+                        <li>Data-driven A/B testing framework for continuous conversion improvement</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3 class="serif-heading" style="color: var(--warm-brown); margin-bottom: 15px;">Industry Applications</h3>
+                    <ul class="skill-list">
+                        <li>Freemium business model optimization for SaaS and digital content platforms</li>
+                        <li>Predictive analytics framework applicable to subscription-based services</li>
+                        <li>Social network analysis techniques for viral growth and user acquisition</li>
+                        <li>Customer lifetime value modeling for digital marketplace strategies</li>
+                        <li>Engagement-based segmentation for personalized marketing automation</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="serif-heading text-center" style="font-size: 24px; margin-bottom: 20px; color: var(--warm-brown);">Actionable Business Recommendations</h3>
+                
+                <div class="highlight">
+                    <p><strong>Immediate Implementation:</strong> Deploy engagement-based targeting campaigns for users showing increased loved tracks activity, implement social referral programs for users with premium friends, and develop gamification features to drive platform investment and conversion intent among high-potential user segments.</p>
+                </div>
+                
+                <div class="skills-grid" style="margin-top: 30px;">
+                    <div class="skill-category">
+                        <h3>Short-Term Tactics (0-6 months)</h3>
+                        <ul class="skill-list">
+                            <li>Launch gamification system with achievement badges and progress tracking</li>
+                            <li>Implement premium friend referral program with dual-sided incentives</li>
+                            <li>Deploy targeted email campaigns for high-engagement user segments</li>
+                            <li>A/B test pricing strategies and trial period optimization</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Long-Term Strategy (6-18 months)</h3>
+                        <ul class="skill-list">
+                            <li>Develop comprehensive student bundling partnerships for market expansion</li>
+                            <li>Build advanced recommendation engine based on social network analysis</li>
+                            <li>Create tiered premium offerings with exclusive content and features</li>
+                            <li>Implement predictive churn modeling for proactive retention campaigns</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Impact -->
+    <section>
+        <div class="container">
+            <h2 class="section-title serif-heading">Project Impact & Learning Outcomes</h2>
+            
+            <div class="skills-grid">
+                <div class="card">
+                    <h3 class="serif-heading" style="color: var(--warm-brown); margin-bottom: 15px;">Key Deliverables</h3>
+                    <ul class="skill-list">
+                        <li>High-performance predictive model with 93.6% accuracy for conversion prediction</li>
+                        <li>Comprehensive user behavior analysis identifying top conversion drivers</li>
+                        <li>Strategic framework for freemium-to-premium optimization with measurable KPIs</li>
+                        <li>Complete R analysis pipeline replicable for similar digital platform studies</li>
+                        <li>Excel-based simulator for business stakeholder decision-making support</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3 class="serif-heading" style="color: var(--warm-brown); margin-bottom: 15px;">Industry Applications</h3>
+                    <ul class="skill-list">
+                        <li>Advanced predictive modeling techniques for subscription-based digital services</li>
+                        <li>Social network analysis methodologies for viral growth optimization</li>
+                        <li>Freemium business model optimization strategies for competitive markets</li>
+                        <li>Customer engagement analytics for retention and conversion improvement</li>
+                        <li>Data-driven decision making frameworks for sustainable revenue growth</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="serif-heading text-center" style="font-size: 24px; margin-bottom: 20px; color: var(--warm-brown);">Analytical Excellence & Business Innovation</h3>
+                
+                <div class="highlight">
+                    <p><strong>Strategic Success:</strong> This comprehensive freemium analysis demonstrates the power of combining advanced predictive analytics with actionable business strategy. The project showcases how data science can solve real-world business challenges, providing clear pathways to revenue optimization while maintaining user engagement and competitive positioning in dynamic digital markets.</p>
+                </div>
+                
+                <div class="skills-grid" style="margin-top: 30px;">
+                    <div class="skill-category">
+                        <h3>Technical Mastery</h3>
+                        <ul class="skill-list">
+                            <li>Advanced machine learning model development and validation</li>
+                            <li>Statistical significance testing and hypothesis validation</li>
+                            <li>Feature engineering and missing data imputation strategies</li>
+                            <li>Model interpretability and business rule extraction</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Business Strategy Integration</h3>
+                        <ul class="skill-list">
+                            <li>Translation of statistical insights into actionable marketing strategies</li>
+                            <li>ROI-focused campaign development with measurable conversion targets</li>
+                            <li>Customer journey optimization and retention strategy formulation</li>
+                            <li>Competitive analysis and sustainable growth planning</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
