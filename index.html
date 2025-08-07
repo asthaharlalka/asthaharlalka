@@ -448,15 +448,21 @@
 
         /* Logo Styles */
         .logo-img {
-            width: 40px;
-            height: 40px;
+            width: 60px;
+            height: 60px;
             object-fit: contain;
-            border-radius: 8px;
+            border-radius: 12px;
             background: var(--white);
-            padding: 5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-right: 15px;
+            padding: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            margin-right: 20px;
             flex-shrink: 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
         }
 
         .education-item, .experience-item {
